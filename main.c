@@ -449,7 +449,7 @@ t_bool	check_valid_move(t_game *game, int flag)
 	else if (flag == D_KEY)
 		target_v.x = game->player_posx + 0.11;
 
-	printf("retard detection is (%d, %d)\n", (int) target_v.x, (int) target_v.y);
+	printf("wall detection is (%d, %d)\n", (int) target_v.x, (int) target_v.y);
 
 	if (game->map[(int) target_v.y][(int) target_v.x] == '1')
 	{
@@ -464,26 +464,42 @@ int	key_hook(int keycode, t_game *game)
 	if (keycode == W_KEY)
 	{
 		if (check_valid_move(game, W_KEY) == TRUE)
-			game->player_posy -= 0.10;
+		{
+			game->player_posx += (game->dir.x * 0.10);
+			game->player_posy += (game->dir.y * 0.10);
+			// game->player_posy -= 0.10;
+		}
 		// printf("player (%f, %f)\n", game->player_posx, game->player_posy);
 		ray_cast(game);
 	}
 	else if (keycode == A_KEY)
 	{
 		if (check_valid_move(game, A_KEY) == TRUE)
-			game->player_posx -= 0.10;
+		{
+			game->player_posx -= (-game->dir.y * 0.10);
+			game->player_posy -= (game->dir.x * 0.10);
+			//game->player_posx -= 0.10;
+		}
 		ray_cast(game);
 	}
 	else if (keycode == S_KEY)
 	{
 		if (check_valid_move(game, S_KEY) == TRUE)
-			game->player_posy += 0.10;
+		{
+			game->player_posx -= (game->dir.x * 0.10);
+			game->player_posy -= (game->dir.y * 0.10);
+			// game->player_posy += 0.10;
+		}
 		ray_cast(game);
 	}
 	else if (keycode == D_KEY)
 	{
 		if (check_valid_move(game, D_KEY) == TRUE)
-			game->player_posx += 0.10;
+		{
+			game->player_posx += (-game->dir.y * 0.10);
+			game->player_posy += (game->dir.x * 0.10);
+			//game->player_posx += 0.10;
+		}
 		ray_cast(game);
 	}
 	else if (keycode == L_ARROW)
@@ -501,7 +517,7 @@ int	key_hook(int keycode, t_game *game)
 		ray_cast(game);
 	}
 	printf("keycode is %d\n", keycode);
-	// else if (keycode == ESC_KEY)
+	// else if (keycode == ESC_KEY_LINUX)
 	// 	;
 	//printf("key pressed is %d and player pos is (%f, %f)\n", keycode, game->player_posx, game->player_posy);
 	return (0);
@@ -511,27 +527,43 @@ int	key_hook_linux(int keycode, t_game *game)
 {
 	if (keycode == W_KEY_LINUX)
 	{
-		if (check_valid_move(game, W_KEY) == TRUE)
-			game->player_posy -= 0.10;
+		if (check_valid_move(game, W_KEY_LINUX) == TRUE)
+		{
+			game->player_posx += (game->dir.x * 0.10);
+			game->player_posy += (game->dir.y * 0.10);
+			// game->player_posy -= 0.10;
+		}
 		// printf("player (%f, %f)\n", game->player_posx, game->player_posy);
 		ray_cast(game);
 	}
 	else if (keycode == A_KEY_LINUX)
 	{
-		if (check_valid_move(game, A_KEY) == TRUE)
-			game->player_posx -= 0.10;
+		if (check_valid_move(game, A_KEY_LINUX) == TRUE)
+		{
+			game->player_posx -= (-game->dir.y * 0.10);
+			game->player_posy -= (game->dir.x * 0.10);
+			//game->player_posx -= 0.10;
+		}
 		ray_cast(game);
 	}
 	else if (keycode == S_KEY_LINUX)
 	{
-		if (check_valid_move(game, S_KEY) == TRUE)
-			game->player_posy += 0.10;
+		if (check_valid_move(game, S_KEY_LINUX) == TRUE)
+		{
+			game->player_posx -= (game->dir.x * 0.10);
+			game->player_posy -= (game->dir.y * 0.10);
+			// game->player_posy += 0.10;
+		}
 		ray_cast(game);
 	}
 	else if (keycode == D_KEY_LINUX)
 	{
-		if (check_valid_move(game, D_KEY) == TRUE)
-			game->player_posx += 0.10;
+		if (check_valid_move(game, D_KEY_LINUX) == TRUE)
+		{
+			game->player_posx += (-game->dir.y * 0.10);
+			game->player_posy += (game->dir.x * 0.10);
+			//game->player_posx += 0.10;
+		}
 		ray_cast(game);
 	}
 	else if (keycode == L_ARROW_LINUX)
