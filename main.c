@@ -500,7 +500,56 @@ int	key_hook(int keycode, t_game *game)
 		rotate_angle(game, &(game->cam_plane), 0);
 		ray_cast(game);
 	}
+	printf("keycode is %d\n", keycode);
 	// else if (keycode == ESC_KEY)
+	// 	;
+	//printf("key pressed is %d and player pos is (%f, %f)\n", keycode, game->player_posx, game->player_posy);
+	return (0);
+}
+
+int	key_hook_linux(int keycode, t_game *game)
+{
+	if (keycode == W_KEY_LINUX)
+	{
+		if (check_valid_move(game, W_KEY) == TRUE)
+			game->player_posy -= 0.10;
+		// printf("player (%f, %f)\n", game->player_posx, game->player_posy);
+		ray_cast(game);
+	}
+	else if (keycode == A_KEY_LINUX)
+	{
+		if (check_valid_move(game, A_KEY) == TRUE)
+			game->player_posx -= 0.10;
+		ray_cast(game);
+	}
+	else if (keycode == S_KEY_LINUX)
+	{
+		if (check_valid_move(game, S_KEY) == TRUE)
+			game->player_posy += 0.10;
+		ray_cast(game);
+	}
+	else if (keycode == D_KEY_LINUX)
+	{
+		if (check_valid_move(game, D_KEY) == TRUE)
+			game->player_posx += 0.10;
+		ray_cast(game);
+	}
+	else if (keycode == L_ARROW_LINUX)
+	{
+		// game->player_angle += 0.035;
+		rotate_angle(game, &(game->dir), 1);
+		rotate_angle(game, &(game->cam_plane), 1);
+		ray_cast(game);
+	}
+	else if (keycode == R_ARROW_LINUX)
+	{
+		// game->player_angle -= 0.035;
+		rotate_angle(game, &(game->dir), 0);
+		rotate_angle(game, &(game->cam_plane), 0);
+		ray_cast(game);
+	}
+	printf("keycode is %d\n", keycode);
+	// else if (keycode == ESC_KEY_LINUX)
 	// 	;
 	//printf("key pressed is %d and player pos is (%f, %f)\n", keycode, game->player_posx, game->player_posy);
 	return (0);
@@ -560,7 +609,10 @@ int main()
 	mlx_put_image_to_window(game.data.mlx_ptr, game.data.win_ptr, game.data.img.img, 0, 0);
 
 	// mlx_key_hook(game.data.win_ptr, key_hook, &game);
-	mlx_hook(game.data.win_ptr, 2, 0, key_hook, &game);
+	mlx_key_hook(game.data.win_ptr, key_hook_linux, &game);
+
+	// mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook, &game);
+	// mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook_linux, &game);
 
     mlx_loop(game.data.mlx_ptr);
     return (0);

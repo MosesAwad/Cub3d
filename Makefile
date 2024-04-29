@@ -15,15 +15,15 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
 #MAC_OS
-$(NAME): $(OBJS)
-	$(CC) $(OBJS) -o $(NAME) -g3 -fsanitize=address -Lmlx -lmlx -framework OpenGL -framework AppKit $(LIBFT)
+#$(NAME): $(OBJS)
+#	$(CC) $(OBJS) -o $(NAME) -g3 -fsanitize=address -Lmlx -lmlx -framework OpenGL -framework AppKit $(LIBFT)
 
-%.o: %.c
-	$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@
+#%.o: %.c
+#	$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@
 
 #LINUX
-#$(NAME): $(OBJS)
-#	$(CC) $(OBJS) -o $(NAME) -Lmlx-linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz $(LIBFT)
+$(NAME): $(OBJS)
+	$(CC) $(OBJS) -o $(NAME) -Lmlx-linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz $(LIBFT)
 
 %.o: %.c
 	$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3 -c $< -o $@

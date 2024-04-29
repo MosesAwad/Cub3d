@@ -13,8 +13,8 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-// #include "mlx-linux/mlx.h"
-# include "mlx/mlx.h"
+# include "mlx-linux/mlx.h"
+// # include "mlx/mlx.h"
 # include "Libft/libft.h"
 
 # include <stdio.h>
@@ -35,6 +35,14 @@
 # define ESC_KEY 53
 # define L_ARROW 123
 # define R_ARROW 124
+
+# define W_KEY_LINUX 119
+# define A_KEY_LINUX 97
+# define S_KEY_LINUX 115
+# define D_KEY_LINUX 100
+# define ESC_KEY_LINUX 65307
+# define L_ARROW_LINUX 65361
+# define R_ARROW_LINUX 65363
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
