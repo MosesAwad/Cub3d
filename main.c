@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/04/28 02:19:46 by mawad            ###   ########.fr       */
+/*   Updated: 2024/04/30 21:01:33 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,12 +145,23 @@ void	draw_walls(t_game game, t_img *img)
 	}
 }
 
-void	draw_v_line(t_img *img, int x, int start, int end, int color)
+void	draw_v_line(t_img *img, double div, int x, int start, int end, int color)
 {
-	while (start < end)
+	int	save_x;
+	int	save_start;
+
+	save_x = x;
+	save_start = start;
+	(void) div;
+	while (x < save_x + 5)
 	{
-		my_pixel_put(img, x, start, color);
-		start++;
+		start = save_start;
+		while (start < end)
+		{
+			my_pixel_put(img, x, start, color);
+			start++;
+		}
+		x++;
 	}
 }
 
@@ -181,16 +192,17 @@ void	rotate_angle(t_game *game, t_vector *vec, int flag)
 	vec_x_save = vec->x;
 	// angle = game->player_angle;
 	if (flag == 1)
-		angle = -0.035;
+		angle = -ROT_SPEED;
 	else
-		angle = 0.035;
+		angle = ROT_SPEED;
+	printf("angle is %f\n", angle);
 	vec->x = cos(angle) * vec->x - sin(angle) * vec->y;
 	vec->y = sin(angle) * vec_x_save + cos(angle) * vec->y;
 }
 
 void	ray_cast(t_game *game)
 {
-	printf("player_posx %f and player_posy %f\n", game->player_posx, game->player_posy);
+	//printf("player_posx %f and player_posy %f\n", game->player_posx, game->player_posy);
 	//These lines + DIM / 2 is to get the circle's center to be in the
 	//center of the tile, not at the top left corner of the tile because
 	//that's where (x * DIM, y * DIM) go. So in addition to x * DIM, I
@@ -203,7 +215,9 @@ void	ray_cast(t_game *game)
 	// t_vector	cam_plane;
 	double		camera_x; 
 	t_vector 	ray_dir;
+	double		div;
 
+	div = game->map_width / 128;
 	data = game->data;
 
 	flush(*game);
@@ -223,7 +237,7 @@ void	ray_cast(t_game *game)
 
 	// screen_width = game.map_width * DIM;
 
-	for (double x = 0; x < game->map_width; x++)
+	for (double x = 0; x < game->map_width; x += 5)
 	{
 		camera_x = (2 * x / game->map_width) - 1;
 		ray_dir.x = game->dir.x + game->cam_plane.x * camera_x;
@@ -253,12 +267,12 @@ void	ray_cast(t_game *game)
 		if (ray_dir.x == 0.00)
 			delta_dist_x = 1e30;
 		else
-			delta_dist_x = sqrt(1 + pow(ray_dir.y / ray_dir.x, 2));
+			delta_dist_x = fabs(1 / ray_dir.x);
 		
 		if (ray_dir.y == 0.00)
 			delta_dist_y = 1e30;
 		else
-			delta_dist_y = sqrt(1 + pow(ray_dir.x / ray_dir.y, 2));
+			delta_dist_y = fabs(1 / ray_dir.y);
 
 		// printf("delta dis x is %f\n", delta_dist_x);
 		// printf("delta dis y is %f\n", delta_dist_y);
@@ -308,9 +322,6 @@ void	ray_cast(t_game *game)
 		if (side == 0)
 		{
 			side_dist_x -= delta_dist_x;
-			double	save_ray_dir_x = ray_dir.x;
-			ray_dir.x = ray_dir.x * (side_dist_x / sqrt(pow(ray_dir.x, 2) + pow(ray_dir.y, 2)));
-			ray_dir.y = ray_dir.y * (side_dist_x / sqrt(pow(save_ray_dir_x, 2) + pow(ray_dir.y, 2)));
 			// printf("BY NOW: ray_dir.x is %f and ray_dir.y is %f\n", ray_dir.x, ray_dir.y);
 			double	line_height = game->map_height / side_dist_x;
 			double	start = (game->map_height / 2) - (line_height / 2);
@@ -319,15 +330,12 @@ void	ray_cast(t_game *game)
 			double	end = (game->map_height / 2) + (line_height / 2);
 			if (end > game->map_height)
 				end = game->map_height - 1;
-			printf("%f start and %f end\n", start, end);
-			draw_v_line(&(data.img), x, start, end, 0xff00);
+			//printf("%f start and %f end\n", start, end);
+			draw_v_line(&(data.img), div, x, start, end, 0xff00);
 		}
 		else
 		{
 			side_dist_y -= delta_dist_y;
-			double	save_ray_dir_x = ray_dir.x;
-			ray_dir.x = ray_dir.x * (side_dist_y / sqrt(pow(ray_dir.x, 2) + pow(ray_dir.y, 2)));
-			ray_dir.y = ray_dir.y * (side_dist_y / sqrt(pow(save_ray_dir_x, 2) + pow(ray_dir.y, 2)));
 			double	line_height = game->map_height / side_dist_y;
 			double	start = (game->map_height / 2) - (line_height / 2);
 			if (start < 0)
@@ -335,128 +343,39 @@ void	ray_cast(t_game *game)
 			double	end = (game->map_height / 2) + (line_height / 2);
 			if (end > game->map_height)
 				end = game->map_height - 1;
-			printf("%f start and %f end\n", start, end);
-			draw_v_line(&(data.img), x, start, end, 0x006400);
+			//printf("%f start and %f end\n", start, end);
+			draw_v_line(&(data.img), div, x, start, end, 0x006400);
 		}
 
 		mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img.img, 0, 0);		
 	}
-	// for (double x = -cam_plane_mag; x < 0; x += 0.066)
-	// {
-	// 	ray_dir.x = game->dir.x + game->cam_plane.x * x;
-	// 	ray_dir.y = game->dir.y + game->cam_plane.y * x;
-	// 	printf("---------------------------\n");
-	// 	// printf("WTF.ray_dir.x is %f and ray_dir.y is %f\n", ray_dir.x, ray_dir.y);
-	// 	t_vector	map;
-	// 	double		side_dist_x;
-	// 	double		side_dist_y;
-	// 	double		delta_dist_x;
-	// 	double		delta_dist_y;
-	// 	int			step_x;
-	// 	int			step_y;
-	// 	t_bool		hit;
-	// 	int			side;
-
-	// 	hit = FALSE;
-	// 	side = 0;
-	// 	map.x = (int) game->player_posx;
-	// 	map.y = (int) game->player_posy;
-
-	// 	if (ray_dir.x == 0)
-	// 		delta_dist_x = 1e30;
-	// 	else
-	// 		delta_dist_x = sqrt(1 + pow(ray_dir.y / ray_dir.x, 2));
-		
-	// 	if (ray_dir.y == 0)
-	// 		delta_dist_y = 1e30;
-	// 	else
-	// 		delta_dist_y = sqrt(1 + pow(ray_dir.x / ray_dir.y, 2));
-
-	// 	if (ray_dir.x < 0)
-	// 	{
-	// 		step_x = -1;
-	// 		side_dist_x = (pos.x - map.x) * delta_dist_x;
-	// 	}
-	// 	else
-	// 	{
-	// 		step_x = 1;
-	// 		side_dist_x = ((1 - (pos.x - map.x)) * delta_dist_x);
-	// 	}
-	// 	if (ray_dir.y < 0)
-	// 	{
-	// 		step_y = -1;
-	// 		side_dist_y = (pos.y - map.y) * delta_dist_y;
-	// 	}
-	// 	else
-	// 	{
-	// 		step_y = 1;
-	// 		side_dist_y = (1 - (pos.y - map.y)) * delta_dist_y;
-	// 	}
-		
-	// 	while (hit == FALSE)
-	// 	{
-	// 		// printf("side_dist_x at the beginning is %f\n", side_dist_x);
-	// 		// printf("side_dist_y at the beginning is %f\n", side_dist_y);
-	// 		if (side_dist_x < side_dist_y)
-	// 		{
-	// 			side_dist_x += delta_dist_x;
-	// 			map.x += step_x;
-	// 			side = 0;
-	// 		}
-	// 		else
-	// 		{
-	// 			side_dist_y += delta_dist_y;
-	// 			map.y += step_y;
-	// 			side = 1;
-	// 		}
-	// 		// printf("map (x, y) is (%d, %d)\n", (int) map.x, (int) map.y);
-	// 		// printf("map (%d, %d) is in fact %c\n", (int) map.x, (int) map.y, game->map[(int) map.y][(int) map.x]);
-	// 		if (game->map[(int) map.y][(int) map.x] == '1')
-	// 			hit = TRUE;
-	// 	}
-	// 	if (side == 0)
-	// 	{
-	// 		side_dist_x -= delta_dist_x;
-	// 		double save_ray_dir_x = ray_dir.x;
-	// 		ray_dir.x = ray_dir.x * (side_dist_x / sqrt(pow(ray_dir.x, 2) + pow(ray_dir.y, 2)));
-	// 		ray_dir.y = ray_dir.y * (side_dist_x / sqrt(pow(save_ray_dir_x, 2) + pow(ray_dir.y, 2)));
-	// 		// printf("BY NOW: ray_dir.x is %f and ray_dir.y is %f\n", ray_dir.x, ray_dir.y);
-	// 	}
-	// 	else
-	// 	{
-	// 		side_dist_y -= delta_dist_y;
-	// 		double save_ray_dir_x = ray_dir.x;
-	// 		ray_dir.x = ray_dir.x * (side_dist_y / sqrt(pow(ray_dir.x, 2) + pow(ray_dir.y, 2)));
-	// 		ray_dir.y = ray_dir.y * (side_dist_y / sqrt(pow(save_ray_dir_x, 2) + pow(ray_dir.y, 2)));
-	// 	}
-	// 	//draw_line(&(data.img), pos, ray_dir);
-	// 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img.img, 0, 0);
-	// }
 }
 
 t_bool	check_valid_move(t_game *game, int flag)
 {
-	t_vector	target_v;
+	// t_vector	target_v;
 
-	target_v.x = game->player_posx;
-	target_v.y = game->player_posy;
-	if (flag == W_KEY)
-		target_v.y = game->player_posy - 0.11;
-	else if (flag == S_KEY)
-		target_v.y = game->player_posy + 0.11;
-	else if (flag == A_KEY)
-		target_v.x = game->player_posx - 0.11;
-	else if (flag == D_KEY)
-		target_v.x = game->player_posx + 0.11;
+	// target_v.x = game->player_posx;
+	// target_v.y = game->player_posy;
+	// if (flag == W_KEY)
+	// 	target_v.y = game->player_posy - 0.11;
+	// else if (flag == S_KEY)
+	// 	target_v.y = game->player_posy + 0.11;
+	// else if (flag == A_KEY)
+	// 	target_v.x = game->player_posx - 0.11;
+	// else if (flag == D_KEY)
+	// 	target_v.x = game->player_posx + 0.11;
 
-	printf("wall detection is (%d, %d)\n", (int) target_v.x, (int) target_v.y);
+	// printf("wall detection is (%d, %d)\n", (int) target_v.x, (int) target_v.y);
 
-	if (game->map[(int) target_v.y][(int) target_v.x] == '1')
-	{
-		return (FALSE);
-	}
-	else
-		return (TRUE);
+	// if (game->map[(int) target_v.y][(int) target_v.x] == '1')
+	// {
+	// 	return (FALSE);
+	// }
+	// else
+	(void) flag;
+	(void) game;
+	return (TRUE);
 }
 
 int	key_hook(int keycode, t_game *game)
@@ -465,8 +384,8 @@ int	key_hook(int keycode, t_game *game)
 	{
 		if (check_valid_move(game, W_KEY) == TRUE)
 		{
-			game->player_posx += (game->dir.x * 0.10);
-			game->player_posy += (game->dir.y * 0.10);
+			game->player_posx += (game->dir.x * MOVE_SPEED);
+			game->player_posy += (game->dir.y * MOVE_SPEED);
 			// game->player_posy -= 0.10;
 		}
 		// printf("player (%f, %f)\n", game->player_posx, game->player_posy);
@@ -476,8 +395,8 @@ int	key_hook(int keycode, t_game *game)
 	{
 		if (check_valid_move(game, A_KEY) == TRUE)
 		{
-			game->player_posx -= (-game->dir.y * 0.10);
-			game->player_posy -= (game->dir.x * 0.10);
+			game->player_posx -= (-game->dir.y * MOVE_SPEED);
+			game->player_posy -= (game->dir.x * MOVE_SPEED);
 			//game->player_posx -= 0.10;
 		}
 		ray_cast(game);
@@ -486,8 +405,8 @@ int	key_hook(int keycode, t_game *game)
 	{
 		if (check_valid_move(game, S_KEY) == TRUE)
 		{
-			game->player_posx -= (game->dir.x * 0.10);
-			game->player_posy -= (game->dir.y * 0.10);
+			game->player_posx -= (game->dir.x * MOVE_SPEED);
+			game->player_posy -= (game->dir.y * MOVE_SPEED);
 			// game->player_posy += 0.10;
 		}
 		ray_cast(game);
@@ -496,8 +415,8 @@ int	key_hook(int keycode, t_game *game)
 	{
 		if (check_valid_move(game, D_KEY) == TRUE)
 		{
-			game->player_posx += (-game->dir.y * 0.10);
-			game->player_posy += (game->dir.x * 0.10);
+			game->player_posx += (-game->dir.y * MOVE_SPEED);
+			game->player_posy += (game->dir.x * MOVE_SPEED);
 			//game->player_posx += 0.10;
 		}
 		ray_cast(game);
@@ -516,7 +435,7 @@ int	key_hook(int keycode, t_game *game)
 		rotate_angle(game, &(game->cam_plane), 0);
 		ray_cast(game);
 	}
-	printf("keycode is %d\n", keycode);
+	//printf("keycode is %d\n", keycode);
 	// else if (keycode == ESC_KEY_LINUX)
 	// 	;
 	//printf("key pressed is %d and player pos is (%f, %f)\n", keycode, game->player_posx, game->player_posy);
@@ -580,7 +499,7 @@ int	key_hook_linux(int keycode, t_game *game)
 		rotate_angle(game, &(game->cam_plane), 0);
 		ray_cast(game);
 	}
-	printf("keycode is %d\n", keycode);
+	//printf("keycode is %d\n", keycode);
 	// else if (keycode == ESC_KEY_LINUX)
 	// 	;
 	//printf("key pressed is %d and player pos is (%f, %f)\n", keycode, game->player_posx, game->player_posy);
@@ -641,11 +560,79 @@ int main()
 	mlx_put_image_to_window(game.data.mlx_ptr, game.data.win_ptr, game.data.img.img, 0, 0);
 
 	// mlx_key_hook(game.data.win_ptr, key_hook, &game);
-	mlx_key_hook(game.data.win_ptr, key_hook_linux, &game);
+	// mlx_key_hook(game.data.win_ptr, key_hook_linux, &game);
 
-	// mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook, &game);
+	mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook, &game);
 	// mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook_linux, &game);
 
     mlx_loop(game.data.mlx_ptr);
     return (0);
 }
+
+// int main()
+// {
+// 	t_game	game;	
+// 	int		fd;
+
+// 	fd = open("map.cub", O_RDONLY, 0777);
+// 	if (fd == -1)
+// 	{
+// 		printf("error opening file\n");
+// 		return (1);
+// 	}
+
+// 	game.map = get_map(fd);
+// 	game.map_height = MAP_HEIGHT;
+// 	game.map_width = MAP_WIDTH;
+
+// 	printf("map height %d and map width %d\n", game.map_height, game.map_width);
+
+//     game.data.mlx_ptr = mlx_init();
+
+//     game.data.win_ptr = mlx_new_window(game.data.mlx_ptr, game.map_width , game.map_height, "Yay");
+
+// 	game.data.img.img = mlx_new_image(game.data.mlx_ptr, game.map_width, game.map_height);
+// 	if (game.data.img.img == NULL)
+// 	{
+// 		printf("error : img ptr\n");
+// 		return (1);
+// 	}
+
+// 	game.data.img.img_pixels_ptr = mlx_get_data_addr(game.data.img.img,
+// 												&(game.data.img.bits_per_pixel),
+// 												&(game.data.img.line_len),
+// 												&(game.data.img.endian));
+// 	if (game.data.img.img_pixels_ptr == NULL)
+// 	{
+// 		printf("error : img pxl ptr\n");
+// 		return (1);
+// 	}
+
+// 	// draw_square(&(data.img), 400, 400, 0xff00);
+// 	//fill_squares(&(data.img), 0xff00);
+
+// 	// draw_walls(game, &(game.data.img));
+
+// 	set_player_pos(&game);
+// 	game.player_angle = 0;
+
+// 	game.dir = (t_vector){1, 0};
+// 	game.cam_plane = (t_vector){0, 0.66};
+
+// 	draw_v_line(&(game.data.img), 320, 0, 480, 0xff00);
+// 	// draw_v_line(&(game.data.img), 325, 0, 480, 0xff00);
+// 	// draw_v_line(&(game.data.img), 330, 0, 480, 0xff00);
+
+// 	draw_circle(&(game.data.img), 320, 240, 20);
+
+// 	mlx_put_image_to_window(game.data.mlx_ptr, game.data.win_ptr, game.data.img.img, 0, 0);
+
+// 	// mlx_key_hook(game.data.win_ptr, key_hook, &game);
+// 	// mlx_key_hook(game.data.win_ptr, key_hook_linux, &game);
+
+// 	// mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook, &game);
+// 	// mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook_linux, &game);
+
+//     mlx_loop(game.data.mlx_ptr);
+//     return (0);
+// }

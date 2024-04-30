@@ -6,15 +6,15 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/04/28 00:17:55 by mawad            ###   ########.fr       */
+/*   Updated: 2024/04/30 21:01:42 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "mlx-linux/mlx.h"
-// # include "mlx/mlx.h"
+// # include "mlx-linux/mlx.h"
+# include "mlx/mlx.h"
 # include "Libft/libft.h"
 
 # include <stdio.h>
@@ -25,6 +25,9 @@
 
 # define MAP_WIDTH 640
 # define MAP_HEIGHT 480
+
+# define MOVE_SPEED 0.25
+# define ROT_SPEED	0.15
 
 # define DIM	64
 
