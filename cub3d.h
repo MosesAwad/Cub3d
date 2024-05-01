@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/04/30 21:01:42 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/01 18:51:38 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 
 # define MAP_WIDTH 640
 # define MAP_HEIGHT 480
+
+// # define MAP_WIDTH 1284
+// # define MAP_HEIGHT 960
+
 
 # define MOVE_SPEED 0.25
 # define ROT_SPEED	0.15

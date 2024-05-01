@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/04/30 21:01:33 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/01 18:51:48 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void	draw_v_line(t_img *img, double div, int x, int start, int end, int color)
 	save_x = x;
 	save_start = start;
 	(void) div;
-	while (x < save_x + 5)
+	while (x < save_x + 8)
 	{
 		start = save_start;
 		while (start < end)
@@ -237,7 +237,7 @@ void	ray_cast(t_game *game)
 
 	// screen_width = game.map_width * DIM;
 
-	for (double x = 0; x < game->map_width; x += 5)
+	for (double x = 0; x < game->map_width; x += 8)
 	{
 		camera_x = (2 * x / game->map_width) - 1;
 		ray_dir.x = game->dir.x + game->cam_plane.x * camera_x;
