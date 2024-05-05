@@ -409,10 +409,35 @@ void	ray_cast(t_game *game)
 			tex_x = game->album[0].tex_width - (tex_x + 1);
 
 		step = ((double) game->album[0].tex_height / line_height);
-		//tex_pos = (start - game->map_height / 2 + line_height / 2) * step;
-		tex_pos = 0;
+
+		//This line is for the most part going to be zero, because
+		//start = game->map_height / 2 - line_height / 2. So, in the
+		//equation where we have -game->map_height / 2 + line_height / 2,
+		//that is basically the negative of start. Thus, for most of the
+		//the rays, tex_pos is usually start + (-1 * start) * step which 
+		//is equal to 0. However, when the player gets too close to the
+		//wall, start can get too large (out of screen bounds) so we end
+		//up manually changing start to 0! In that case, start is no
+		//longer equal to game->map_height / 2 - line_height / 2. Thus,
+		//tex_pos instead ends up becoming -draw_start * step and not
+		//just zero because tex_pos = (0 - game->map_height / 2 + 
+		//line_height / 2) * step) is the same as 
+		//tex_pos = (-draw_start) * step. This would give us the right
+		//tex_pos on the texture as per the actual line_height (which depends
+		//on side_dist_x or side_disty_y, the actual distance) because we do
+		//not want to start at the top of the texture in this case (when 
+		//we are too close to a wall). If it is still hard to understand,
+		//change tex_pos below equal to 0. If you do that, everything would
+		//look the same (because in all those cases, we actually are starting
+		//to draw from the top of the texture) EXCEPT for when you get to close
+		//to a wall. You'll then see the discrepancy along the ray slice that
+		//cover the whole screen and the other ray slices that taper down as
+		//the view gets "deeper" into the map.
+		tex_pos = (start - game->map_height / 2 + line_height / 2) * step;
+		
 		// printf("start %d and end %d\n", start, end);
 		// printf("%f\n", step);
+		
 		while (start < end)
 		{
 			//tex dimensions have to be a power of 2 for the below
