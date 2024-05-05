@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+# ifndef CUB3D_H
+#  define CUB3D_H
 
-// # include "mlx-linux/mlx.h"
-# include "mlx/mlx.h"
+# include "mlx-linux/mlx.h"
+// # include "mlx/mlx.h"
 # include "Libft/libft.h"
 
 # include <stdio.h>
@@ -62,12 +62,22 @@ typedef enum s_bool
 }	t_bool;
 
 typedef struct s_img {
-	void	*img;
-	char	*img_pixels_ptr;
+	void	*img_ptr;
+	int		*img_pixels_ptr;
 	int		bits_per_pixel;
 	int		line_len;
 	int		endian;
 }				t_img;
+
+typedef struct s_tex {
+	void	*img;
+	int		*img_pixels_ptr;
+	int		tex_width;
+	int		tex_height;
+	int		bits_per_pixel;
+	int		line_len;
+	int		endian;
+}				t_tex;
 
 typedef struct s_var {
 	void	*mlx_ptr;
@@ -90,6 +100,7 @@ typedef struct s_game {
 	t_vector	dir;
 	t_vector	cam_plane;
 	t_var		data;
+	t_tex		album[8];
 }	t_game;
 
 //get_next_line.c
@@ -104,5 +115,8 @@ int		get_map_height(char **map);
 
 //player_utils.c
 void	set_player_pos(t_game *game);
+
+//set_up_images.c
+void    set_up_images(t_game *game);
 
 #endif

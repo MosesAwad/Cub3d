@@ -12,157 +12,158 @@
 
 #include "cub3d.h"
 
-void	my_pixel_put(t_img *img, int x, int y, int color)
+void	my_pixel_put(t_game *game, t_img *img, int x, int y, int color)
 {
 	int	offset;
 
 	//🚨 Line len is in bytes. WIDTH 800 len_line ~3200 (can differ for alignment)
-	offset = (img->line_len * y) + (x * (img->bits_per_pixel / 8));	
+	offset = (game->map_width * y) + x;	
 
-	*((unsigned int *)(offset + img->img_pixels_ptr)) = color;
+	*(offset + img->img_pixels_ptr) = color;
 }
 
-//Draws a square of dimensions (DIM * DIM) starting from the top-left corner
-//of the point specified by co-ordinates(x, y)
-void	draw_square(t_img *img, int x, int y, int color)
-{
-	int	ylim;
-	int	xlim;
-	int	x_og;
+// //Draws a square of dimensions (DIM * DIM) starting from the top-left corner
+// //of the point specified by co-ordinates(x, y)
+// void	draw_square(t_img *img, int x, int y, int color)
+// {
+// 	int	ylim;
+// 	int	xlim;
+// 	int	x_og;
 
-	ylim = y + DIM - 2;
-	xlim = x + DIM - 2;
-	x_og = x + 2;
+// 	ylim = y + DIM - 2;
+// 	xlim = x + DIM - 2;
+// 	x_og = x + 2;
 
-	while (y + 2 < ylim)
-	{
-		x = x_og;
-		while (x < xlim)
-		{
-			my_pixel_put(img, x, y, color);
-			x++;
-		}
-		y++;
-	}
-}
+// 	while (y + 2 < ylim)
+// 	{
+// 		x = x_og;
+// 		while (x < xlim)
+// 		{
+// 			my_pixel_put(img, x, y, color);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// }
 
-void	draw_circle(t_img *img, int x, int y, int r)
-{
-	int	x_inc;
-	int	y_inc;
-	int	decision;
+// void	draw_circle(t_img *img, int x, int y, int r)
+// {
+// 	int	x_inc;
+// 	int	y_inc;
+// 	int	decision;
 
-	x_inc = r;
-	y_inc = 0;
-	decision = 1 - r;
-	while (x_inc >= y_inc)
-	{
-		my_pixel_put(img, x + x_inc, y + y_inc, 0xFF0000);
-		my_pixel_put(img, x + y_inc, y + x_inc, 0xFF0000);
-		my_pixel_put(img, x - y_inc, y + x_inc, 0xFF0000);
-		my_pixel_put(img, x - x_inc, y + y_inc, 0xFF0000);
-		my_pixel_put(img, x - x_inc, y - y_inc, 0xFF0000);
-		my_pixel_put(img, x - y_inc, y - x_inc, 0xFF0000);
-		my_pixel_put(img, x + y_inc, y - x_inc, 0xFF0000);
-		my_pixel_put(img, x + x_inc, y - y_inc, 0xFF0000);
+// 	x_inc = r;
+// 	y_inc = 0;
+// 	decision = 1 - r;
+// 	while (x_inc >= y_inc)
+// 	{
+// 		my_pixel_put(img, x + x_inc, y + y_inc, 0xFF0000);
+// 		my_pixel_put(img, x + y_inc, y + x_inc, 0xFF0000);
+// 		my_pixel_put(img, x - y_inc, y + x_inc, 0xFF0000);
+// 		my_pixel_put(img, x - x_inc, y + y_inc, 0xFF0000);
+// 		my_pixel_put(img, x - x_inc, y - y_inc, 0xFF0000);
+// 		my_pixel_put(img, x - y_inc, y - x_inc, 0xFF0000);
+// 		my_pixel_put(img, x + y_inc, y - x_inc, 0xFF0000);
+// 		my_pixel_put(img, x + x_inc, y - y_inc, 0xFF0000);
 
-		y_inc++;
-		if (decision <= 0)
-		{
-			decision += 2 * y_inc + 1;
-		}
-		else
-		{
-			x_inc--;
-			decision += 2 * (y_inc - x_inc) + 1;
-		}
-	}
-}
+// 		y_inc++;
+// 		if (decision <= 0)
+// 		{
+// 			decision += 2 * y_inc + 1;
+// 		}
+// 		else
+// 		{
+// 			x_inc--;
+// 			decision += 2 * (y_inc - x_inc) + 1;
+// 		}
+// 	}
+// }
 
-void draw_line(t_img *img, t_vector start, t_vector end)
-{
-	// end = (t_vector){(start.x + end.x) * DIM + DIM / 2, (start.y + end.y) * DIM + DIM /2};
-	// start = (t_vector){start.x * DIM + DIM /2, start.y * DIM + DIM /2};
+// void draw_line(t_img *img, t_vector start, t_vector end)
+// {
+// 	// end = (t_vector){(start.x + end.x) * DIM + DIM / 2, (start.y + end.y) * DIM + DIM /2};
+// 	// start = (t_vector){start.x * DIM + DIM /2, start.y * DIM + DIM /2};
     
-	end = (t_vector){(start.x + end.x) * DIM, (start.y + end.y) * DIM};
-	start = (t_vector){start.x * DIM, start.y * DIM};
+// 	end = (t_vector){(start.x + end.x) * DIM, (start.y + end.y) * DIM};
+// 	start = (t_vector){start.x * DIM, start.y * DIM};
 
-	// printf("start.x is %f and start.y is %f\n", start.x, start.y);
-	// printf("end.x is %f and end.y is %f\n", end.x, end.y);
-	start.x = (int) start.x;
-	start.y = (int) start.y;
-	end.x = (int) end.x;
-	end.y = (int) end.y;
-	// printf("start.x is %f and start.y is %f\n", start.x, start.y);
-	// printf("end.x is %f and end.y is %f\n", end.x, end.y);
+// 	// printf("start.x is %f and start.y is %f\n", start.x, start.y);
+// 	// printf("end.x is %f and end.y is %f\n", end.x, end.y);
+// 	start.x = (int) start.x;
+// 	start.y = (int) start.y;
+// 	end.x = (int) end.x;
+// 	end.y = (int) end.y;
+// 	// printf("start.x is %f and start.y is %f\n", start.x, start.y);
+// 	// printf("end.x is %f and end.y is %f\n", end.x, end.y);
 
-	int dx = fabs(end.x - start.x);
-    int dy = fabs(end.y - start.y);
-    int sx = start.x < end.x ? 1 : -1;
-    int sy = start.y < end.y ? 1 : -1;
-    int err = dx - dy;
-    int e2;
+// 	int dx = fabs(end.x - start.x);
+//     int dy = fabs(end.y - start.y);
+//     int sx = start.x < end.x ? 1 : -1;
+//     int sy = start.y < end.y ? 1 : -1;
+//     int err = dx - dy;
+//     int e2;
 
-    while (!(start.x == end.x && start.y == end.y))
-    {
-		// printf("-----------------------------------\n");
-		// printf("start.x is %f and start.y is %f\n", start.x, start.y);
-		// printf("end.x is %f and end.y is %f\n", end.x, end.y);
-        my_pixel_put(img, start.x, start.y, 0x4169E1);
-        e2 = 2 * err;
-        if (e2 > -dy)
-        {
-            err -= dy;
-            start.x += sx;
-        }
-        if (e2 < dx)
-        {
-            err += dx;
-            start.y += sy;
-        }
-    }
-    my_pixel_put(img, start.x, start.y, 0x4169E1); // Ensure end point is drawn
-}
+//     while (!(start.x == end.x && start.y == end.y))
+//     {
+// 		// printf("-----------------------------------\n");
+// 		// printf("start.x is %f and start.y is %f\n", start.x, start.y);
+// 		// printf("end.x is %f and end.y is %f\n", end.x, end.y);
+//         my_pixel_put(img, start.x, start.y, 0x4169E1);
+//         e2 = 2 * err;
+//         if (e2 > -dy)
+//         {
+//             err -= dy;
+//             start.x += sx;
+//         }
+//         if (e2 < dx)
+//         {
+//             err += dx;
+//             start.y += sy;
+//         }
+//     }
+//     my_pixel_put(img, start.x, start.y, 0x4169E1); // Ensure end point is drawn
+// }
 
-void	draw_walls(t_game game, t_img *img)
-{
-	int	x;
-	int	y;
+// void	draw_walls(t_game game, t_img *img)
+// {
+// 	int	x;
+// 	int	y;
 
-	y = 0;
-	while (game.map[y])
-	{
-		x = 0;
-		while (game.map[y][x])
-		{
-			if (game.map[y][x] == '1')
-				draw_square(img, x * DIM, y * DIM, 0xff00);
-			else
-				draw_square(img, x * DIM, y * DIM, 0xD3D3D3);
-			x++;
-		}
-		y++;
-	}
-}
+// 	y = 0;
+// 	while (game.map[y])
+// 	{
+// 		x = 0;
+// 		while (game.map[y][x])
+// 		{
+// 			if (game.map[y][x] == '1')
+// 				draw_square(img, x * DIM, y * DIM, 0xff00);
+// 			else
+// 				draw_square(img, x * DIM, y * DIM, 0xD3D3D3);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// }
 
-void	draw_v_line(t_img *img, double div, int x, int start, int end, int color)
+void	draw_v_line(t_game *game, t_img *img, double div, int x, int start, int end, int color)
 {
 	int	save_x;
 	int	save_start;
 
+	(void) save_x;
 	save_x = x;
 	save_start = start;
 	(void) div;
-	while (x < save_x + 8)
-	{
+	// while (x < save_x + 8)
+	// {
 		start = save_start;
 		while (start < end)
 		{
-			my_pixel_put(img, x, start, color);
+			my_pixel_put(game, img, x, start, color);
 			start++;
 		}
-		x++;
-	}
+	// 	x++;
+	// }
 }
 
 void	flush(t_game game)
@@ -176,7 +177,7 @@ void	flush(t_game game)
 		x = 0;
 		while (x < game.map_width)
 		{
-			my_pixel_put(&(game.data.img), x , y, 0x000000);
+			my_pixel_put(&game, &(game.data.img), x , y, 0x00FFFF);
 			x++;
 		}
 		y++;
@@ -195,9 +196,20 @@ void	rotate_angle(t_game *game, t_vector *vec, int flag)
 		angle = -ROT_SPEED;
 	else
 		angle = ROT_SPEED;
-	printf("angle is %f\n", angle);
+	// printf("angle is %f\n", angle);
 	vec->x = cos(angle) * vec->x - sin(angle) * vec->y;
 	vec->y = sin(angle) * vec_x_save + cos(angle) * vec->y;
+}
+
+int	get_color(t_game *game, int tex_x, int tex_y)
+{
+	int	color;
+	int	offset;
+
+	color = 0;
+	offset = (game->album[0].tex_width* tex_y) + (tex_x);
+	color = *(game->album[0].img_pixels_ptr + offset);
+	return (color);
 }
 
 void	ray_cast(t_game *game)
@@ -220,6 +232,8 @@ void	ray_cast(t_game *game)
 	div = game->map_width / 128;
 	data = game->data;
 
+	(void) div;
+	// printf("call\n");
 	flush(*game);
 	// draw_walls(*game, &(data.img));
 
@@ -237,9 +251,10 @@ void	ray_cast(t_game *game)
 
 	// screen_width = game.map_width * DIM;
 
-	for (double x = 0; x < game->map_width; x += 8)
+	for (double x = 0; x < game->map_width; x++)
 	{
-		camera_x = (2 * x / game->map_width) - 1;
+		//if you don't cast x as double, then x / game->map_width would always truncate!
+		camera_x =  (2 * x / game->map_width) - 1;
 		ray_dir.x = game->dir.x + game->cam_plane.x * camera_x;
 		ray_dir.y = game->dir.y + game->cam_plane.y * camera_x;
 		// printf("---------------------------\n");
@@ -319,36 +334,97 @@ void	ray_cast(t_game *game)
 			if (game->map[(int) map.y][(int) map.x] == '1')
 				hit = TRUE;
 		}
+		// if (side == 0)
+		// {
+		// 	side_dist_x -= delta_dist_x;
+		// 	// printf("BY NOW: ray_dir.x is %f and ray_dir.y is %f\n", ray_dir.x, ray_dir.y);
+		// 	int	line_height = (int) (game->map_height / side_dist_x);
+		// 	int	start = (game->map_height / 2) - (line_height / 2);
+		// 	if (start < 0)
+		// 		start = 0;
+		// 	int	end = (game->map_height / 2) + (line_height / 2);
+		// 	if (end > game->map_height)
+		// 		end = game->map_height - 1;
+		// 	//printf("%f start and %f end\n", start, end);
+		// 	printf("start and end is %d, %d\n", start, end);
+		// 	draw_v_line(game, &(data.img), div, x, start, end, 0xff00);
+		// }
+		// else
+		// {
+		// 	side_dist_y -= delta_dist_y;
+		// 	int	line_height = (int) (game->map_height / side_dist_y);
+		// 	int	start = (game->map_height / 2) - (line_height / 2);
+		// 	if (start < 0)
+		// 		start = 0;
+		// 	int	end = (game->map_height / 2) + (line_height / 2);
+		// 	if (end > game->map_height)
+		// 		end = game->map_height - 1;
+		// 	//printf("%f start and %f end\n", start, end);
+		// 	printf("start and end is %d, %d\n", start, end);
+		// 	draw_v_line(game, &(data.img), div, x, start, end, 0x006400);
+		// }
+
+		double	wall_x;
+		int		tex_x;
+		int		tex_y;
+		double	step;
+		int		line_height;
+		int		start;
+		int		end;
+		double	tex_pos;
 		if (side == 0)
 		{
 			side_dist_x -= delta_dist_x;
-			// printf("BY NOW: ray_dir.x is %f and ray_dir.y is %f\n", ray_dir.x, ray_dir.y);
-			double	line_height = game->map_height / side_dist_x;
-			double	start = (game->map_height / 2) - (line_height / 2);
+			line_height = (int) (game->map_height / side_dist_x);
+			start = (game->map_height / 2) - (line_height / 2);
 			if (start < 0)
 				start = 0;
-			double	end = (game->map_height / 2) + (line_height / 2);
+			end = (game->map_height / 2) + (line_height / 2);
 			if (end > game->map_height)
 				end = game->map_height - 1;
-			//printf("%f start and %f end\n", start, end);
-			draw_v_line(&(data.img), div, x, start, end, 0xff00);
+			wall_x = game->player_posy + side_dist_x * ray_dir.y;
+			wall_x -= floor(wall_x);
 		}
 		else
 		{
 			side_dist_y -= delta_dist_y;
-			double	line_height = game->map_height / side_dist_y;
-			double	start = (game->map_height / 2) - (line_height / 2);
+			line_height = (int) (game->map_height / side_dist_y);
+			start = (game->map_height / 2) - (line_height / 2);
 			if (start < 0)
 				start = 0;
-			double	end = (game->map_height / 2) + (line_height / 2);
+			end = (game->map_height / 2) + (line_height / 2);
 			if (end > game->map_height)
 				end = game->map_height - 1;
-			//printf("%f start and %f end\n", start, end);
-			draw_v_line(&(data.img), div, x, start, end, 0x006400);
+			wall_x = game->player_posx + side_dist_y * ray_dir.x;
+			wall_x -= floor(wall_x);
 		}
 
-		mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img.img, 0, 0);		
+		tex_x = (int) (wall_x * game->album[0].tex_width);
+		if (side == 0 && ray_dir.x < 0)
+			tex_x = game->album[0].tex_width - (tex_x + 1);
+		if (side == 1 && ray_dir.y > 0)
+			tex_x = game->album[0].tex_width - (tex_x + 1);
+
+		step = ((double) game->album[0].tex_height / line_height);
+		//tex_pos = (start - game->map_height / 2 + line_height / 2) * step;
+		tex_pos = 0;
+		// printf("start %d and end %d\n", start, end);
+		// printf("%f\n", step);
+		while (start < end)
+		{
+			//tex dimensions have to be a power of 2 for the below
+			//masking/capping to work
+			tex_y = (int) tex_pos & (game->album[0].tex_height - 1);
+			// printf("tex_x %d and tex_y %d\n", tex_x, tex_y);
+			tex_pos += step;
+			int color = get_color(game, tex_x, tex_y);
+			int offset = (game->map_width * start) + x;
+			*(data.img.img_pixels_ptr + offset) = color;
+			//printf("tex_x: %d and tex_y: %d\n", tex_x, tex_y);
+			start++;
+		}
 	}
+	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img.img_ptr, 0, 0);		
 }
 
 t_bool	check_valid_move(t_game *game, int flag)
@@ -528,14 +604,14 @@ int main()
 
     game.data.win_ptr = mlx_new_window(game.data.mlx_ptr, game.map_width , game.map_height, "Yay");
 
-	game.data.img.img = mlx_new_image(game.data.mlx_ptr, game.map_width, game.map_height);
-	if (game.data.img.img == NULL)
+	game.data.img.img_ptr = mlx_new_image(game.data.mlx_ptr, game.map_width, game.map_height);
+	if (game.data.img.img_ptr == NULL)
 	{
 		printf("error : img ptr\n");
 		return (1);
 	}
 
-	game.data.img.img_pixels_ptr = mlx_get_data_addr(game.data.img.img,
+	game.data.img.img_pixels_ptr = (int *) mlx_get_data_addr(game.data.img.img_ptr,
 												&(game.data.img.bits_per_pixel),
 												&(game.data.img.line_len),
 												&(game.data.img.endian));
@@ -556,13 +632,17 @@ int main()
 	game.dir = (t_vector){1, 0};
 	game.cam_plane = (t_vector){0, 0.66};
 
+	set_up_images(&game);
+
+	//flush(game);
+	// draw_v_line(&game, &(game.data.img), 5, 20, 100, 380, 0xFF0000);
 	ray_cast(&game);
-	mlx_put_image_to_window(game.data.mlx_ptr, game.data.win_ptr, game.data.img.img, 0, 0);
+	mlx_put_image_to_window(game.data.mlx_ptr, game.data.win_ptr, game.data.img.img_ptr, 0, 0);
 
 	// mlx_key_hook(game.data.win_ptr, key_hook, &game);
 	// mlx_key_hook(game.data.win_ptr, key_hook_linux, &game);
 
-	mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook, &game);
+	mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook_linux, &game);
 	// mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook_linux, &game);
 
     mlx_loop(game.data.mlx_ptr);
