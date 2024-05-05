@@ -177,7 +177,7 @@ void	flush(t_game game)
 		x = 0;
 		while (x < game.map_width)
 		{
-			my_pixel_put(&game, &(game.data.img), x , y, 0x00FFFF);
+			my_pixel_put(&game, &(game.data.img), x , y, 0x000000);
 			x++;
 		}
 		y++;
@@ -398,6 +398,9 @@ void	ray_cast(t_game *game)
 			wall_x = game->player_posx + side_dist_y * ray_dir.x;
 			wall_x -= floor(wall_x);
 		}
+
+		draw_v_line(game, &(data.img), div, x, start, game->map_height - 1, 0x70543E);
+		draw_v_line(game, &(data.img), div, x, 0, end, 0x87CEEB);
 
 		tex_x = (int) (wall_x * game->album[0].tex_width);
 		if (side == 0 && ray_dir.x < 0)
