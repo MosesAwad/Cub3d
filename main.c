@@ -6,18 +6,18 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/06 22:21:45 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/06 22:29:10 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	my_pixel_put(t_game *game, t_img *img, int x, int y, int color)
+void	my_pixel_put(t_game *game, int x, int y, int color)
 {
 	int	offset;
 
 	offset = (game->map_width * y) + x;
-	*(offset + img->img_pixels_ptr) = color;
+	*(offset + game->data.img.img_pixels_ptr) = color;
 }
 
 // //Draws a square of dimensions (DIM * DIM) starting from the top-left corner
@@ -79,9 +79,10 @@ void	my_pixel_put(t_game *game, t_img *img, int x, int y, int color)
 
 // void draw_line(t_img *img, t_vector start, t_vector end)
 // {
-// 	// end = (t_vector){(start.x + end.x) * DIM + DIM / 2, (start.y + end.y) * DIM + DIM /2};
+// 	// end = (t_vector){(start.x + end.x) * DIM + DIM / 2,
+// 		// (start.y + end.y) * DIM + DIM /2};
 // 	// start = (t_vector){start.x * DIM + DIM /2, start.y * DIM + DIM /2};
-    
+
 // 	end = (t_vector){(start.x + end.x) * DIM, (start.y + end.y) * DIM};
 // 	start = (t_vector){start.x * DIM, start.y * DIM};
 
@@ -119,7 +120,8 @@ void	my_pixel_put(t_game *game, t_img *img, int x, int y, int color)
 //             start.y += sy;
 //         }
 //     }
-//     my_pixel_put(img, start.x, start.y, 0x4169E1); // Ensure end point is drawn
+// 	// Ensure end point is drawn
+//     my_pixel_put(img, start.x, start.y, 0x4169E1);
 // }
 
 // void	draw_walls(t_game game, t_img *img)
@@ -143,27 +145,6 @@ void	my_pixel_put(t_game *game, t_img *img, int x, int y, int color)
 // 	}
 // }
 
-// void	draw_v_line(t_game *game, t_img *img, int x, int start, int end, int color)
-// {
-// 	int	save_x;
-// 	int	save_start;
-
-// 	(void) save_x;
-// 	save_x = x;
-// 	save_start = start;
-// 	(void) div;
-// 	// while (x < save_x + 8)
-// 	// {
-// 		start = save_start;
-// 		while (start < end)
-// 		{
-// 			my_pixel_put(game, img, x, start, color);
-// 			start++;
-// 		}
-// 	// 	x++;
-// 	// }
-// }
-
 void	draw_v_line(t_game *game, t_dda dda, int x, int color)
 {
 	int	start;
@@ -183,7 +164,7 @@ void	draw_v_line(t_game *game, t_dda dda, int x, int color)
 	}
 	while (start < end)
 	{
-		my_pixel_put(game, &(game->data.img), x, start, color);
+		my_pixel_put(game, x, start, color);
 		start++;
 	}
 }
@@ -199,7 +180,7 @@ void	flush(t_game game)
 		x = 0;
 		while (x < game.map_width)
 		{
-			my_pixel_put(&game, &(game.data.img), x, y, 0x000000);
+			my_pixel_put(&game, x, y, 0x000000);
 			x++;
 		}
 		y++;

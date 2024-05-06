@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:46:48 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/06 22:19:35 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/06 23:53:18 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,32 @@ static void	dda_loop(t_game *game, t_dda *dda)
 	}
 }
 
+//transparent pixels in mlx have color values that are less than 0.
+//So we only copy the pixels that are non-transparent from the
+//hand and gun sprite to the background image buffer.
+void	draw_gun(t_game *game)
+{
+	int	color;
+	int	offset;
+	int	x;
+	int	y;
+
+	x = 0;
+	while (x < game->map_width - 1)
+	{
+		y = 0;
+		while (y < game->map_height - 1)
+		{
+			offset = (game->album[1].tex_width * y) + x;
+			color = *(game->album[1].img_pixels_ptr + offset);
+			if (color > 0)
+				*(game->data.img.img_pixels_ptr + offset) = color;
+			y++;
+		}
+		x++;
+	}
+}
+
 void	ray_cast(t_game *game)
 {
 	t_dda		dda;
@@ -103,6 +129,7 @@ void	ray_cast(t_game *game)
 		texture_loop(game, &tex, dda, x);
 		x++;
 	}
+	draw_gun(game);
 	mlx_put_image_to_window(game->data.mlx_ptr, game->data.win_ptr,
 		game->data.img.img_ptr, 0, 0);
 }

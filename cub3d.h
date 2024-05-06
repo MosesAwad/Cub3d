@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/06 22:17:46 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/06 23:00:46 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <math.h>
 # include <fcntl.h>
 
-# define MAP_WIDTH 640
-# define MAP_HEIGHT 480
+# define MAP_WIDTH 1280
+# define MAP_HEIGHT 720
 
 // # define MAP_WIDTH 1284
 // # define MAP_HEIGHT 960
