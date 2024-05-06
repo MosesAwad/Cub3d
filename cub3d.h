@@ -6,15 +6,15 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/01 18:51:38 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/06 22:17:46 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef CUB3D_H
 #  define CUB3D_H
 
-# include "mlx-linux/mlx.h"
-// # include "mlx/mlx.h"
+// # include "mlx-linux/mlx.h"
+# include "mlx/mlx.h"
 # include "Libft/libft.h"
 
 # include <stdio.h>
@@ -69,6 +69,11 @@ typedef struct s_img {
 	int		endian;
 }				t_img;
 
+typedef struct s_vector {
+	double	x;
+	double	y;
+}	t_vector;
+
 typedef struct s_tex {
 	void	*img;
 	int		*img_pixels_ptr;
@@ -77,18 +82,35 @@ typedef struct s_tex {
 	int		bits_per_pixel;
 	int		line_len;
 	int		endian;
+	double	wall_x;
+	int		tex_x;
+	int		tex_y;
+	double	tex_pos;
+	double	step;
 }				t_tex;
+
+typedef struct s_dda {
+	double		camera_x;
+	t_vector	ray_dir;
+	t_vector	map;
+	double		side_dist_x;
+	double		side_dist_y;
+	double		delta_dist_x;
+	double		delta_dist_y;
+	int			step_x;
+	int			step_y;
+	t_bool		hit;
+	int			side;
+	int			line_height;
+	int			start;
+	int			end;
+}				t_dda;
 
 typedef struct s_var {
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_img	img;
 }	t_var;
-
-typedef struct s_vector {
-	double	x;
-	double	y;
-}	t_vector;
 
 typedef struct s_game {
 	char		**map;
@@ -102,6 +124,11 @@ typedef struct s_game {
 	t_var		data;
 	t_tex		album[8];
 }	t_game;
+
+//main.c
+void	flush(t_game game);
+void	draw_v_line(t_game *game, t_dda dda, int x, int color);
+int		get_color(t_game *game, int tex_x, int tex_y);
 
 //get_next_line.c
 char	*get_next_line(int fd);
@@ -118,5 +145,14 @@ void	set_player_pos(t_game *game);
 
 //set_up_images.c
 void    set_up_images(t_game *game);
+
+//raycast.c
+void	ray_cast(t_game *game);
+
+//raycast_utils.c
+void	set_up_start_end(t_game *game, t_dda *dda);
+void	set_up_tex_x(t_game *game, t_dda dda, t_tex *tex);
+void	texture_loop(t_game *game, t_tex *tex, t_dda dda, double x);
+void	draw_ceiling_and_floor(t_game *game, t_dda dda, double x);
 
 #endif
