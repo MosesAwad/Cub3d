@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/07 22:13:06 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/07 22:50:52 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ int		get_map_width(char **map);
 int		get_map_height(char **map);
 
 //player_utils.c
-void	set_player_pos(t_game *game);
+void	set_up_player(t_game *game);
 
 //set_up_images.c
 void	set_up_images(t_game *game);

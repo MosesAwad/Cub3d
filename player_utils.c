@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 00:01:02 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/07 22:46:48 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/07 22:50:39 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ static void	set_player_dir(t_game *game, int x, int y)
 	}
 }
 
-void	set_player_pos(t_game *game)
+//This function sets up the players position attributes
+//game->player_posx and game->player_posy and it also
+//sets up the direction via the subcall to the
+//set_plyaer_dir (function).
+void	set_up_player(t_game *game)
 {
 	int	x;
 	int	y;

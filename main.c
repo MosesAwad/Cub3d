@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/07 22:45:05 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/07 22:56:20 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,6 @@ int	get_color(t_game *game, int tex_x, int tex_y)
 t_bool	check_valid_move(t_game *game, int flag)
 {
 	t_vector	target_v;
-	static int	call;
 
 	target_v.x = game->player_posx;
 	target_v.y = game->player_posy;
@@ -249,19 +248,8 @@ t_bool	check_valid_move(t_game *game, int flag)
 		target_v.x += (-game->dir.y * (MOVE_SPEED));
 		target_v.y += (game->dir.x * (MOVE_SPEED));
 	}
-	printf("----------Call %d-----------\n", call++);
-	printf("game dir is (%f, %f)\n", game->dir.x, game->dir.y);
-	printf("game player is (%f, %f)\n", game->player_posx, game->player_posy);
-	printf("target co-or is (%f, %f)\n", target_v.x, target_v.y);
-	printf("wall detection is (%d, %d)\n", (int) target_v.x, (int) target_v.y);
 	if (game->map[(int) target_v.y][(int) target_v.x] == '1')
-	{
-		printf("no move\n");
 		return (FALSE);
-	}
-	// else
-	(void) flag;
-	(void) game;
 	return (TRUE);
 }
 
@@ -273,9 +261,7 @@ int	key_hook(int keycode, t_game *game)
 		{
 			game->player_posx += (game->dir.x * MOVE_SPEED);
 			game->player_posy += (game->dir.y * MOVE_SPEED);
-			// game->player_posy -= 0.10;
 		}
-		// printf("player (%f, %f)\n", game->player_posx, game->player_posy);
 		ray_cast(game);
 	}
 	else if (keycode == A_KEY)
@@ -284,7 +270,6 @@ int	key_hook(int keycode, t_game *game)
 		{
 			game->player_posx -= (-game->dir.y * MOVE_SPEED);
 			game->player_posy -= (game->dir.x * MOVE_SPEED);
-			//game->player_posx -= 0.10;
 		}
 		ray_cast(game);
 	}
@@ -294,7 +279,6 @@ int	key_hook(int keycode, t_game *game)
 		{
 			game->player_posx -= (game->dir.x * MOVE_SPEED);
 			game->player_posy -= (game->dir.y * MOVE_SPEED);
-			// game->player_posy += 0.10;
 		}
 		ray_cast(game);
 	}
@@ -304,28 +288,21 @@ int	key_hook(int keycode, t_game *game)
 		{
 			game->player_posx += (-game->dir.y * MOVE_SPEED);
 			game->player_posy += (game->dir.x * MOVE_SPEED);
-			//game->player_posx += 0.10;
 		}
 		ray_cast(game);
 	}
 	else if (keycode == L_ARROW)
 	{
-		// game->player_angle += 0.035;
 		rotate_angle(game, &(game->dir), 1);
 		rotate_angle(game, &(game->cam_plane), 1);
 		ray_cast(game);
 	}
 	else if (keycode == R_ARROW)
 	{
-		// game->player_angle -= 0.035;
 		rotate_angle(game, &(game->dir), 0);
 		rotate_angle(game, &(game->cam_plane), 0);
 		ray_cast(game);
 	}
-	//printf("keycode is %d\n", keycode);
-	// else if (keycode == ESC_KEY_LINUX)
-	// 	;
-	//printf("key pressed is %d and player pos is (%f, %f)\n", keycode, game->player_posx, game->player_posy);
 	return (0);
 }
 
@@ -337,9 +314,7 @@ int	key_hook_linux(int keycode, t_game *game)
 		{
 			game->player_posx += (game->dir.x * 0.10);
 			game->player_posy += (game->dir.y * 0.10);
-			// game->player_posy -= 0.10;
 		}
-		// printf("player (%f, %f)\n", game->player_posx, game->player_posy);
 		ray_cast(game);
 	}
 	else if (keycode == A_KEY_LINUX)
@@ -348,7 +323,6 @@ int	key_hook_linux(int keycode, t_game *game)
 		{
 			game->player_posx -= (-game->dir.y * 0.10);
 			game->player_posy -= (game->dir.x * 0.10);
-			//game->player_posx -= 0.10;
 		}
 		ray_cast(game);
 	}
@@ -358,7 +332,6 @@ int	key_hook_linux(int keycode, t_game *game)
 		{
 			game->player_posx -= (game->dir.x * 0.10);
 			game->player_posy -= (game->dir.y * 0.10);
-			// game->player_posy += 0.10;
 		}
 		ray_cast(game);
 	}
@@ -368,28 +341,21 @@ int	key_hook_linux(int keycode, t_game *game)
 		{
 			game->player_posx += (-game->dir.y * 0.10);
 			game->player_posy += (game->dir.x * 0.10);
-			//game->player_posx += 0.10;
 		}
 		ray_cast(game);
 	}
 	else if (keycode == L_ARROW_LINUX)
 	{
-		// game->player_angle += 0.035;
 		rotate_angle(game, &(game->dir), 1);
 		rotate_angle(game, &(game->cam_plane), 1);
 		ray_cast(game);
 	}
 	else if (keycode == R_ARROW_LINUX)
 	{
-		// game->player_angle -= 0.035;
 		rotate_angle(game, &(game->dir), 0);
 		rotate_angle(game, &(game->cam_plane), 0);
 		ray_cast(game);
 	}
-	//printf("keycode is %d\n", keycode);
-	// else if (keycode == ESC_KEY_LINUX)
-	// 	;
-	//printf("key pressed is %d and player pos is (%f, %f)\n", keycode, game->player_posx, game->player_posy);
 	return (0);
 }
 
@@ -432,18 +398,11 @@ int main()
 		return (1);
 	}
 
-	// draw_square(&(data.img), 400, 400, 0xff00);
-	//fill_squares(&(data.img), 0xff00);
-
-	// draw_walls(game, &(game.data.img));
-
-	set_player_pos(&game);
+	set_up_player(&game);
 	game.player_angle = 0;
 
 	set_up_images(&game);
 
-	//flush(game);
-	// draw_v_line(&game, &(game.data.img), 5, 20, 100, 380, 0xFF0000);
 	ray_cast(&game);
 	mlx_put_image_to_window(game.data.mlx_ptr, game.data.win_ptr, game.data.img.img_ptr, 0, 0);
 
