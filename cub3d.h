@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/07 18:24:51 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/07 19:12:29 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 // # define MAP_WIDTH 1284
 // # define MAP_HEIGHT 960
 
-# define MOVE_SPEED 0.25
+# define MOVE_SPEED 0.15
 # define ROT_SPEED	0.15
 
 # define DIM 64
@@ -147,7 +147,7 @@ int		get_map_height(char **map);
 void	set_player_pos(t_game *game);
 
 //set_up_images.c
-void    set_up_images(t_game *game);
+void	set_up_images(t_game *game);
 
 //raycast.c
 void	ray_cast(t_game *game);

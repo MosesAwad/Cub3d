@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/07 18:52:10 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/07 20:36:16 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,25 +217,41 @@ int	get_color(t_game *game, int tex_x, int tex_y)
 
 t_bool	check_valid_move(t_game *game, int flag)
 {
-	// t_vector	target_v;
+	t_vector	target_v;
+	static int	call;
 
-	// target_v.x = game->player_posx;
-	// target_v.y = game->player_posy;
-	// if (flag == W_KEY)
-	// 	target_v.y = game->player_posy - 0.11;
-	// else if (flag == S_KEY)
-	// 	target_v.y = game->player_posy + 0.11;
-	// else if (flag == A_KEY)
-	// 	target_v.x = game->player_posx - 0.11;
-	// else if (flag == D_KEY)
-	// 	target_v.x = game->player_posx + 0.11;
-
-	// printf("wall detection is (%d, %d)\n", (int) target_v.x, (int) target_v.y);
-
-	// if (game->map[(int) target_v.y][(int) target_v.x] == '1')
-	// {
-	// 	return (FALSE);
-	// }
+	target_v.x = game->player_posx;
+	target_v.y = game->player_posy;
+	if (flag == W_KEY)
+	{
+		target_v.x += (game->dir.x * (MOVE_SPEED));
+		target_v.y += (game->dir.y * (MOVE_SPEED));
+	}
+	else if (flag == A_KEY)
+	{
+		target_v.x -= (-game->dir.y * (MOVE_SPEED));
+		target_v.y -= (game->dir.x * (MOVE_SPEED));
+	}
+	else if (flag == S_KEY)
+	{
+		target_v.x -= (game->dir.x * (MOVE_SPEED));
+		target_v.y -= (game->dir.y * (MOVE_SPEED));
+	}
+	else if (flag == D_KEY)
+	{
+		target_v.x += (-game->dir.y * (MOVE_SPEED));
+		target_v.y += (game->dir.x * (MOVE_SPEED));
+	}
+	printf("----------Call %d-----------\n", call++);
+	printf("game dir is (%f, %f)\n", game->dir.x, game->dir.y);
+	printf("game player is (%f, %f)\n", game->player_posx, game->player_posy);
+	printf("target co-or is (%f, %f)\n", target_v.x, target_v.y);
+	printf("wall detection is (%d, %d)\n", (int) target_v.x, (int) target_v.y);
+	if (game->map[(int) target_v.y][(int) target_v.x] == '1')
+	{
+		printf("no move\n");
+		return (FALSE);
+	}
 	// else
 	(void) flag;
 	(void) game;

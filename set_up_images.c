@@ -4,7 +4,7 @@
 void    set_up_images(t_game *game)
 {
     game->album[0].img = mlx_xpm_file_to_image(
-        game->data.mlx_ptr, "images/ice.xpm",
+        game->data.mlx_ptr, "images/ice2.xpm",
             &(game->album[0].tex_width), &(game->album[0].tex_height));
 
     if (game->album[0].img)
