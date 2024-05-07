@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/07 21:31:59 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/07 22:45:05 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -439,9 +439,6 @@ int main()
 
 	set_player_pos(&game);
 	game.player_angle = 0;
-
-	game.dir = (t_vector){0, -1};
-	game.cam_plane = (t_vector){0.66, 0};
 
 	set_up_images(&game);
 

@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/07 21:51:01 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/07 22:13:06 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,5 +157,8 @@ void	set_up_start_end(t_game *game, t_dda *dda);
 void	set_up_tex_x(t_game *game, t_dda dda, t_tex *tex);
 void	texture_loop(t_game *game, t_tex *tex, t_dda dda, double x);
 void	draw_ceiling_and_floor(t_game *game, t_dda dda, double x);
+
+//destroy.c
+void	ft_destroy(t_game *game);
 
 #endif
