@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/07 20:36:16 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/07 21:31:59 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,14 @@ void	draw_v_line(t_game *game, t_dda dda, int x, int color)
 	}
 	while (start < end)
 	{
-		my_pixel_put(game, x, start, color);
+		// if (color == FLOOR_COLOR && start % 4 == 0)
+		// 	my_pixel_put(game, x, start, 0x6a6e70);
+		// else
+			my_pixel_put(game, x, start, color);
+		// if (color == CEILING_COLOR)
+		// {
+		// 	my_pixel_put(game, x, start, color);
+		// }
 		start++;
 	}
 }

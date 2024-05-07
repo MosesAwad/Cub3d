@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/07 19:12:29 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/07 21:51:01 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define MAP_WIDTH 1280
 # define MAP_HEIGHT 720
 
-# define FLOOR_COLOR 0xe8eff7
-# define CEILING_COLOR 0xb7bcc0
+# define FLOOR_COLOR 0xebf2f9
+# define CEILING_COLOR 0x737a84
 
 // # define MAP_WIDTH 1284
 // # define MAP_HEIGHT 960

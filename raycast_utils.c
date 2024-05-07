@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:56:01 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/07 19:00:26 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/07 21:42:04 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	texture_loop(t_game *game, t_tex *tex, t_dda dda, double x)
 	int	offset;
 
 	tex->step = ((double) game->album[0].tex_height / dda.line_height);
-	tex->tex_pos = (dda.start - game->map_height / 2 + dda.line_height / 2)
+	tex->tex_pos = (dda.start - game->map_height / 2 + 3 * dda.line_height / 4)
 		* tex->step;
 	while (dda.start < dda.end)
 	{
