@@ -6,12 +6,12 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/06 23:00:46 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/07 18:24:51 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef CUB3D_H
-#  define CUB3D_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
 // # include "mlx-linux/mlx.h"
 # include "mlx/mlx.h"
@@ -26,14 +26,16 @@
 # define MAP_WIDTH 1280
 # define MAP_HEIGHT 720
 
+# define FLOOR_COLOR 0xe8eff7
+# define CEILING_COLOR 0xb7bcc0
+
 // # define MAP_WIDTH 1284
 // # define MAP_HEIGHT 960
-
 
 # define MOVE_SPEED 0.25
 # define ROT_SPEED	0.15
 
-# define DIM	64
+# define DIM 64
 
 # define W_KEY 13
 # define A_KEY 0
@@ -129,6 +131,7 @@ typedef struct s_game {
 void	flush(t_game game);
 void	draw_v_line(t_game *game, t_dda dda, int x, int color);
 int		get_color(t_game *game, int tex_x, int tex_y);
+void	my_pixel_put(t_game *game, int x, int y, int color);
 
 //get_next_line.c
 char	*get_next_line(int fd);

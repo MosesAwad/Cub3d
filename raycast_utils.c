@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:56:01 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/06 22:19:56 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/07 19:00:26 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	set_up_start_end(t_game *game, t_dda *dda)
 	{
 		dda->side_dist_x -= dda->delta_dist_x;
 		dda->line_height = (int)(game->map_height / dda->side_dist_x);
-		dda->start = (game->map_height / 2) - (dda->line_height / 2);
+		dda->start = (game->map_height / 2) - (3 * dda->line_height / 4);
 		if (dda->start < 0)
 			dda->start = 0;
-		dda->end = (game->map_height / 2) + (dda->line_height / 2);
+		dda->end = (game->map_height / 2) + (dda->line_height / 4);
 		if (dda->end > game->map_height)
 			dda->end = game->map_height - 1;
 	}
@@ -29,10 +29,10 @@ void	set_up_start_end(t_game *game, t_dda *dda)
 	{
 		dda->side_dist_y -= dda->delta_dist_y;
 		dda->line_height = (int)(game->map_height / dda->side_dist_y);
-		dda->start = (game->map_height / 2) - (dda->line_height / 2);
+		dda->start = (game->map_height / 2) - (3 * dda->line_height / 4);
 		if (dda->start < 0)
 			dda->start = 0;
-		dda->end = (game->map_height / 2) + (dda->line_height / 2);
+		dda->end = (game->map_height / 2) + (dda->line_height / 4);
 		if (dda->end > game->map_height)
 			dda->end = game->map_height - 1;
 	}
@@ -113,6 +113,6 @@ void	texture_loop(t_game *game, t_tex *tex, t_dda dda, double x)
 
 void	draw_ceiling_and_floor(t_game *game, t_dda dda, double x)
 {
-	draw_v_line(game, dda, x, 0x70543E);
-	draw_v_line(game, dda, x, 0x87CEEB);
+	draw_v_line(game, dda, x, FLOOR_COLOR);
+	draw_v_line(game, dda, x, CEILING_COLOR);
 }

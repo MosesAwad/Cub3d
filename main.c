@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/06 22:29:10 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/07 18:52:10 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,12 +152,12 @@ void	draw_v_line(t_game *game, t_dda dda, int x, int color)
 
 	start = 0;
 	end = 0;
-	if (color == 0x87CEEB)
+	if (color == CEILING_COLOR)
 	{
 		start = 0;
 		end = dda.end;
 	}
-	else if (color == 0x70543E)
+	else if (color == FLOOR_COLOR)
 	{
 		start = dda.start;
 		end = game->map_height - 1;
@@ -417,8 +417,8 @@ int main()
 	set_player_pos(&game);
 	game.player_angle = 0;
 
-	game.dir = (t_vector){1, 0};
-	game.cam_plane = (t_vector){0, 0.66};
+	game.dir = (t_vector){0, -1};
+	game.cam_plane = (t_vector){0.66, 0};
 
 	set_up_images(&game);
 

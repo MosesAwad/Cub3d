@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:46:48 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/06 23:53:18 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/07 19:01:55 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,29 @@ static void	dda_loop(t_game *game, t_dda *dda)
 	}
 }
 
+void	draw_cross_hair(t_game *game)
+{
+	int	start;
+	int	end;
+
+	start = (game->map_height / 2) - 20;
+	end = (game->map_height / 2) - 7;
+	while (start < end)
+		my_pixel_put(game, game->map_width / 2, start++, 0x39FF14);
+	start = (game->map_height / 2) + 7;
+	end = (game->map_height / 2) + 20;
+	while (start < end)
+		my_pixel_put(game, game->map_width / 2, start++, 0x39FF14);
+	start = (game->map_width / 2) - 20;
+	end = (game->map_width / 2) - 7;
+	while (start < end)
+		my_pixel_put(game, start++, game->map_height / 2, 0x39FF14);
+	start = (game->map_width / 2) + 7;
+	end = (game->map_width / 2) + 20;
+	while (start < end)
+		my_pixel_put(game, start++, game->map_height / 2, 0x39FF14);
+}
+
 //transparent pixels in mlx have color values that are less than 0.
 //So we only copy the pixels that are non-transparent from the
 //hand and gun sprite to the background image buffer.
@@ -129,6 +152,7 @@ void	ray_cast(t_game *game)
 		texture_loop(game, &tex, dda, x);
 		x++;
 	}
+	draw_cross_hair(game);
 	draw_gun(game);
 	mlx_put_image_to_window(game->data.mlx_ptr, game->data.win_ptr,
 		game->data.img.img_ptr, 0, 0);
