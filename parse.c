@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:14:23 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/09 00:31:20 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/09 03:00:41 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,86 @@ static int	get_tex_index(char *trimmed)
 	return (index);
 }
 
+int	convert_rgb(int *rgb)
+{
+	int	color;
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		printf("rgb[%d]: %d\n", i, rgb[i]);
+		if (rgb[i] > 255 || rgb[i] < 0)
+		{
+			printf("Error\nr, g, b values outside of 0-255 range"
+				" OR invalid character usage\n""Please ensure format"
+				" is strictly as follows:\n"
+				"Identifier r, g, b\n");
+		}
+		i++;
+	}
+	color = rgb[0] * (pow(256, 2)) + (rgb[1] * 256) + rgb[2];
+	return (color);
+}
+
+//This line:
+//		if (str[i] == ',' && rgb[0] != -1)
+// 			i++;
+//was added to ensure that a ',' shall not be accepted the first
+//value (the r (red) value), only after the first, or second value.
+//So something like C ,242, 30, 0 is handled by that line.
+void	set_color(char *str)
+{
+	int	i;
+	int	j;
+	int	k;
+	int	rgb[3];
+	int	color;
+
+	i = 0;
+	k = 0;
+	rgb[0] = -1;
+	rgb[1] = -1;
+	rgb[2] = -1;
+	while (str[i] && is_wspace(str[i]))
+		i++;
+	if (!str[i])
+		printf("Error\nPlease enter an r, g, b value\n");
+	while (str[i])
+	{
+		j = 0;
+		while (str[i] && (is_wspace(str[i])) && str[i] != ',')
+			i++;
+		if (str[i] == ',')
+		{
+			if (rgb[0] == -1 || rgb[2] != -1)
+				printf("Error\nWrong ',' character placement\n");
+			else if (!is_wspace(str[i + 1]) && !ft_isdigit(str[i + 1]))
+				printf("Error\nWrong ',' character placement\n");
+			i++;
+		}
+		while (str[i + j] && ft_isdigit(str[i + j]))
+			j++;
+		if (j != 0)
+		{
+			rgb[k++] = ft_atoi(str + i);
+			i = i + j;
+		}
+		while (str[i] && !(is_wspace(str[i])) && str[i] != ',')
+			i++;
+		if (str[i] == ',')
+		{
+			if (rgb[0] == -1 || rgb[2] != -1)
+				printf("Error\nWrong ',' character placement\n");
+			else if (!is_wspace(str[i + 1]) && !ft_isdigit(str[i + 1]))
+				printf("Error\nWrong ',' character placement\n");
+			i++;
+		}
+	}
+	color = convert_rgb(rgb);
+	printf("%x\n", color);
+}
+
 void	parse_textures(t_game *game, int fd)
 {
 	int		i;
@@ -82,9 +162,11 @@ void	parse_textures(t_game *game, int fd)
 			get_path(game, trimmed + 2, get_tex_index(trimmed));
 			count++;
 		}
+		else if (trimmed[0] == 'C')
+			set_color(trimmed + 1);
 		line = get_next_line(fd);
 		i++;
 	}
 	if (count != 4)
-		printf("Error\nMissing wall texture or incorrect texture format\n");
+		printf("Error\nMissing wall texture or incorrect texture identifier\n");
 }
