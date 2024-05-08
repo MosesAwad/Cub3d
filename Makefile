@@ -3,7 +3,8 @@ NAME = cube
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = main.c get_next_line.c map_utils.c map_utils2.c player_utils.c set_up_images.c raycast.c raycast_utils.c destroy.c
+SRCS = main.c get_next_line.c map_utils.c map_utils2.c player_utils.c set_up_images.c raycast.c raycast_utils.c destroy.c \
+		parse.c parse_utils.c
 OBJS = $(SRCS:.c=.o)
 
 LIBFT_DIR = Libft

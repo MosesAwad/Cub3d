@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 13:24:52 by mawad             #+#    #+#             */
-/*   Updated: 2023/07/14 14:49:57 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/08 22:45:31 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	end_finder(char const *s1, char const *set)
 	return (i + 1);
 }
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char *s1, char const *set)
 {
 	int		start_ind;
 	int		end_ind;
@@ -72,11 +72,11 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if ((start_ind > end_ind) || (*s1 == '\0'))
 	{
 		buffer = ft_strdup("");
-		return (buffer);
+		return (free(s1), buffer);
 	}
 	buffer = (char *)malloc(((end_ind - start_ind + 1) + 1) * sizeof(*buffer));
 	if (buffer == NULL)
 		return (NULL);
 	ft_strlcpy(buffer, s1 + start_ind, (end_ind - start_ind + 1) + 1);
-	return (buffer);
+	return (free(s1), buffer);
 }

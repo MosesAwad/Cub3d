@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/07 22:50:52 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/08 22:42:56 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,5 +160,11 @@ void	draw_ceiling_and_floor(t_game *game, t_dda dda, double x);
 
 //destroy.c
 void	ft_destroy(t_game *game);
+
+//parse.c
+void	parse_textures(t_game *game, int fd);
+
+//parse_utils.c
+t_bool	is_wspace(char c);
 
 #endif
