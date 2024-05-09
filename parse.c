@@ -61,7 +61,7 @@ static int	get_tex_index(char *trimmed)
 	return (index);
 }
 
-int	convert_rgb(int *rgb)
+int	convert_rgb(long long int *rgb)
 {
 	int	color;
 	int	i;
@@ -69,19 +69,142 @@ int	convert_rgb(int *rgb)
 	i = 0;
 	while (i < 3)
 	{
-		printf("rgb[%d]: %d\n", i, rgb[i]);
+		printf("rgb[%d]: %lld\n", i, rgb[i]);
 		if (rgb[i] > 255 || rgb[i] < 0)
-		{
-			printf("Error\nr, g, b values outside of 0-255 range"
-				" OR invalid character usage\n""Please ensure format"
-				" is strictly as follows:\n"
-				"Identifier r, g, b\n");
-		}
+			printf("Error\nr, g, b values outside of 0-255 range\n");
 		i++;
 	}
 	color = rgb[0] * (pow(256, 2)) + (rgb[1] * 256) + rgb[2];
 	return (color);
 }
+
+t_bool	com_trail_valid(int index, char *str)
+{
+	int		digit_count;
+
+	digit_count = 0;
+	index++;
+	while (str[index] && str[index] != ',')
+	{
+		while (str[index] && is_wspace(str[index]))
+			index++;
+		if (ft_isdigit(str[index]))
+			digit_count++;
+		while (str[index] && ft_isdigit(str[index]))
+			index++;
+		if (str[index] && str[index] != ',' && !ft_isdigit(str[index]) && !is_wspace(str[index]))
+			return (FALSE);
+	}
+	if (digit_count == 1)
+		return (TRUE);
+	return (FALSE);
+}
+
+//I am using index >= 1 and not index >= because I am sending
+//trimmed + 1 to the check_syntax function. So I don't want to
+//include that C in the beginning
+t_bool	com_prec_valid(int index, char *str)
+{
+	int		digit_count;
+
+	digit_count = 0;
+	index--;
+	while (index >= 1 && str[index] != ',')
+	{
+		while (index >= 1 && is_wspace(str[index]))
+			index--;
+		if (ft_isdigit(str[index]))
+			digit_count++;
+		while (index >= 1 && ft_isdigit(str[index]))
+			index--;
+		if (str[index] != ',' && !ft_isdigit(str[index]) && !is_wspace(str[index]))
+			return (FALSE);
+	}
+	if (digit_count == 1)
+		return (TRUE);
+	return (FALSE);
+}
+
+//Logic is simply:
+//-1.
+//--All ',' characters can only be preceded by digits (whitespace
+//--trail allowed)
+//-2
+//--Implement a counter to make sure tbat there has to be a total
+//--of only 2 of these ',' characters that are preceeded by digits
+//--(whitespace trail allowed).
+//-3
+//--Lastly, we also have to check if a ',' is strictly followed by
+//--a number via the com_trail_valid function. While this may seem
+//--redundant, it is a necessary step to handle [C  242,  23  0,] as
+//--in this scenario, there are only 2 ',' characters and each one
+//--is in fact preceeded by only digits but clearly it is wrong.
+//--So instead of checking for whether there is only one digit
+//--before and after a ',', I decided to look the other way
+//-4.
+//--All characters besides ',', digits, and whitespaces
+//--are rejected.
+// void	check_syntax(char *str)
+// {
+// 	int	i;
+// 	int	j;
+// 	int	count;
+
+// 	i = 0;
+// 	count = 0;
+// 	while (str[i])
+// 	{
+// 		while (str[i] && is_wspace(str[i]))
+// 			i++;
+// 		if (str[i] == ',')
+// 		{
+// 			j = -1;
+// 			while (i + j >= 0 && is_wspace(str[i + j]))
+// 				j--;
+// 			if ((i + j != 0) && !ft_isdigit(str[i + j]))
+// 				break ;
+// 			if (com_trail_valid(i, str) == FALSE)
+// 				break ;
+// 			count++;
+// 			i++;		
+// 		}
+// 		else if (str[i] && (!is_wspace(str[i]) && !ft_isdigit(str[i])))
+// 			break ;
+// 		while (str[i] && ft_isdigit(str[i]))
+// 			i++;
+// 	}
+// 	if (count != 2 || str[i] != '\0')
+// 		printf("Error\nIncorrect r, g, b syntax\n");
+// }
+void	check_syntax(char *str)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		while (str[i] && is_wspace(str[i]))
+			i++;
+		if (str[i] == ',')
+		{
+			if (com_prec_valid(i, str) && com_trail_valid(i, str))
+				count++;
+			else
+				break ;
+			i++;
+		}
+		else if (str[i] && (!is_wspace(str[i]) && !ft_isdigit(str[i])))
+			break ;
+		while (str[i] && ft_isdigit(str[i]))
+			i++;
+	}
+	printf("count %d\n", count);
+	if (count != 2 || str[i] != '\0')
+		printf("Error\nIncorrect r, g, b syntax\n");
+}
+
 
 //This line:
 //		if (str[i] == ',' && rgb[0] != -1)
@@ -91,51 +214,27 @@ int	convert_rgb(int *rgb)
 //So something like C ,242, 30, 0 is handled by that line.
 void	set_color(char *str)
 {
-	int	i;
-	int	j;
-	int	k;
-	int	rgb[3];
-	int	color;
+	int				i;
+	int				j;
+	int				k;
+	long long int	rgb[3];
+	int				color;
 
 	i = 0;
 	k = 0;
-	rgb[0] = -1;
-	rgb[1] = -1;
-	rgb[2] = -1;
-	while (str[i] && is_wspace(str[i]))
-		i++;
-	if (!str[i])
-		printf("Error\nPlease enter an r, g, b value\n");
+	j = 0;
 	while (str[i])
 	{
 		j = 0;
-		while (str[i] && (is_wspace(str[i])) && str[i] != ',')
-			i++;
-		if (str[i] == ',')
-		{
-			if (rgb[0] == -1 || rgb[2] != -1)
-				printf("Error\nWrong ',' character placement\n");
-			else if (!is_wspace(str[i + 1]) && !ft_isdigit(str[i + 1]))
-				printf("Error\nWrong ',' character placement\n");
-			i++;
-		}
-		while (str[i + j] && ft_isdigit(str[i + j]))
+		while (ft_isdigit(str[i + j]))
 			j++;
 		if (j != 0)
 		{
-			rgb[k++] = ft_atoi(str + i);
+			rgb[k++] = ft_atol(str + i);
 			i = i + j;
 		}
-		while (str[i] && !(is_wspace(str[i])) && str[i] != ',')
+		else
 			i++;
-		if (str[i] == ',')
-		{
-			if (rgb[0] == -1 || rgb[2] != -1)
-				printf("Error\nWrong ',' character placement\n");
-			else if (!is_wspace(str[i + 1]) && !ft_isdigit(str[i + 1]))
-				printf("Error\nWrong ',' character placement\n");
-			i++;
-		}
 	}
 	color = convert_rgb(rgb);
 	printf("%x\n", color);
@@ -163,10 +262,13 @@ void	parse_textures(t_game *game, int fd)
 			count++;
 		}
 		else if (trimmed[0] == 'C')
+		{
+			check_syntax(trimmed + 1);
 			set_color(trimmed + 1);
+		}
 		line = get_next_line(fd);
 		i++;
 	}
 	if (count != 4)
-		printf("Error\nMissing wall texture or incorrect texture identifier\n");
+		printf("Error\nMissing or incorrect identifier\n");
 }
