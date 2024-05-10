@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/10 22:01:03 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/11 01:19:52 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -435,7 +435,6 @@ int main()
 	game.map = NULL;
 
 	parse_elements(&game, fd);
-	// game.map = get_map(fd);
 	//mlx_loop(game.data.mlx_ptr);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/10 23:21:58 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/11 01:19:08 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,35 @@ typedef struct s_game {
 	t_tex		album[8];
 }	t_game;
 
+//		-- START OF PARSING DIRECTORY SECTION --	//
+//parsing/map_rules.c
+void	map_rules1(t_game *game);
+
+//parsing/map_utils.c
+char	**get_map(int fd);
+
+//parsing/map_utils2.c
+int		get_map_width(char **map);
+int		get_map_height(char **map);
+void	handle_spaces(char **map);
+
+//parsing/parse_textures.c
+int		parse_textures(t_game *game, char *trimmed);
+
+//parsing/parse_colors.c
+int		parse_colors(t_game *game, char *trimmed);
+
+//parsing/parse_colors_utils.c
+void	check_rgb_syntax(t_game *game, char *full, char *str);
+
+//parsing/parse.c
+void	parse_elements(t_game *game, int fd);
+
+//parsing/parse_utils.c
+t_bool	is_wspace(char c);
+void	whitespace_checker(t_game *game, char *trimmed);
+//		-- END OF PARSING DIRECTORY SECTION --	//
+
 //main.c
 void	flush(t_game game);
 void	draw_v_line(t_game *game, t_dda dda, int x, int color);
@@ -144,13 +173,6 @@ void	my_pixel_put(t_game *game, int x, int y, int color);
 
 //get_next_line.c
 char	*get_next_line(int fd);
-
-//map_utils.c
-char	**get_map(int fd);
-
-//map_utils2.c
-int		get_map_width(char **map);
-int		get_map_height(char **map);
 
 //player_utils.c
 void	set_up_player(t_game *game);
@@ -170,21 +192,5 @@ void	draw_ceiling_and_floor(t_game *game, t_dda dda, double x);
 //general_utils.c
 void	ft_destroy(t_game *game);
 void	exit_err(t_game *game, char *line, char *message);
-
-//parse_textures.c
-int		parse_textures(t_game *game, char *trimmed);
-
-//parse_colors.c
-int		parse_colors(t_game *game, char *trimmed);
-
-//parse_colors_utils.c
-void	check_rgb_syntax(t_game *game, char *full, char *str);
-
-//parse.c
-void	parse_elements(t_game *game, int fd);
-
-//parse_utils.c
-t_bool	is_wspace(char c);
-void	whitespace_checker(t_game *game, char *trimmed);
 
 #endif

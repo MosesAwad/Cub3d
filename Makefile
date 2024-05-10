@@ -5,8 +5,8 @@ CFLAGS = -Wall -Wextra -Werror
 
 PARSE_DIR = parsing
 
-SRCS = main.c get_next_line.c map_utils.c map_utils2.c player_utils.c set_up_images.c raycast.c raycast_utils.c general_utils.c \
-		$(addprefix $(PARSE_DIR)/, parse.c parse_utils.c parse_colors.c parse_colors_utils.c parse_textures.c)
+SRCS = main.c get_next_line.c player_utils.c set_up_images.c raycast.c raycast_utils.c general_utils.c \
+		$(addprefix $(PARSE_DIR)/, map_rules.c map_utils.c map_utils2.c parse.c parse_utils.c parse_colors.c parse_colors_utils.c parse_textures.c)
 
 OBJS = $(SRCS:.c=.o)
 

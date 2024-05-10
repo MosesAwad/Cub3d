@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_utils2.c                                       :+:      :+:    :+:   */
+/*   map_rules.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/24 18:46:24 by mawad             #+#    #+#             */
-/*   Updated: 2024/04/24 23:28:34 by mawad            ###   ########.fr       */
+/*   Created: 2024/05/11 00:58:22 by mawad             #+#    #+#             */
+/*   Updated: 2024/05/11 01:03:22 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
-int	get_map_width(char **map)
-{
-	int	j;
-
-	j = 0;
-	while (map[0][j])
-		j++;
-	return (j);
-}
-
-int	get_map_height(char **map)
+void	map_rules1(t_game *game)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (map[i])
+	j = 0;
+	while (game->map[0][j] == '1')
+		j++;
+	if (game->map[0][j] != '\0')
+		exit_err(game, NULL, "map not surrounded by walls");
+	while (game->map[i + 1])
 		i++;
-	return (i);
+	j = 0;
+	while (game->map[i][j] == '1')
+		j++;
+	if (game->map[i][j] != '\0')
+		exit_err(game, NULL, "map not surrounded by walls");
 }

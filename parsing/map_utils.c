@@ -6,11 +6,35 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:44:12 by mawad             #+#    #+#             */
-/*   Updated: 2024/04/24 18:43:57 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/11 01:16:41 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
+
+// static	char	*first_nonempty_line(int fd, char *line)
+// {
+// 	int		i;
+// 	char	*line;
+
+// 	i = 0;
+// 	line = get_next_line(fd);
+// 	while (is_wspace(line[i]))
+// 		i++;
+// 	if (line[i] != '\0')
+// 		return (line);
+// 	free(line);
+// 	while (line)
+// 	{
+// 		line = get_next_line(fd);
+// 		while (is_wspace(line[i]))
+// 			i++;
+// 		if (line[i] != '\0')
+// 			return (line);
+// 		free(line);
+// 	}
+// 	return (NULL);
+// }
 
 static void	ft_map_alloc_clean(char **map, int y)
 {
@@ -31,6 +55,8 @@ static char	*first_row(int fd, char **map, int *y)
 	row = get_next_line(fd);
 	if (!row)
 		return (free(map), NULL);
+	// if (empty_line(row) == TRUE)
+	// 	return (row);
 	*y = 0;
 	map[*y] = (char *)malloc(sizeof(char) * (ft_strlen(row) + 1));
 	if (!map[*y])
