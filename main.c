@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/09 00:14:52 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/10 22:01:03 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,12 +152,12 @@ void	draw_v_line(t_game *game, t_dda dda, int x, int color)
 
 	start = 0;
 	end = 0;
-	if (color == CEILING_COLOR)
+	if (color == game->ceiling_color)
 	{
 		start = 0;
 		end = dda.end;
 	}
-	else if (color == FLOOR_COLOR)
+	else if (color == game->floor_color)
 	{
 		start = dda.start;
 		end = game->map_height - 1;
@@ -431,7 +431,10 @@ int main()
 	game.map_height = MAP_HEIGHT;
 	game.map_width = MAP_WIDTH;
 	game.data.win_ptr = mlx_new_window(game.data.mlx_ptr, game.map_width , game.map_height, "Yay");
-	parse_textures(&game, fd);
+
+	game.map = NULL;
+
+	parse_elements(&game, fd);
 	// game.map = get_map(fd);
 	//mlx_loop(game.data.mlx_ptr);
 	return (0);

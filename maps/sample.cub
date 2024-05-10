@@ -1,8 +1,8 @@
-F    220,100,0
+F 220,  201 ,0
 	NO images/brick.xpm
   WE		 images/gun.xpm    
   		EA 	images/ice.xpm				
 
-C           232 	, 209 23, 22
+C          232 	, 209 , 22
 
 SO images/ice3.xpm

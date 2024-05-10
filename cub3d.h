@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/08 22:42:56 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/10 23:21:58 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define MAP_WIDTH 1280
 # define MAP_HEIGHT 720
 
-# define FLOOR_COLOR 0xebf2f9
-# define CEILING_COLOR 0x737a84
+// # define FLOOR_COLOR 0xebf2f9
+// # define CEILING_COLOR 0x737a84
 
 // # define MAP_WIDTH 1284
 // # define MAP_HEIGHT 960
@@ -36,6 +36,13 @@
 # define ROT_SPEED	0.15
 
 # define DIM 64
+
+# define OG		"\033[0m"
+# define RED	"\033[1;31m"
+# define GRN	"\033[1;32m"
+# define YLW	"\033[1;33m"
+# define BLU	"\033[1;34m"
+# define PRL	"\033[0;35m"
 
 # define W_KEY 13
 # define A_KEY 0
@@ -118,6 +125,8 @@ typedef struct s_game {
 	char		**map;
 	int			map_height;
 	int			map_width;
+	int			floor_color;
+	int			ceiling_color;
 	double		player_posx;
 	double		player_posy;
 	double		player_angle;
@@ -158,13 +167,24 @@ void	set_up_tex_x(t_game *game, t_dda dda, t_tex *tex);
 void	texture_loop(t_game *game, t_tex *tex, t_dda dda, double x);
 void	draw_ceiling_and_floor(t_game *game, t_dda dda, double x);
 
-//destroy.c
+//general_utils.c
 void	ft_destroy(t_game *game);
+void	exit_err(t_game *game, char *line, char *message);
+
+//parse_textures.c
+int		parse_textures(t_game *game, char *trimmed);
+
+//parse_colors.c
+int		parse_colors(t_game *game, char *trimmed);
+
+//parse_colors_utils.c
+void	check_rgb_syntax(t_game *game, char *full, char *str);
 
 //parse.c
-void	parse_textures(t_game *game, int fd);
+void	parse_elements(t_game *game, int fd);
 
 //parse_utils.c
 t_bool	is_wspace(char c);
+void	whitespace_checker(t_game *game, char *trimmed);
 
 #endif

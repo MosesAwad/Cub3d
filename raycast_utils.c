@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:56:01 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/07 21:42:04 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/10 21:56:41 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,6 @@ void	texture_loop(t_game *game, t_tex *tex, t_dda dda, double x)
 
 void	draw_ceiling_and_floor(t_game *game, t_dda dda, double x)
 {
-	draw_v_line(game, dda, x, FLOOR_COLOR);
-	draw_v_line(game, dda, x, CEILING_COLOR);
+	draw_v_line(game, dda, x, game->floor_color);
+	draw_v_line(game, dda, x, game->ceiling_color);
 }
