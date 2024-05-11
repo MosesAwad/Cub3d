@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:14:23 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 00:43:52 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 01:39:46 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	parse_elements(t_game *game, int fd)
 		printf("\n");
 	}
 	parse_marked_map(game, mark_map);
+	destroy_2d_arr(mark_map);
 	printf("\n");
 
 	printf("Parsing successful\n");

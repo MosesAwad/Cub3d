@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 00:43:14 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 01:19:57 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,16 @@ typedef enum s_bool
 	TRUE = 1
 }	t_bool;
 
+typedef struct s_index{
+	int	x;
+	int	y;
+}	t_index;
+
+typedef struct s_vector {
+	double	x;
+	double	y;
+}	t_vector;
+
 typedef struct s_img {
 	void	*img_ptr;
 	int		*img_pixels_ptr;
@@ -77,11 +87,6 @@ typedef struct s_img {
 	int		line_len;
 	int		endian;
 }				t_img;
-
-typedef struct s_vector {
-	double	x;
-	double	y;
-}	t_vector;
 
 typedef struct s_tex {
 	void	*img;

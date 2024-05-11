@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dfs.c                                              :+:      :+:    :+:   */
+/*   map_dfs.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:27:24 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 00:10:25 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 01:37:16 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "..//cub3d.h"
-
-typedef struct s_index{
-	int	x;
-	int	y;
-}	t_index;
 
 char	**mark_map_spawn(t_game *game, char **map)
 {
@@ -42,93 +37,70 @@ char	**mark_map_spawn(t_game *game, char **map)
 	return (buffer);
 }
 
-//up, down, left, right
-void	find_neighbors(t_game *game, t_index pos, int *neighbor_count, t_index *neighbors)
+//Nieghbors arranged in: up, down, left, right
+static int	find_neighbors1(t_game *game, t_index pos, t_index *neighbors)
 {
 	if (pos.x == 0 && pos.y == 0)
-	{
-		neighbors[0] = (t_index){pos.x, pos.y + 1};
-		neighbors[1] = (t_index){pos.x + 1, pos.y};
-		*neighbor_count = 2;
-	}
+		return (neighbors[0] = (t_index){pos.x, pos.y + 1},
+				neighbors[1] = (t_index){pos.x + 1, pos.y},
+				2);
 	else if (pos.x == game->map_width - 1 && pos.y == 0)
-	{
-		neighbors[0] = (t_index){pos.x, pos.y + 1};
-		neighbors[1] = (t_index){pos.x - 1, pos.y};
-		*neighbor_count = 2;
-	}
+		return (neighbors[0] = (t_index){pos.x, pos.y + 1},
+				neighbors[1] = (t_index){pos.x - 1, pos.y},
+				2);
 	else if (pos.x == 0 && pos.y == game->map_height - 1)
-	{
-		neighbors[0] = (t_index){pos.x, pos.y - 1};
-		neighbors[1] = (t_index){pos.x + 1, pos.y};
-		*neighbor_count = 2;
-	}
+		return (neighbors[0] = (t_index){pos.x, pos.y - 1},
+				neighbors[1] = (t_index){pos.x + 1, pos.y},
+				2);
 	else if (pos.x == game->map_width - 1 && pos.y == game->map_height - 1)
-	{
-		neighbors[0] = (t_index){pos.x, pos.y - 1};
-		neighbors[1] = (t_index){pos.x - 1, pos.y};
-		*neighbor_count = 2;
-	}
+		return (neighbors[0] = (t_index){pos.x, pos.y - 1},
+				neighbors[1] = (t_index){pos.x - 1, pos.y},
+				2);
 	else if (pos.y == 0)
-	{
-		neighbors[0] = (t_index){pos.x, pos.y + 1};
-		neighbors[1] = (t_index){pos.x - 1, pos.y};
-		neighbors[2] = (t_index){pos.x + 1, pos.y};
-		*neighbor_count = 3;
-	}
-	else if (pos.y == game->map_height - 1)
-	{
-		neighbors[0] = (t_index){pos.x, pos.y - 1};
-		neighbors[1] = (t_index){pos.x - 1, pos.y};
-		neighbors[2] = (t_index){pos.x + 1, pos.y};
-		*neighbor_count = 3;
-	}
-	else if (pos.x == 0)
-	{
-		neighbors[0] = (t_index){pos.x, pos.y - 1};
-		neighbors[1] = (t_index){pos.x, pos.y + 1};
-		neighbors[2] = (t_index){pos.x + 1, pos.y};
-		*neighbor_count = 3;
-	}
-	else if (pos.x == game->map_width - 1)
-	{
-		neighbors[0] = (t_index){pos.x, pos.y - 1};
-		neighbors[1] = (t_index){pos.x, pos.y + 1};
-		neighbors[2] = (t_index){pos.x - 1, pos.y};
-		*neighbor_count = 3;
-	}
-	else
-	{
-		neighbors[0] = (t_index){pos.x, pos.y - 1};
-		neighbors[1] = (t_index){pos.x, pos.y + 1};
-		neighbors[2] = (t_index){pos.x - 1, pos.y};
-		neighbors[3] = (t_index){pos.x + 1, pos.y};
-		*neighbor_count = 4;
-	}
+		return (neighbors[0] = (t_index){pos.x, pos.y + 1},
+				neighbors[1] = (t_index){pos.x - 1, pos.y},
+				neighbors[2] = (t_index){pos.x + 1, pos.y},
+				3);
+	return (-1);
 }
 
-// void	dfs(t_game *game, char **mark_map, int j, int i)
-// {
-// 	t_index			neighbors[4];
-// 	int				k;
+//Nieghbors arranged in: up, down, left, right
+static int	find_neighbors2(t_game *game, t_index pos, t_index *neighbors)
+{
+	if (pos.y == game->map_height - 1)
+		return (neighbors[0] = (t_index){pos.x, pos.y - 1},
+				neighbors[1] = (t_index){pos.x - 1, pos.y},
+				neighbors[2] = (t_index){pos.x + 1, pos.y},
+				3);
+	else if (pos.x == 0)
+		return (neighbors[0] = (t_index){pos.x, pos.y - 1},
+				neighbors[1] = (t_index){pos.x, pos.y + 1},
+				neighbors[2] = (t_index){pos.x + 1, pos.y},
+				3);
+	else if (pos.x == game->map_width - 1)
+		return (neighbors[0] = (t_index){pos.x, pos.y - 1},
+				neighbors[1] = (t_index){pos.x, pos.y + 1},
+				neighbors[2] = (t_index){pos.x - 1, pos.y},
+				3);
+	else
+		return (neighbors[0] = (t_index){pos.x, pos.y - 1},
+				neighbors[1] = (t_index){pos.x, pos.y + 1},
+				neighbors[2] = (t_index){pos.x - 1, pos.y},
+				neighbors[3] = (t_index){pos.x + 1, pos.y},
+				4);
+	return (-1);
+}
 
-// 	mark_map[i][j] = 'T';
-// 	if (game->map[i][j] == 'C')
-// 		game->dfs_coincount++;
-// 	k = 0;
-// 	find_neighbors(j, i, neighbors);
-// 	while (k < 4)
-// 	{
-// 		i = neighbors[k].i;
-// 		j = neighbors[k].j;
-// 		if (!(game->map[i][j] == '1' || game->map[i][j] == 'E')
-// 			&& mark_map[i][j] == 'F')
-// 		{
-// 			dfs(game, mark_map, j, i);
-// 		}
-// 		k++;
-// 	}
-// }
+//Nieghbors arranged in: up, down, left, right
+int	find_neighbors(t_game *game, t_index pos, t_index *neighbors)
+{
+	int	neighbor_count;
+
+	neighbor_count = find_neighbors1(game, pos, neighbors);
+	if (neighbor_count == -1)
+		neighbor_count = find_neighbors2(game, pos, neighbors);
+	return (neighbor_count);
+}
 
 void	dfs(t_game *game, char **mark_map, int x, int y)
 {
@@ -140,14 +112,9 @@ void	dfs(t_game *game, char **mark_map, int x, int y)
 	mark_map[y][x] = 'T';
 	k = 0;
 	pos = (t_index){x, y};
-	neighbor_count = 0;
-	find_neighbors(game, pos, &neighbor_count, neighbors);
+	neighbor_count = find_neighbors(game, pos, neighbors);
 	while (k < neighbor_count)
 	{
-		// for (int i = 0; mark_map[i] != NULL; i++) {
-		//     printf("%s\n", mark_map[i]);
-		// }
-		// printf("\n");
 		x = neighbors[k].x;
 		y = neighbors[k].y;
 		if (!(game->map[y][x] == '1' || game->map[y][x] == 'X')
@@ -157,7 +124,7 @@ void	dfs(t_game *game, char **mark_map, int x, int y)
 	}
 }
 
-void	check_boundary(t_game *game, int x, int y)
+void	check_boundary(t_game *game, char **marked_map, int x, int y)
 {
 	t_index	neighbors[4];
 	int		neighbor_count;
@@ -169,19 +136,18 @@ void	check_boundary(t_game *game, int x, int y)
 	if (pos.x == 0 || pos.x == game->map_width - 1
 		|| pos.y == 0 || pos.y == game->map_height - 1)
 	{
-		// free_2d_arr(marked_map);
+		destroy_2d_arr(marked_map);
 		exit_err(game, NULL, "Map not surrouned by walls");
 	}
-	neighbor_count = 0;
 	k = 0;
-	find_neighbors(game, pos, &neighbor_count, neighbors);
+	neighbor_count = find_neighbors(game, pos, neighbors);
 	while (k < neighbor_count)
 	{
 		x = neighbors[k].x;
 		y = neighbors[k].y;
 		if (game->map[y][x] == 'X')
 		{
-			// free_2d_arr(marked_map);
+			destroy_2d_arr(marked_map);
 			exit_err(game, NULL, "Map not surrouned by walls");
 		}
 		k++;
@@ -200,7 +166,7 @@ void	parse_marked_map(t_game *game, char **marked_map)
 		while (marked_map[i][j])
 		{
 			if (marked_map[i][j] == 'T')
-				check_boundary(game, j, i);
+				check_boundary(game, marked_map, j, i);
 			j++;
 		}
 		i++;
