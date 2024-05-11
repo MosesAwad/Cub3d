@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/11 01:19:08 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 00:43:14 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,16 +137,19 @@ typedef struct s_game {
 }	t_game;
 
 //		-- START OF PARSING DIRECTORY SECTION --	//
-//parsing/dfs.c
-char    **mark_map_spawn(t_game *game, char **map);
-void    dfs(t_game *game, char **mark_map, int x, int y);
-void    parse_marked_map(t_game *game, char **marked_map);
+//parsing/map_dfs.c
+char	**mark_map_spawn(t_game *game, char **map);
+void	dfs(t_game *game, char **mark_map, int x, int y);
+void	parse_marked_map(t_game *game, char **marked_map);
 
-//parsing/map_rules.c
-void	map_rules1(t_game *game);
-
-//parsing/map_utils.c
+//parsing/get_map.c
 char	**get_map(int fd);
+void	parse_map_lines(t_game *game, char **map);
+
+//parsing/get_map_utils.c
+void	ft_map_alloc_clean(char **map, char *line, int y);
+t_bool	valid_line(char *line);
+void	parse_map_lines(t_game *game, char **map);
 
 //parsing/map_utils2.c
 int		get_map_width(char **map);
@@ -170,6 +173,7 @@ void	parse_elements(t_game *game, int fd);
 //parsing/parse_utils.c
 t_bool	is_wspace(char c);
 void	whitespace_checker(t_game *game, char *trimmed);
+t_bool	is_trailing_wspace(char *str, int index);
 //		-- END OF PARSING DIRECTORY SECTION --	//
 
 //main.c
@@ -197,7 +201,7 @@ void	texture_loop(t_game *game, t_tex *tex, t_dda dda, double x);
 void	draw_ceiling_and_floor(t_game *game, t_dda dda, double x);
 
 //general_utils.c
-void	ft_destroy(t_game *game);
+void	destroy_2d_arr(char **map);
 void	exit_err(t_game *game, char *line, char *message);
 
 #endif

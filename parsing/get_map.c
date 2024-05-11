@@ -1,26 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_utils.c                                        :+:      :+:    :+:   */
+/*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:44:12 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/11 01:16:41 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 00:40:23 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-static void	ft_map_alloc_clean(char **map, int y)
-{
-	int	i;
-
-	i = 0;
-	while (i < y)
-		free(map[i++]);
-	free(map);
-}
 
 static char	*first_row(int fd, char **map, int *y)
 {
@@ -63,7 +53,7 @@ static char	**get_map_nl(int fd)
 			break ;
 		map[y] = (char *)malloc(sizeof(char) * (ft_strlen(row) + 1));
 		if (!map[y])
-			return (ft_map_alloc_clean(map, y), NULL);
+			return (ft_map_alloc_clean(map, row, y), NULL);
 		ft_strlcpy(map[y++], row, ft_strlen(row) + 1);
 		free(row);
 	}
@@ -116,31 +106,6 @@ char	**get_map(int fd)
 			map[i] = extract_nl(map[i]);
 		i++;
 	}
+	i = 0;
 	return (map);
 }
-
-// void	fill_map(char **map)
-// {
-// 	map = {'1', '1', '1', '1', '1', '1', '1', '1'};
-// }
-
-// int main()
-// {
-// 	t_game	game;	
-// 	int		fd;
-
-// 	fd = open("map.cub", O_RDONLY, 0777);
-// 	if (fd == -1)
-// 	{
-// 		printf("error opening file\n");
-// 		return (1);
-// 	}
-// 	game.map = get_map(fd);
-// 	for (int i = 0; game.map[i] != NULL; i++)
-// 	{
-// 		printf("%s\n", game.map[i]);
-// 	}
-// 	// draw_square(&(data.img), 400, 400, 0xff00);
-// 	//fill_squares(&(data.img), 0xff00);
-//     return (0);
-// }

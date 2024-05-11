@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:25:50 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/10 23:24:55 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/11 23:38:00 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,15 @@ void	whitespace_checker(t_game *game, char *trimmed)
 			exit_err(game, trimmed, "Identifier and texture path must"
 				" be separated by whitespace");
 	}
+}
+
+t_bool	is_trailing_wspace(char *str, int index)
+{
+	while (str[index])
+	{
+		if (!is_wspace(str[index]))
+			return (FALSE);
+		index++;
+	}
+	return (TRUE);
 }

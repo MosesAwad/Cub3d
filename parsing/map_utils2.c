@@ -6,40 +6,18 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 18:46:24 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/11 00:30:05 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/11 23:59:39 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	get_map_width(char **map)
-{
-	int	j;
-
-	j = 0;
-	while (map[0][j])
-		j++;
-	return (j);
-}
-
-int	get_map_height(char **map)
-{
-	int	i;
-
-	i = 0;
-	while (map[i])
-		i++;
-	return (i);
-}
-
-//Fill preceeding and trailing spaces with X's
-//Fill intermediate spaces with 0's
-char	**ft_realloc_x(t_game *game, char **map)
+static char	**x_map_mem_alloc(t_game *game, char **map)
 {
 	int		i;
 	int		j;
-	int		max_len;
 	char	**buffer;
+	int		max_len;
 
 	i = 0;
 	max_len = -2147483648;
@@ -47,7 +25,6 @@ char	**ft_realloc_x(t_game *game, char **map)
 		i++;
 	buffer = (char **)malloc((i + 1) * (sizeof(char *)));
 	game->map_height = i;
-
 	i = 0;
 	while (map[i])
 	{
@@ -61,8 +38,13 @@ char	**ft_realloc_x(t_game *game, char **map)
 	i = 0;
 	while (map[i])
 		buffer[i++] = (char *)malloc(max_len + 1);
-	buffer[i] = NULL;
-	game->map_width = max_len;
+	return (buffer[i] = NULL, game->map_width = max_len, buffer);
+}
+
+static void	fill_x_map(char **map, char **buffer, int max_len)
+{
+	int	i;
+	int	j;
 
 	i = 0;
 	while (map[i])
@@ -72,7 +54,9 @@ char	**ft_realloc_x(t_game *game, char **map)
 			buffer[i][j++] = 'X';
 		while (map[i][j])
 		{
-			if (map[i][j] == ' ')
+			if (is_trailing_wspace(map[i], j))
+				buffer[i][j] = 'X';
+			else if (is_wspace(map[i][j]))
 				buffer[i][j] = '0';
 			else
 				buffer[i][j] = map[i][j];
@@ -81,30 +65,20 @@ char	**ft_realloc_x(t_game *game, char **map)
 		while (j < max_len)
 			buffer[i][j++] = 'X';
 		buffer[i][j] = '\0';
-		free(map[i]);
 		i++;
 	}
-	free(map);
-	return (buffer);
 }
 
-// void	handle_spaces(char **map)
-// {
-// 	int	i;
-// 	int	j;
+//Fill preceeding and trailing spaces with X's
+//Fill intermediate spaces with 0's
+char	**ft_realloc_x(t_game *game, char **map)
+{
+	char	**buffer;
+	int		max_len;
 
-// 	i = 0;
-// 	if (map == NULL)
-// 		return ;
-// 	while (map[i])
-// 	{
-// 		j = 0;
-// 		while (map[i][j])
-// 		{
-// 			if (is_wspace(map[i][j]))
-// 				map[i][j] = '1';
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
+	buffer = x_map_mem_alloc(game, map);
+	max_len = game->map_width;
+	fill_x_map(map, buffer, max_len);
+	destroy_2d_arr(map);
+	return (buffer);
+}

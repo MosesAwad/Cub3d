@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 00:01:02 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/07 22:50:39 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/11 23:55:55 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,5 @@ void	set_up_player(t_game *game)
 		}
 		y++;
 	}
-	ft_destroy(game);
-	printf("Error: no player on map\n");
-	exit(1);
+	exit_err(game, NULL, "No player on map");
 }

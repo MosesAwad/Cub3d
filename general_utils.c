@@ -6,24 +6,24 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 22:07:29 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/10 22:01:53 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/11 23:51:03 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_destroy(t_game *game)
+void	destroy_2d_arr(char **map)
 {
 	int	i;
 
 	i = 0;
-	if (game->map == NULL)
+	if (map == NULL)
 		return ;
-	if (game->map[0] == NULL)
+	if (map[0] == NULL)
 		return ;
-	while (game->map[i])
-		free(game->map[i++]);
-	free(game->map);
+	while (map[i])
+		free(map[i++]);
+	free(map);
 }
 
 //Check later, naybe there is no need to even destroy mlx
@@ -33,6 +33,6 @@ void	exit_err(t_game *game, char *line, char *message)
 {
 	printf(RED"⚠️ Error ⚠️\n%s\n"OG, message);
 	free(line);
-	ft_destroy(game);
+	destroy_2d_arr(game->map);
 	exit(1);
 }

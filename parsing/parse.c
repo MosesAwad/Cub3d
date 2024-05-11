@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:14:23 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/11 01:04:27 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 00:43:52 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	parse_elements(t_game *game, int fd)
 			printf("%s\n", game->map[i]);
 		}
 	}
+	parse_map_lines(game, game->map);
 
 	printf("\n");
 
