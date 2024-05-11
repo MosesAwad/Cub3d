@@ -12,30 +12,6 @@
 
 #include "../cub3d.h"
 
-// static	char	*first_nonempty_line(int fd, char *line)
-// {
-// 	int		i;
-// 	char	*line;
-
-// 	i = 0;
-// 	line = get_next_line(fd);
-// 	while (is_wspace(line[i]))
-// 		i++;
-// 	if (line[i] != '\0')
-// 		return (line);
-// 	free(line);
-// 	while (line)
-// 	{
-// 		line = get_next_line(fd);
-// 		while (is_wspace(line[i]))
-// 			i++;
-// 		if (line[i] != '\0')
-// 			return (line);
-// 		free(line);
-// 	}
-// 	return (NULL);
-// }
-
 static void	ft_map_alloc_clean(char **map, int y)
 {
 	int	i;
@@ -53,10 +29,13 @@ static char	*first_row(int fd, char **map, int *y)
 	if (map == NULL)
 		return (NULL);
 	row = get_next_line(fd);
-	if (!row)
-		return (free(map), NULL);
-	// if (empty_line(row) == TRUE)
-	// 	return (row);
+	while (row[0] == '\n' && row[1] == '\0')
+	{
+		free(row);
+		row = get_next_line(fd);
+		if (!row)
+			return (free(map), NULL);
+	}
 	*y = 0;
 	map[*y] = (char *)malloc(sizeof(char) * (ft_strlen(row) + 1));
 	if (!map[*y])

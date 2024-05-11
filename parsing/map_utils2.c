@@ -32,23 +32,79 @@ int	get_map_height(char **map)
 	return (i);
 }
 
-void	handle_spaces(char **map)
+//Fill preceeding and trailing spaces with X's
+//Fill intermediate spaces with 0's
+char	**ft_realloc_x(t_game *game, char **map)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	int		max_len;
+	char	**buffer;
 
 	i = 0;
-	if (map == NULL)
-		return ;
+	max_len = -2147483648;
+	while (map[i])
+		i++;
+	buffer = (char **)malloc((i + 1) * (sizeof(char *)));
+	game->map_height = i;
+
+	i = 0;
 	while (map[i])
 	{
 		j = 0;
 		while (map[i][j])
-		{
-			if (is_wspace(map[i][j]))
-				map[i][j] = '1';
 			j++;
-		}
+		if (j > max_len)
+			max_len = j;
 		i++;
 	}
+	i = 0;
+	while (map[i])
+		buffer[i++] = (char *)malloc(max_len + 1);
+	buffer[i] = NULL;
+	game->map_width = max_len;
+
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (is_wspace(map[i][j]))
+			buffer[i][j++] = 'X';
+		while (map[i][j])
+		{
+			if (map[i][j] == ' ')
+				buffer[i][j] = '0';
+			else
+				buffer[i][j] = map[i][j];
+			j++;
+		}
+		while (j < max_len)
+			buffer[i][j++] = 'X';
+		buffer[i][j] = '\0';
+		free(map[i]);
+		i++;
+	}
+	free(map);
+	return (buffer);
 }
+
+// void	handle_spaces(char **map)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = 0;
+// 	if (map == NULL)
+// 		return ;
+// 	while (map[i])
+// 	{
+// 		j = 0;
+// 		while (map[i][j])
+// 		{
+// 			if (is_wspace(map[i][j]))
+// 				map[i][j] = '1';
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }

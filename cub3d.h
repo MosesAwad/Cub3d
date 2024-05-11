@@ -13,8 +13,8 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "mlx-linux/mlx.h"
-// # include "mlx/mlx.h"
+// # include "mlx-linux/mlx.h"
+# include "mlx/mlx.h"
 # include "Libft/libft.h"
 
 # include <stdio.h>
@@ -137,6 +137,11 @@ typedef struct s_game {
 }	t_game;
 
 //		-- START OF PARSING DIRECTORY SECTION --	//
+//parsing/dfs.c
+char    **mark_map_spawn(t_game *game, char **map);
+void    dfs(t_game *game, char **mark_map, int x, int y);
+void    parse_marked_map(t_game *game, char **marked_map);
+
 //parsing/map_rules.c
 void	map_rules1(t_game *game);
 
@@ -147,6 +152,8 @@ char	**get_map(int fd);
 int		get_map_width(char **map);
 int		get_map_height(char **map);
 void	handle_spaces(char **map);
+
+char	**ft_realloc_x(t_game *game, char **map);
 
 //parsing/parse_textures.c
 int		parse_textures(t_game *game, char *trimmed);
