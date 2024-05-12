@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 22:51:33 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 22:51:39 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 // # include "mlx-linux/mlx.h"
 # include "mlx/mlx.h"
@@ -141,76 +141,76 @@ typedef struct s_game {
 
 //	---- START OF PARSING DIRECTORY SECTION ---- //
 
-//parsing/map_dfs.c
+//parsing_bonus/map_dfs_bonus.c
 char	**mark_map_spawn(t_game *game, char **map);
 void	dfs(t_game *game, char **mark_map, int x, int y);
 void	parse_marked_map(t_game *game, char **marked_map);
 
-//parsing/get_map.c
+//parsing_bonus/get_map_bonus.c
 char	**get_map(int fd);
 void	parse_map_lines(t_game *game, char **map);
 
-//parsing/get_map_utils.c
+//parsing_bonus/get_map_utils_bonus.c
 void	ft_map_alloc_clean(char **map, char *line, int y);
 t_bool	valid_line(char *line);
 void	parse_map_lines(t_game *game, char **map);
 
-//parsing/map_utils2.c
+//parsing_bonus/map_utils2_bonus.c
 int		get_map_width(char **map);
 int		get_map_height(char **map);
 void	handle_spaces(char **map);
 
 char	**ft_realloc_x(t_game *game, char **map);
 
-//parsing/parse_textures.c
+//parsing_bonus/parse_textures_bonus.c
 int		parse_textures(t_game *game, char *trimmed);
 
-//parsing/parse_colors.c
+//parsing_bonus/parse_colors_bonus.c
 int		parse_colors(t_game *game, char *trimmed);
 
-//parsing/parse_colors_utils.c
+//parsing_bonus/parse_colors_utils_bonus.c
 void	check_rgb_syntax(t_game *game, char *full, char *str);
 
-//parsing/parse.c
+//parsing_bonus/parse_bonus.c
 void	parse_elements(t_game *game, int fd);
 
-//parsing/get_next_line.c
+//parsing_bonus/get_next_line_bonus.c
 char	*get_next_line(int fd);
 
-//parsing/parse_utils.c
+//parsing_bonus/parse_utils_bonus.c
 t_bool	is_wspace(char c);
 void	whitespace_checker(t_game *game, char *trimmed);
 t_bool	is_trailing_wspace(char *str, int index);
 t_bool	valid_file_name(char *str);
 
-//parsing/parse_map.c
+//parsing_bonus/parse_map_bonus.c
 void	parse_map(t_game *game, int fd);
 
 //	---- END OF PARSING DIRECTORY SECTION ---- //
 
 
-//srcs/main.c
+//srcs_bonus/main_bonus.c
 void	flush(t_game game);
 void	draw_v_line(t_game *game, t_dda dda, int x, int color);
 int		get_color(t_game *game, int index, int tex_x, int tex_y);
 void	my_pixel_put(t_game *game, int x, int y, int color);
 
-//srcs/player_utils.c
+//srcs_bonus/player_utils_bonus.c
 void	set_up_player(t_game *game);
 
-//srcs/set_up_images.c
+//srcs_bonus/set_up_images_bonus.c
 void	set_up_images(t_game *game);
 
-//srcs/raycast.c
+//srcs_bonus/raycast_bonus.c
 void	ray_cast(t_game *game);
 
-//srcs/raycast_utils.c
+//srcs_bonus/raycast_utils_bonus.c
 void	set_up_start_end(t_game *game, t_dda *dda);
 void	set_up_tex_x(t_game *game, t_dda dda, t_tex *tex);
 void	texture_loop(t_game *game, t_tex *tex, t_dda dda, double x);
 void	draw_ceiling_and_floor(t_game *game, t_dda dda, double x);
 
-//srcs/general_utils.c
+//srcs_bonus/general_utils_bonus.c
 void	destroy_2d_arr(char **map);
 void	exit_err(t_game *game, char *line, char *message);
 
