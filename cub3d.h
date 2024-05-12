@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 18:18:05 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 22:17:47 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ typedef struct s_game {
 	int			fd;
 	int			map_height;
 	int			map_width;
+	int			map_ind_height;
+	int			map_ind_width;
 	int			floor_color;
 	int			ceiling_color;
 	double		player_posx;
@@ -178,6 +180,9 @@ void	check_rgb_syntax(t_game *game, char *full, char *str);
 //parsing/parse.c
 void	parse_elements(t_game *game, int fd);
 
+//parsing/get_next_line.c
+char	*get_next_line(int fd);
+
 //parsing/parse_utils.c
 t_bool	is_wspace(char c);
 void	whitespace_checker(t_game *game, char *trimmed);
@@ -193,11 +198,8 @@ void	parse_map(t_game *game, int fd);
 //main.c
 void	flush(t_game game);
 void	draw_v_line(t_game *game, t_dda dda, int x, int color);
-int		get_color(t_game *game, int tex_x, int tex_y);
+int		get_color(t_game *game, int index, int tex_x, int tex_y);
 void	my_pixel_put(t_game *game, int x, int y, int color);
-
-//get_next_line.c
-char	*get_next_line(int fd);
 
 //player_utils.c
 void	set_up_player(t_game *game);

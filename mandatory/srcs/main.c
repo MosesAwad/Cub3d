@@ -6,11 +6,11 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 18:20:16 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 22:32:49 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	my_pixel_put(t_game *game, int x, int y, int color)
 {
@@ -211,14 +211,14 @@ void	rotate_angle(t_game *game, t_vector *vec, int flag)
 	vec->y = sin(angle) * vec_x_save + cos(angle) * vec->y;
 }
 
-int	get_color(t_game *game, int tex_x, int tex_y)
+int	get_color(t_game *game, int index, int tex_x, int tex_y)
 {
 	int	color;
 	int	offset;
 
 	color = 0;
-	offset = (game->album[0].tex_width * tex_y) + (tex_x);
-	color = *(game->album[0].img_pixels_ptr + offset);
+	offset = (game->album[index].tex_width * tex_y) + (tex_x);
+	color = *(game->album[index].img_pixels_ptr + offset);
 	return (color);
 }
 
@@ -416,6 +416,16 @@ int	key_hook_linux(int keycode, t_game *game)
 //     return (0);
 // }
 
+void	init_params(t_game *game)
+{
+	game->data.mlx_ptr = mlx_init();
+	game->map_height = MAP_HEIGHT;
+	game->map_width = MAP_WIDTH;
+	game->data.win_ptr = mlx_new_window(game->data.mlx_ptr,
+			game->map_width, game->map_height, "cub3D");
+	game->map = NULL;
+}
+
 int main(int argc, char *argv[])
 {
 	t_game	game;	
@@ -427,14 +437,45 @@ int main(int argc, char *argv[])
 	game.fd = open(argv[1], O_RDONLY, 0777);
 	if (game.fd == -1)
 		return (printf("Error opening file\n"), 1);
-	game.data.mlx_ptr = mlx_init();
-	game.map_height = MAP_HEIGHT;
-	game.map_width = MAP_WIDTH;
-	game.data.win_ptr = mlx_new_window(game.data.mlx_ptr, game.map_width , game.map_height, "Yay");
-
-	game.map = NULL;
+	init_params(&game);
 
 	parse_elements(&game, game.fd);
+
+	game.data.img.img_ptr = mlx_new_image(game.data.mlx_ptr, game.map_width, game.map_height);
+	if (game.data.img.img_ptr == NULL)
+	{
+		printf("error : img ptr\n");
+		return (1);
+	}
+
+	game.data.img.img_pixels_ptr = (int *) mlx_get_data_addr(game.data.img.img_ptr,
+												&(game.data.img.bits_per_pixel),
+												&(game.data.img.line_len),
+												&(game.data.img.endian));
+	if (game.data.img.img_pixels_ptr == NULL)
+	{
+		printf("error : img pxl ptr\n");
+		return (1);
+	}
+
+	// set_up_player(&game);
+	game.player_angle = 0;
+
+
+	// set_up_images(&game);
+
+	ray_cast(&game);
+	mlx_put_image_to_window(game.data.mlx_ptr, game.data.win_ptr, game.data.img.img_ptr, 0, 0);
+
+	// mlx_key_hook(game.data.win_ptr, key_hook, &game);
+	// mlx_key_hook(game.data.win_ptr, key_hook_linux, &game);
+
+	mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook, &game);
+	// mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook_linux, &game);
+
+    mlx_loop(game.data.mlx_ptr);
+
+
 	//mlx_loop(game.data.mlx_ptr);
 	return (0);
 }

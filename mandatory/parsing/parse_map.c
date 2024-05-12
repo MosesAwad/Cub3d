@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:55:56 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 18:01:05 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 19:41:47 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	parse_map(t_game *game, int fd)
 
 
 // 	printf("game height is %d and game width is %d\n",
-// 		game->map_height, game->map_width);
+// 		game->map_ind_height, game->map_ind_width);
 // 	printf("\n");
 
 // 	char **mark_map = mark_map_spawn(game, game->map);

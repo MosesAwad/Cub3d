@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 18:01:47 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/10 23:22:41 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 22:31:58 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ static void	get_path(t_game *game, char *full, char *str, int index)
 	if (game->album[index].img == NULL)
 		exit_err(game, full, "Incorrect file path used for one or more"
 			" textures");
+	game->album[index].img_pixels_ptr = (int *)mlx_get_data_addr(
+			game->album[index].img,
+			&(game->album[index].bits_per_pixel),
+			&(game->album[index].line_len),
+			&(game->album[index].endian));
 }
 
 static int	get_tex_index(char *trimmed)

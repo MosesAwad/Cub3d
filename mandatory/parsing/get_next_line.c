@@ -6,11 +6,11 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:28 by mawad             #+#    #+#             */
-/*   Updated: 2024/04/24 17:32:15 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 22:17:55 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 static int	nb_check(int nb_read, char *line, char *buffer)
 {

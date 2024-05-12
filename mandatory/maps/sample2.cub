@@ -1,11 +1,11 @@
 F 220,  201 ,0
-	NO images/brick.xpm
-  WE		 images/gun.xpm    
-  		EA 	images/ice.xpm				
+	NO mandatory/images/brick.xpm
+  WE		 mandatory/images/lion.xpm    
+  		EA 	mandatory/images/ice.xpm				
 
 C          232 	, 209 , 22
 
-SO images/ice3.xpm
+SO mandatory/images/ice3.xpm
 
 
 

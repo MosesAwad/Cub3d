@@ -6,11 +6,11 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 22:07:29 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 18:03:48 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 22:19:58 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	destroy_2d_arr(char **map)
 {

@@ -6,11 +6,11 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 00:01:02 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/11 23:55:55 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 22:20:05 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 static void	set_player_dir(t_game *game, int x, int y)
 {

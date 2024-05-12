@@ -6,11 +6,11 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:56:01 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/10 21:56:41 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 22:20:10 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	set_up_start_end(t_game *game, t_dda *dda)
 {
@@ -94,15 +94,24 @@ void	texture_loop(t_game *game, t_tex *tex, t_dda dda, double x)
 {
 	int	color;
 	int	offset;
+	int	index;
 
-	tex->step = ((double) game->album[0].tex_height / dda.line_height);
+	if (dda.side == 0 && dda.ray_dir.x > 0)
+		index = 2;
+	if (dda.side == 0 && dda.ray_dir.x < 0)
+		index = 3;
+	if (dda.side == 1 && dda.ray_dir.y > 0)
+		index = 1;
+	if (dda.side == 1 && dda.ray_dir.y < 0)
+		index = 0;
+	tex->step = ((double) game->album[index].tex_height / dda.line_height);
 	tex->tex_pos = (dda.start - game->map_height / 2 + 3 * dda.line_height / 4)
 		* tex->step;
 	while (dda.start < dda.end)
 	{
-		tex->tex_y = (int) tex->tex_pos & (game->album[0].tex_height - 1);
+		tex->tex_y = (int) tex->tex_pos & (game->album[index].tex_height - 1);
 		tex->tex_pos += tex->step;
-		color = get_color(game, tex->tex_x, tex->tex_y);
+		color = get_color(game, index, tex->tex_x, tex->tex_y);
 		if (dda.side == 1)
 			color = (color >> 1) & 8355711;
 		offset = (game->map_width * dda.start) + x;

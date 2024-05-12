@@ -6,11 +6,11 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:46:48 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/07 21:40:05 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 22:20:15 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 static void	init_params_and_vectors(t_game *game, t_dda *dda,
 	t_vector *ray_dir, double x)
@@ -120,8 +120,8 @@ void	draw_gun(t_game *game)
 		y = 0;
 		while (y < game->map_height - 1)
 		{
-			offset = (game->album[1].tex_width * y) + x;
-			color = *(game->album[1].img_pixels_ptr + offset);
+			offset = (game->album[5].tex_width * y) + x;
+			color = *(game->album[5].img_pixels_ptr + offset);
 			if (color > 0)
 				*(game->data.img.img_pixels_ptr + offset) = color;
 			y++;

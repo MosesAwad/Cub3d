@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 18:46:24 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/11 23:59:39 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 19:41:41 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	**x_map_mem_alloc(t_game *game, char **map)
 	while (map[i])
 		i++;
 	buffer = (char **)malloc((i + 1) * (sizeof(char *)));
-	game->map_height = i;
+	game->map_ind_height = i;
 	i = 0;
 	while (map[i])
 	{
@@ -38,7 +38,7 @@ static char	**x_map_mem_alloc(t_game *game, char **map)
 	i = 0;
 	while (map[i])
 		buffer[i++] = (char *)malloc(max_len + 1);
-	return (buffer[i] = NULL, game->map_width = max_len, buffer);
+	return (buffer[i] = NULL, game->map_ind_width = max_len, buffer);
 }
 
 static void	fill_x_map(char **map, char **buffer, int max_len)
@@ -77,7 +77,7 @@ char	**ft_realloc_x(t_game *game, char **map)
 	int		max_len;
 
 	buffer = x_map_mem_alloc(game, map);
-	max_len = game->map_width;
+	max_len = game->map_ind_width;
 	fill_x_map(map, buffer, max_len);
 	destroy_2d_arr(map);
 	return (buffer);
