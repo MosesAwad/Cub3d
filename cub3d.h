@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 01:19:57 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 18:18:05 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ typedef struct s_var {
 
 typedef struct s_game {
 	char		**map;
+	int			fd;
 	int			map_height;
 	int			map_width;
 	int			floor_color;
@@ -141,7 +142,9 @@ typedef struct s_game {
 	t_tex		album[8];
 }	t_game;
 
-//		-- START OF PARSING DIRECTORY SECTION --	//
+
+//	---- START OF PARSING DIRECTORY SECTION ---- //
+
 //parsing/map_dfs.c
 char	**mark_map_spawn(t_game *game, char **map);
 void	dfs(t_game *game, char **mark_map, int x, int y);
@@ -179,7 +182,13 @@ void	parse_elements(t_game *game, int fd);
 t_bool	is_wspace(char c);
 void	whitespace_checker(t_game *game, char *trimmed);
 t_bool	is_trailing_wspace(char *str, int index);
-//		-- END OF PARSING DIRECTORY SECTION --	//
+t_bool	valid_file_name(char *str);
+
+//parsing/parse_map.c
+void	parse_map(t_game *game, int fd);
+
+//	---- END OF PARSING DIRECTORY SECTION ---- //
+
 
 //main.c
 void	flush(t_game game);

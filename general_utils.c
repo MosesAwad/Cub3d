@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 22:07:29 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/11 23:51:03 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 18:03:48 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ void	exit_err(t_game *game, char *line, char *message)
 	printf(RED"⚠️ Error ⚠️\n%s\n"OG, message);
 	free(line);
 	destroy_2d_arr(game->map);
+	close(game->fd);
 	exit(1);
 }

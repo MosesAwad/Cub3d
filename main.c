@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/11 01:19:52 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/12 18:20:16 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -416,17 +416,17 @@ int	key_hook_linux(int keycode, t_game *game)
 //     return (0);
 // }
 
-int main()
+int main(int argc, char *argv[])
 {
 	t_game	game;	
-	int		fd;
 
-	fd = open("maps/sample.cub", O_RDONLY, 0777);
-	if (fd == -1)
-	{
-		printf("error opening file\n");
-		return (1);
-	}
+	if (argc != 2)
+		return (printf("Must use strictly 2 arguments\n"), 1);
+	if (valid_file_name(argv[1]) == FALSE)
+		return (printf("Map must be in .cub format\n"), 1);
+	game.fd = open(argv[1], O_RDONLY, 0777);
+	if (game.fd == -1)
+		return (printf("Error opening file\n"), 1);
 	game.data.mlx_ptr = mlx_init();
 	game.map_height = MAP_HEIGHT;
 	game.map_width = MAP_WIDTH;
@@ -434,7 +434,7 @@ int main()
 
 	game.map = NULL;
 
-	parse_elements(&game, fd);
+	parse_elements(&game, game.fd);
 	//mlx_loop(game.data.mlx_ptr);
 	return (0);
 }

@@ -1,4 +1,4 @@
-NAME = cube
+NAME = cub3D
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
@@ -7,7 +7,7 @@ PARSE_DIR = parsing
 
 SRCS = main.c get_next_line.c player_utils.c set_up_images.c raycast.c raycast_utils.c general_utils.c \
 		$(addprefix $(PARSE_DIR)/, get_map.c get_map_utils.c map_utils2.c parse.c parse_utils.c parse_colors.c \
-			parse_colors_utils.c parse_textures.c map_dfs.c)
+			parse_colors_utils.c parse_textures.c map_dfs.c parse_map.c)
 
 OBJS = $(SRCS:.c=.o)
 
