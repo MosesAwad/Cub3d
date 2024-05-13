@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:47:37 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/10 23:23:02 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/13 06:37:23 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,26 @@ static int	set_color(t_game *game, char *full, char *str)
 
 int	parse_colors(t_game *game, char *trimmed)
 {
-	int	count;
-
-	count = 0;
-	if (trimmed[0] == 'C')
+	if (trimmed[0] == 'C' && is_wspace(trimmed[1]))
 	{
 		whitespace_checker(game, trimmed);
 		check_rgb_syntax(game, trimmed, trimmed + 1);
+		if (game->ceiling_color != -1)
+			exit_err(game, trimmed, "Duplicate color identifier");
 		game->ceiling_color = set_color(game, trimmed, trimmed + 1);
-		count++;
+		return (1);
 	}
-	else if (trimmed[0] == 'F')
+	else if (trimmed[0] == 'F' && is_wspace(trimmed[1]))
 	{
 		whitespace_checker(game, trimmed);
 		check_rgb_syntax(game, trimmed, trimmed + 1);
+		if (game->floor_color != -1)
+			exit_err(game, trimmed, "Duplicate color identifier");
 		game->floor_color = set_color(game, trimmed, trimmed + 1);
-		count++;
+		return (1);
 	}
-	return (count);
+	else if (trimmed[0] == '\n' || trimmed[0] == '\0')
+		return (0);
+	else
+		return (-1);
 }

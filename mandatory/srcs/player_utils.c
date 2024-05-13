@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 00:01:02 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 22:20:05 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/13 07:52:41 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	set_up_player(t_game *game)
 				|| game->map[y][x] == 'E' || game->map[y][x] == 'W')
 			{
 				set_player_dir(game, x, y);
-				game->player_posx = x;
-				game->player_posy = y;
+				game->player_posx = x + 0.5;
+				game->player_posy = y + 0.5;
 				return ;
 			}
 			x++;

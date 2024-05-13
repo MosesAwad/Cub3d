@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 22:51:33 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/13 06:46:24 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ typedef struct s_game {
 	t_vector	dir;
 	t_vector	cam_plane;
 	t_var		data;
-	t_tex		album[8];
+	t_tex		album[6];
 }	t_game;
 
 
@@ -147,7 +147,7 @@ void	dfs(t_game *game, char **mark_map, int x, int y);
 void	parse_marked_map(t_game *game, char **marked_map);
 
 //parsing/get_map.c
-char	**get_map(int fd);
+char	**get_map(t_game *game, int fd);
 void	parse_map_lines(t_game *game, char **map);
 
 //parsing/get_map_utils.c

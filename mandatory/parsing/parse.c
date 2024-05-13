@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:14:23 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 22:33:46 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/13 07:27:55 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ void	parse_elements(t_game *game, int fd)
 	while (line && count != 6)
 	{
 		trimmed = ft_strtrim(line, " \t\n\v\f\r");
-		count += parse_textures(game, trimmed);
-		count += parse_colors(game, trimmed);
+		if (parse_textures(game, trimmed) == 0)
+			count += parse_colors(game, trimmed);
+		else
+			count++;
 		free(trimmed);
 		line = get_next_line(fd);
 	}

@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 22:32:49 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/13 07:47:58 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,8 @@ t_bool	check_valid_move(t_game *game, int flag)
 		target_v.x += (-game->dir.y * (MOVE_SPEED));
 		target_v.y += (game->dir.x * (MOVE_SPEED));
 	}
-	if (game->map[(int) target_v.y][(int) target_v.x] == '1')
+	if (game->map[(int) target_v.y][(int) target_v.x] == '1'
+		|| game->map[(int) target_v.y][(int) target_v.x] == 'X')
 		return (FALSE);
 	return (TRUE);
 }
@@ -418,12 +419,21 @@ int	key_hook_linux(int keycode, t_game *game)
 
 void	init_params(t_game *game)
 {
+	int	i;
+
+	i = 0;
+	while (i < 6)
+		game->album[i++].img = NULL;
 	game->data.mlx_ptr = mlx_init();
 	game->map_height = MAP_HEIGHT;
 	game->map_width = MAP_WIDTH;
 	game->data.win_ptr = mlx_new_window(game->data.mlx_ptr,
 			game->map_width, game->map_height, "cub3D");
 	game->map = NULL;
+	game->ceiling_color = -1;
+	game->floor_color = -1;
+	game->map_ind_height = 0;
+	game->map_ind_width = 0;
 }
 
 int main(int argc, char *argv[])
