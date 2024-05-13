@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 00:58:22 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 00:41:17 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/13 09:10:39 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,40 @@ t_bool	valid_line(char *line)
 void	parse_map_lines(t_game *game, char **map)
 {
 	int	i;
+	int	j;
 
 	i = 0;
 	while (map[i])
 	{
+		j = 0;
 		if (map[i][0] == '\0')
-			exit_err(game, NULL, "Empty line not allowed"
-				" in map content");
+		{
+			while (map[i + j] != NULL)
+			{
+				if (map[i + j][0] != '\0')
+					exit_err(game, NULL, "Empty line not allowed"
+						" in map content");
+				j++;
+			}
+		}
 		if (valid_line(map[i]) == FALSE)
 			exit_err(game, NULL, "Invalid map line");
 		i++;
 	}
 }
+
+// void	parse_map_lines(t_game *game, char **map)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (map[i])
+// 	{
+// 		if (map[i][0] == '\0')
+// 			exit_err(game, NULL, "Empty line not allowed"
+// 				" in map content");
+// 		if (valid_line(map[i]) == FALSE)
+// 			exit_err(game, NULL, "Invalid map line");
+// 		i++;
+// 	}
+// }

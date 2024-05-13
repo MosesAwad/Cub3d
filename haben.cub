@@ -1,15 +1,16 @@
-NO /Users/mawad/Desktop/GitCube/mandatory/images/brick.xpm
+NO /Users/mawad/Desktop/GitCube/mandatory/images/lion.xpm
 SO /Users/mawad/Desktop/GitCube/mandatory/images/brick.xpm
-WE /Users/mawad/Desktop/GitCube/mandatory/images/brick.xpm  
-EA /Users/mawad/Desktop/GitCube/mandatory/images/brick.xpm
+WE /Users/mawad/Desktop/GitCube/mandatory/images/ice3.xpm  
+EA                               /Users/mawad/Desktop/GitCube/mandatory/images/ice.xpm
 
-F 209,100,025
-C 225,30,0
+F 20,160,25
 
-        1111111111111111111111111
-        1000000000110000000000001
-        1011000001110000000000001
-        1001000000000000000000001
+C 205,30,130
+   
+       111111111111111111111111   
+      1000000000110000000000001   
+     1011000001110000000000001
+    10010000000000000000000011111
 111111111011000001110000000000001
  10000000001100000111011  11111111
 11110111111111011100000010001

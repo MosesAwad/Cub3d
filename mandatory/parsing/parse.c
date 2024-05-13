@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:14:23 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/13 07:27:55 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/13 09:22:27 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	parse_elements(t_game *game, int fd)
 		else
 			count++;
 		free(trimmed);
-		line = get_next_line(fd);
+		if (count != 6)
+			line = get_next_line(fd);
 	}
 	if (count != 6)
 		exit_err(game, line, "Missing or incorrect identifier");
