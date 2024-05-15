@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:02:50 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 14:25:40 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 23:31:33 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,55 @@
 
 void	move_up(t_game *game)
 {
+	if (game->move_up == FALSE)
+		return ;
 	if (check_valid_move(game, W_KEY) == TRUE)
 	{
 		game->player_posx += (game->dir.x * MOVE_SPEED);
 		game->player_posy += (game->dir.y * MOVE_SPEED);
 	}
-	ray_cast(game);
+	printf("%d\n", game->move_up);
 }
 
 void	move_down(t_game *game)
 {
+	if (game->move_down == FALSE)
+		return ;
 	if (check_valid_move(game, S_KEY) == TRUE)
 	{
 		game->player_posx -= (game->dir.x * MOVE_SPEED);
 		game->player_posy -= (game->dir.y * MOVE_SPEED);
 	}
-	ray_cast(game);
 }
 
 void	move_left(t_game *game)
 {
+	if (game->move_left == FALSE)
+		return ;
 	if (check_valid_move(game, A_KEY) == TRUE)
 	{
 		game->player_posx -= (-game->dir.y * MOVE_SPEED);
 		game->player_posy -= (game->dir.x * MOVE_SPEED);
 	}
-	ray_cast(game);
 }
 
 void	move_right(t_game *game)
 {
+	if (game->move_right == FALSE)
+		return ;
 	if (check_valid_move(game, D_KEY) == TRUE)
 	{
 		game->player_posx += (-game->dir.y * MOVE_SPEED);
 		game->player_posy += (game->dir.x * MOVE_SPEED);
 	}
-	ray_cast(game);
+}
+
+void	movement(t_game *game)
+{
+	move_up(game);
+	move_down(game);
+	move_left(game);
+	move_right(game);
+	rotate_left(game);
+	rotate_right(game);
 }

@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:09:14 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 14:48:58 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 23:21:51 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,51 @@
 
 void	rotate_left(t_game *game)
 {
+	if (game->rot_left == FALSE)
+		return ;
 	rotate_angle(&(game->dir), 1);
 	rotate_angle(&(game->cam_plane), 1);
-	ray_cast(game);
 }
 
 void	rotate_right(t_game *game)
 {
+	if (game->rot_right == FALSE)
+		return ;
 	rotate_angle(&(game->dir), 0);
 	rotate_angle(&(game->cam_plane), 0);
-	ray_cast(game);
 }
 
-int	key_hook(int keycode, t_game *game)
+int	key_press(int keycode, t_game *game)
 {
 	if (keycode == W_KEY)
-		move_up(game);
+		game->move_up = TRUE;
 	else if (keycode == A_KEY)
-		move_left(game);
+		game->move_left = TRUE;
 	else if (keycode == S_KEY)
-		move_down(game);
+		game->move_down = TRUE;
 	else if (keycode == D_KEY)
-		move_right(game);
+		game->move_right = TRUE;
 	else if (keycode == L_ARROW)
-		rotate_left(game);
+		game->rot_left = TRUE;
 	else if (keycode == R_ARROW)
-		rotate_right(game);
+		game->rot_right = TRUE;
+	return (0);
+}
+
+int	key_release(int keycode, t_game *game)
+{
+	if (keycode == W_KEY)
+		game->move_up = FALSE;
+	else if (keycode == A_KEY)
+		game->move_left = FALSE;
+	else if (keycode == S_KEY)
+		game->move_down = FALSE;
+	else if (keycode == D_KEY)
+		game->move_right = FALSE;
+	else if (keycode == L_ARROW)
+		game->rot_left = FALSE;
+	else if (keycode == R_ARROW)
+		game->rot_right = FALSE;
 	return (0);
 }
 

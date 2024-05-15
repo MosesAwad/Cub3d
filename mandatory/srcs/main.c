@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 16:08:25 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 23:33:33 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,12 @@ void	init_params(t_game *game)
 	game->floor_color = -1;
 	game->map_ind_height = 0;
 	game->map_ind_width = 0;
+	game->move_up = FALSE;
+	game->move_down = FALSE;
+	game->move_right = FALSE;
+	game->move_left = FALSE;
+	game->rot_left = FALSE;
+	game->rot_right = FALSE;
 }
 
 int main(int argc, char *argv[])
@@ -127,17 +133,19 @@ int main(int argc, char *argv[])
 
 	// set_up_images(&game);
 
-	ray_cast(&game);
+	// ray_cast(&game);
 
-	// mlx_key_hook(game.data.win_ptr, key_hook, &game);
-	// mlx_key_hook(game.data.win_ptr, key_hook_linux, &game);
+	// // mlx_key_hook(game.data.win_ptr, key_hook, &game);
+	// // mlx_key_hook(game.data.win_ptr, key_hook_linux, &game);
 
-	mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook, &game);
-	// mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook_linux, &game);
+	// mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook, &game);
+	// // mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook_linux, &game);
+
+	mlx_hook(game.data.win_ptr, 2, 0, key_press, &game);
+	mlx_hook(game.data.win_ptr, 3, 0, key_release, &game);
+	mlx_loop_hook(game.data.mlx_ptr, ray_cast, &game);
 
     mlx_loop(game.data.mlx_ptr);
 
-
-	//mlx_loop(game.data.mlx_ptr);
 	return (0);
 }

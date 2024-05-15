@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 16:03:22 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 23:34:09 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define SCREEN_WIDTH 1280
 # define SCREEN_HEIGHT 720
 
-# define MOVE_SPEED 0.20
-# define ROT_SPEED	0.15
+# define MOVE_SPEED 0.08
+# define ROT_SPEED	0.05
 
 # define DIM 64
 
@@ -123,6 +123,12 @@ typedef struct s_var {
 typedef struct s_game {
 	char		**map;
 	int			fd;
+	t_bool		move_up;
+	t_bool		move_down;
+	t_bool		move_right;
+	t_bool		move_left;
+	t_bool		rot_right;
+	t_bool		rot_left;
 	int			screen_height;
 	int			screen_width;
 	int			map_ind_height;
@@ -203,7 +209,7 @@ void	set_up_player(t_game *game);
 void	set_up_images(t_game *game);
 
 //srcs/raycast.c
-void	ray_cast(t_game *game);
+int		ray_cast(void *param);
 
 //srcs/raycast_utils.c
 void	set_up_start_end(t_game *game, t_dda *dda);
@@ -220,11 +226,13 @@ void	move_up(t_game *game);
 void	move_down(t_game *game);
 void	move_left(t_game *game);
 void	move_right(t_game *game);
+void	movement(t_game *game);
 
 //srcs/movement2.c
 void	rotate_left(t_game *game);
 void	rotate_right(t_game *game);
-int		key_hook(int keycode, t_game *game);
+int		key_press(int keycode, t_game *game);
+int		key_release(int keycode, t_game *game);
 
 //srcs/movement_utils.c
 void	rotate_angle(t_vector *vec, int flag);

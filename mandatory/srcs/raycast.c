@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:46:48 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 16:06:12 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 23:27:37 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,16 @@ static void	dda_loop(t_game *game, t_dda *dda)
 	}
 }
 
-void	ray_cast(t_game *game)
+int	ray_cast(void *param)
 {
+	t_game		*game;
 	t_dda		dda;
 	t_vector	pos;
 	t_tex		tex;
 	double		x;
 
+	game = (t_game *) param;
+	movement(game);
 	flush(*game);
 	pos = (t_vector){game->player_posx, game->player_posy};
 	x = 0;
@@ -107,4 +110,5 @@ void	ray_cast(t_game *game)
 	draw_gun(game);
 	mlx_put_image_to_window(game->data.mlx_ptr, game->data.win_ptr,
 		game->data.img.img_ptr, 0, 0);
+	return (0);
 }
