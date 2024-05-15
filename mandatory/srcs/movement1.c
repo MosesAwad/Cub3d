@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:02:50 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 23:31:33 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 23:50:21 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	move_up(t_game *game)
 		game->player_posx += (game->dir.x * MOVE_SPEED);
 		game->player_posy += (game->dir.y * MOVE_SPEED);
 	}
-	printf("%d\n", game->move_up);
 }
 
 void	move_down(t_game *game)

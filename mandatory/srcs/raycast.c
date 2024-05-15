@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:46:48 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 23:27:37 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 23:49:39 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ int	ray_cast(void *param)
 	movement(game);
 	flush(*game);
 	pos = (t_vector){game->player_posx, game->player_posy};
-	x = 0;
-	while (x < game->screen_width)
+	x = -1;
+	while (++x < game->screen_width)
 	{
 		init_params_and_vectors(game, &dda, &(dda.ray_dir), x);
 		set_up_delta_dist(&dda);
@@ -104,11 +104,8 @@ int	ray_cast(void *param)
 		set_up_tex_x(game, dda, &tex);
 		draw_ceiling_and_floor(game, dda, x);
 		texture_loop(game, &tex, dda, x);
-		x++;
 	}
-	draw_cross_hair(game);
-	draw_gun(game);
-	mlx_put_image_to_window(game->data.mlx_ptr, game->data.win_ptr,
-		game->data.img.img_ptr, 0, 0);
-	return (0);
+	return (draw_gun_sprite(game),
+		mlx_put_image_to_window(game->data.mlx_ptr, game->data.win_ptr,
+			game->data.img.img_ptr, 0, 0), 0);
 }

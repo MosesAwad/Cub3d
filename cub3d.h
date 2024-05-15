@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 23:34:09 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 23:47:35 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,6 @@ void	draw_v_line(t_game *game, t_dda dda, int x, int color);
 void	my_pixel_put(t_game *game, int x, int y, int color);
 
 //srcs/drawing2.c
-void	draw_gun(t_game *game);
-void	draw_cross_hair(t_game *game);
+void	draw_gun_sprite(t_game *game);
 
 #endif

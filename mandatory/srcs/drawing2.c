@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:35:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 16:02:37 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 23:47:21 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //transparent pixels in mlx have color values that are less than 0.
 //So we only copy the pixels that are non-transparent from the
 //hand and gun sprite to the background image buffer.
-void	draw_gun(t_game *game)
+static void	draw_gun(t_game *game)
 {
 	int	color;
 	int	offset;
@@ -38,7 +38,7 @@ void	draw_gun(t_game *game)
 	}
 }
 
-void	draw_cross_hair(t_game *game)
+static void	draw_cross_hair(t_game *game)
 {
 	int	start;
 	int	end;
@@ -59,4 +59,10 @@ void	draw_cross_hair(t_game *game)
 	end = (game->screen_width / 2) + 20;
 	while (start < end)
 		my_pixel_put(game, start++, game->screen_height / 2, 0x39FF14);
+}
+
+void	draw_gun_sprite(t_game *game)
+{
+	draw_cross_hair(game);
+	draw_gun(game);
 }
