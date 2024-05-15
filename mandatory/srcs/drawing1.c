@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   drawing.c                                          :+:      :+:    :+:   */
+/*   drawing1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:37:28 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 15:36:02 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 16:02:37 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	flush(t_game game)
 	int	y;
 
 	y = 0;
-	while (y < game.map_height)
+	while (y < game.screen_height)
 	{
 		x = 0;
-		while (x < game.map_width)
+		while (x < game.screen_width)
 		{
 			my_pixel_put(&game, x, y, 0x000000);
 			x++;
@@ -56,7 +56,7 @@ void	draw_v_line(t_game *game, t_dda dda, int x, int color)
 	else if (color == game->floor_color)
 	{
 		start = dda.start;
-		end = game->map_height - 1;
+		end = game->screen_height - 1;
 	}
 	while (start < end)
 	{
@@ -69,7 +69,7 @@ void	my_pixel_put(t_game *game, int x, int y, int color)
 {
 	int	offset;
 
-	offset = (game->map_width * y) + x;
+	offset = (game->screen_width * y) + x;
 	*(offset + game->data.img.img_pixels_ptr) = color;
 }
 

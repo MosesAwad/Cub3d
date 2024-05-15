@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:46:48 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 15:35:26 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 16:02:11 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	init_params_and_vectors(t_game *game, t_dda *dda,
 	t_vector *ray_dir, double x)
 {
-	dda->camera_x = (2 * x / game->map_width) - 1;
+	dda->camera_x = (2 * x / game->screen_width) - 1;
 	dda->side = 0;
 	dda->hit = FALSE;
 	ray_dir->x = game->dir.x + game->cam_plane.x * dda->camera_x;
@@ -91,7 +91,7 @@ void	ray_cast(t_game *game)
 	flush(*game);
 	pos = (t_vector){game->player_posx, game->player_posy};
 	x = 0;
-	while (x < game->map_width)
+	while (x < game->screen_width)
 	{
 		init_params_and_vectors(game, &dda, &(dda.ray_dir), x);
 		set_up_delta_dist(&dda);

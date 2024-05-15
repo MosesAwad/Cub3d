@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 15:39:27 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 16:03:22 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <math.h>
 # include <fcntl.h>
 
-# define MAP_WIDTH 1280
-# define MAP_HEIGHT 720
+# define SCREEN_WIDTH 1280
+# define SCREEN_HEIGHT 720
 
 # define MOVE_SPEED 0.20
 # define ROT_SPEED	0.15
@@ -123,8 +123,8 @@ typedef struct s_var {
 typedef struct s_game {
 	char		**map;
 	int			fd;
-	int			map_height;
-	int			map_width;
+	int			screen_height;
+	int			screen_width;
 	int			map_ind_height;
 	int			map_ind_width;
 	int			floor_color;

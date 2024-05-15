@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 15:55:08 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 16:03:10 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@
 // 	}
 
 // 	game.map = get_map(fd);
-// 	game.map_height = MAP_HEIGHT;
-// 	game.map_width = MAP_WIDTH;
+// 	game.screen_height = screen_height;
+// 	game.screen_width = screen_width;
 
-// 	printf("map height %d and map width %d\n", game.map_height, game.map_width);
+// 	printf("map height %d and map width %d\n", game.screen_height, game.screen_width);
 
 //     game.data.mlx_ptr = mlx_init();
 
-//     game.data.win_ptr = mlx_new_window(game.data.mlx_ptr, game.map_width , game.map_height, "Yay");
+//     game.data.win_ptr = mlx_new_window(game.data.mlx_ptr, game.screen_width , game.screen_height, "Yay");
 
-// 	game.data.img.img_ptr = mlx_new_image(game.data.mlx_ptr, game.map_width, game.map_height);
+// 	game.data.img.img_ptr = mlx_new_image(game.data.mlx_ptr, game.screen_width, game.screen_height);
 // 	if (game.data.img.img_ptr == NULL)
 // 	{
 // 		printf("error : img ptr\n");
@@ -78,10 +78,10 @@ void	init_params(t_game *game)
 		game->album[i++].img = NULL;
 	game->data.img.img_ptr = NULL;
 	game->data.mlx_ptr = mlx_init();
-	game->map_height = MAP_HEIGHT;
-	game->map_width = MAP_WIDTH;
+	game->screen_height = SCREEN_HEIGHT;
+	game->screen_width = SCREEN_WIDTH;
 	game->data.win_ptr = mlx_new_window(game->data.mlx_ptr,
-			game->map_width, game->map_height, "cub3D");
+			game->screen_width, game->screen_height, "cub3D");
 	game->map = NULL;
 	game->ceiling_color = -1;
 	game->floor_color = -1;
@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
 
 	parse_elements(&game, game.fd);
 
-	game.data.img.img_ptr = mlx_new_image(game.data.mlx_ptr, game.map_width, game.map_height);
+	game.data.img.img_ptr = mlx_new_image(game.data.mlx_ptr, game.screen_width, game.screen_height);
 	if (game.data.img.img_ptr == NULL)
 	{
 		printf("error : img ptr\n");
