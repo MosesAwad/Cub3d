@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:44:12 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/13 09:19:30 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 15:57:40 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static char	*first_row(int fd, char **map, int *y)
 	if (map == NULL)
 		return (NULL);
 	row = get_next_line(fd);
-	printf("Tis row %s\n", row);
 	if (!row)
 		return (free(row), NULL);
 	while (row[0] == '\n' && row[1] == '\0')

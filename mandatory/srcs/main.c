@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 14:48:43 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 15:55:08 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	init_params(t_game *game)
 	i = 0;
 	while (i < 6)
 		game->album[i++].img = NULL;
+	game->data.img.img_ptr = NULL;
 	game->data.mlx_ptr = mlx_init();
 	game->map_height = MAP_HEIGHT;
 	game->map_width = MAP_WIDTH;

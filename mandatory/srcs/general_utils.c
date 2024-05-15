@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 22:07:29 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 22:19:58 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 15:56:18 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,16 @@ void	destroy_2d_arr(char **map)
 //a map or initialized the mlx window yet.
 void	exit_err(t_game *game, char *line, char *message)
 {
+	int	i;
+
 	printf(RED"⚠️ Error ⚠️\n%s\n"OG, message);
 	free(line);
+	mlx_destroy_window(game->data.mlx_ptr, game->data.win_ptr);
+	if (game->data.img.img_ptr != NULL)
+		mlx_destroy_image(game->data.mlx_ptr, game->data.img.img_pixels_ptr);
+	i = 0;
+	if (game->album[i].img != NULL)
+		mlx_destroy_image(game->data.mlx_ptr, game->album[i++].img);
 	destroy_2d_arr(game->map);
 	close(game->fd);
 	exit(1);

@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 14:39:35 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 15:39:27 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define MAP_WIDTH 1280
 # define MAP_HEIGHT 720
 
-# define MOVE_SPEED 0.15
+# define MOVE_SPEED 0.20
 # define ROT_SPEED	0.15
 
 # define DIM 64
@@ -140,6 +140,9 @@ typedef struct s_game {
 
 //	---- START OF PARSING DIRECTORY SECTION ---- //
 
+//parsing/map_dfs_utils.c
+int		find_neighbors(t_game *game, t_index pos, t_index *neighbors);
+
 //parsing/map_dfs.c
 char	**mark_map_spawn(t_game *game, char **map);
 void	dfs(t_game *game, char **mark_map, int x, int y);
@@ -227,10 +230,14 @@ int		key_hook(int keycode, t_game *game);
 void	rotate_angle(t_vector *vec, int flag);
 t_bool	check_valid_move(t_game *game, int flag);
 
-//srcs/drawing.c
+//srcs/drawing1.c
 void	flush(t_game game);
 int		get_color(t_game *game, int index, int tex_x, int tex_y);
 void	draw_v_line(t_game *game, t_dda dda, int x, int color);
 void	my_pixel_put(t_game *game, int x, int y, int color);
+
+//srcs/drawing2.c
+void	draw_gun(t_game *game);
+void	draw_cross_hair(t_game *game);
 
 #endif

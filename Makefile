@@ -4,11 +4,11 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 SRCS_DIR = mandatory/srcs
-SRCS = $(addprefix $(SRCS_DIR)/, main.c player_utils.c raycast.c raycast_utils.c general_utils.c movement1.c movement2.c movement_utils.c drawing.c)
+SRCS = $(addprefix $(SRCS_DIR)/, main.c player_utils.c raycast.c raycast_utils.c general_utils.c movement1.c movement2.c movement_utils.c drawing1.c drawing2.c)
 
 PARSE_DIR = mandatory/parsing
 PARSE = $(addprefix $(PARSE_DIR)/, get_map.c get_map_utils.c map_utils2.c parse.c parse_utils.c parse_colors.c \
-			parse_colors_utils.c parse_textures.c map_dfs.c parse_map.c get_next_line.c)
+			parse_colors_utils.c parse_textures.c map_dfs_utils.c map_dfs.c parse_map.c get_next_line.c)
 
 SRCS_OBJS = $(SRCS:.c=.o)
 PARSE_OBJS = $(PARSE:.c=.o)

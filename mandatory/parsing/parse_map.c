@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:55:56 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/13 09:17:50 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 15:34:29 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,7 @@ void	parse_map(t_game *game, int fd)
 	char	**mark_map;
 
 	game->map = get_map(game, fd);
-
-	for (int i = 0; game->map[i]; i++){
-		printf("%s\n", game->map[i]);
-	}
-
 	parse_map_lines(game, game->map);
-
-
 	game->map = ft_realloc_x(game, game->map);
 	if (game->map_ind_width < 3 || game->map_ind_height < 3)
 		exit_err(game, NULL, "map must have a width and height of at least 3");
@@ -77,7 +70,6 @@ void	parse_map(t_game *game, int fd)
 // 	for (int i = 0; game->map[i] != NULL; i++) {
 // 		printf("%s\n", game->map[i]);
 // 	}
-
 
 // 	printf("game height is %d and game width is %d\n",
 // 		game->map_ind_height, game->map_ind_width);

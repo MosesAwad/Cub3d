@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:47:37 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/13 06:37:23 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 15:33:59 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static int	convert_rgb(t_game *game, char *line, long long int *rgb)
 	i = 0;
 	while (i < 3)
 	{
-		// printf("rgb[%d]: %lld\n", i, rgb[i]);
 		if (rgb[i] > 255 || rgb[i] < 0)
 			exit_err(game, line,
 				"r, g, b values outside of 0-255 range");
