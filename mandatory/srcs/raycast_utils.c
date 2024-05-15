@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:56:01 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 16:02:37 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 19:01:51 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ void	texture_loop(t_game *game, t_tex *tex, t_dda dda, double x)
 
 	index = assign_index(dda);
 	tex->step = ((double) game->album[index].tex_height / dda.line_height);
-	tex->tex_pos = (dda.start - game->screen_height / 2 + 3 * dda.line_height / 4)
-		* tex->step;
+	tex->tex_pos = (dda.start - game->screen_height / 2 + 3
+			* dda.line_height / 4) * tex->step;
 	while (dda.start < dda.end)
 	{
 		tex->tex_y = (int) tex->tex_pos & (game->album[index].tex_height - 1);

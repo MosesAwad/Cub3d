@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 16:03:10 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 16:08:25 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ int main(int argc, char *argv[])
 	// set_up_images(&game);
 
 	ray_cast(&game);
-	mlx_put_image_to_window(game.data.mlx_ptr, game.data.win_ptr, game.data.img.img_ptr, 0, 0);
 
 	// mlx_key_hook(game.data.win_ptr, key_hook, &game);
 	// mlx_key_hook(game.data.win_ptr, key_hook_linux, &game);
