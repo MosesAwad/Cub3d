@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/13 06:46:24 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/15 14:39:35 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ typedef struct s_game {
 	t_tex		album[6];
 }	t_game;
 
-
 //	---- START OF PARSING DIRECTORY SECTION ---- //
 
 //parsing/map_dfs.c
@@ -188,7 +187,6 @@ void	parse_map(t_game *game, int fd);
 
 //	---- END OF PARSING DIRECTORY SECTION ---- //
 
-
 //srcs/main.c
 void	flush(t_game game);
 void	draw_v_line(t_game *game, t_dda dda, int x, int color);
@@ -213,5 +211,26 @@ void	draw_ceiling_and_floor(t_game *game, t_dda dda, double x);
 //srcs/general_utils.c
 void	destroy_2d_arr(char **map);
 void	exit_err(t_game *game, char *line, char *message);
+
+//srcs/movement1.c
+void	move_up(t_game *game);
+void	move_down(t_game *game);
+void	move_left(t_game *game);
+void	move_right(t_game *game);
+
+//srcs/movement2.c
+void	rotate_left(t_game *game);
+void	rotate_right(t_game *game);
+int		key_hook(int keycode, t_game *game);
+
+//srcs/movement_utils.c
+void	rotate_angle(t_vector *vec, int flag);
+t_bool	check_valid_move(t_game *game, int flag);
+
+//srcs/drawing.c
+void	flush(t_game game);
+int		get_color(t_game *game, int index, int tex_x, int tex_y);
+void	draw_v_line(t_game *game, t_dda dda, int x, int color);
+void	my_pixel_put(t_game *game, int x, int y, int color);
 
 #endif
