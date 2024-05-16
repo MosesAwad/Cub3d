@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 23:33:33 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/17 00:29:15 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	init_params(t_game *game)
 	game->floor_color = -1;
 	game->map_ind_height = 0;
 	game->map_ind_width = 0;
+	game->player_angle = 0;
 	game->move_up = FALSE;
 	game->move_down = FALSE;
 	game->move_right = FALSE;
@@ -128,7 +129,6 @@ int main(int argc, char *argv[])
 	}
 
 	// set_up_player(&game);
-	game.player_angle = 0;
 
 
 	// set_up_images(&game);
