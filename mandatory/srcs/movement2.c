@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:09:14 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 23:21:51 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/17 03:37:26 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,24 @@ void	rotate_left(t_game *game)
 {
 	if (game->rot_left == FALSE)
 		return ;
-	rotate_angle(&(game->dir), 1);
-	rotate_angle(&(game->cam_plane), 1);
+	rotate_angle(game, &(game->dir), 1);
+	rotate_angle(game, &(game->cam_plane), 1);
+	if (game->player_angle >= 6.28319)
+		game->player_angle -= 6.28319;
+	else if (game->player_angle < 0)
+		game->player_angle += 6.28319;
 }
 
 void	rotate_right(t_game *game)
 {
 	if (game->rot_right == FALSE)
 		return ;
-	rotate_angle(&(game->dir), 0);
-	rotate_angle(&(game->cam_plane), 0);
+	rotate_angle(game, &(game->dir), 0);
+	rotate_angle(game, &(game->cam_plane), 0);
+	if (game->player_angle >= 6.28319)
+		game->player_angle -= 6.28319;
+	else if (game->player_angle < 0)
+		game->player_angle += 6.28319;
 }
 
 int	key_press(int keycode, t_game *game)

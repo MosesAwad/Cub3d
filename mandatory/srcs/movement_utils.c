@@ -6,13 +6,20 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:24:00 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 14:26:01 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/17 03:37:12 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	rotate_angle(t_vector *vec, int flag)
+//In each of the rotate_left and rotate_right functions,
+//I call the the rotate_angle function twice. Once for the
+//direcion vector of the player and once for the camera
+//vector. So to prevent the player_angle from being doubled
+//everytime the player looks to the left or right, I increment
+//the player angle by half. That way, the player angle is
+//incremented properly per single rotation.
+void	rotate_angle(t_game *game, t_vector *vec, int flag)
 {
 	double	angle;
 	double	vec_x_save;
@@ -24,6 +31,7 @@ void	rotate_angle(t_vector *vec, int flag)
 		angle = ROT_SPEED;
 	vec->x = cos(angle) * vec->x - sin(angle) * vec->y;
 	vec->y = sin(angle) * vec_x_save + cos(angle) * vec->y;
+	game->player_angle += angle / 2;
 }
 
 static void	check_up_down(t_game *game, t_vector *target_v, int flag)

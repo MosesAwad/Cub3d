@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 23:47:35 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/17 03:37:38 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +235,7 @@ int		key_press(int keycode, t_game *game);
 int		key_release(int keycode, t_game *game);
 
 //srcs/movement_utils.c
-void	rotate_angle(t_vector *vec, int flag);
+void	rotate_angle(t_game *game, t_vector *vec, int flag);
 t_bool	check_valid_move(t_game *game, int flag);
 
 //srcs/drawing1.c

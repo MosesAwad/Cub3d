@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/17 00:29:15 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/17 00:40:17 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,23 @@
 //     mlx_loop(game.data.mlx_ptr);
 //     return (0);
 // }
+
+void	init_angle(t_game *game)
+{
+	int	x;
+	int	y;
+
+	x = game->player_posx;
+	y = game->player_posy;
+	if (game->map[y][x] == 'N')
+		game->player_angle = 0;
+	else if (game->map[y][x] == 'E')
+		game->player_angle = 1.5709;
+	else if (game->map[y][x] == 'S')
+		game->player_angle = 3.14159;
+	else if (game->map[y][x] == 'W')
+		game->player_angle = 4.71239;
+}
 
 void	init_params(t_game *game)
 {
@@ -140,7 +157,7 @@ int main(int argc, char *argv[])
 
 	// mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook, &game);
 	// // mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook_linux, &game);
-
+	init_angle(&game);
 	mlx_hook(game.data.win_ptr, 2, 0, key_press, &game);
 	mlx_hook(game.data.win_ptr, 3, 0, key_release, &game);
 	mlx_loop_hook(game.data.mlx_ptr, ray_cast, &game);
