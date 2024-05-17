@@ -6,68 +6,11 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/17 00:40:17 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/17 20:12:59 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-// int main()
-// {
-// 	t_game	game;	
-// 	int		fd;
-
-// 	fd = open("maps/map.cub", O_RDONLY, 0777);
-// 	if (fd == -1)
-// 	{
-// 		printf("error opening file\n");
-// 		return (1);
-// 	}
-
-// 	game.map = get_map(fd);
-// 	game.screen_height = screen_height;
-// 	game.screen_width = screen_width;
-
-// 	printf("map height %d and map width %d\n", game.screen_height, game.screen_width);
-
-//     game.data.mlx_ptr = mlx_init();
-
-//     game.data.win_ptr = mlx_new_window(game.data.mlx_ptr, game.screen_width , game.screen_height, "Yay");
-
-// 	game.data.img.img_ptr = mlx_new_image(game.data.mlx_ptr, game.screen_width, game.screen_height);
-// 	if (game.data.img.img_ptr == NULL)
-// 	{
-// 		printf("error : img ptr\n");
-// 		return (1);
-// 	}
-
-// 	game.data.img.img_pixels_ptr = (int *) mlx_get_data_addr(game.data.img.img_ptr,
-// 												&(game.data.img.bits_per_pixel),
-// 												&(game.data.img.line_len),
-// 												&(game.data.img.endian));
-// 	if (game.data.img.img_pixels_ptr == NULL)
-// 	{
-// 		printf("error : img pxl ptr\n");
-// 		return (1);
-// 	}
-
-// 	set_up_player(&game);
-// 	game.player_angle = 0;
-
-// 	set_up_images(&game);
-
-// 	ray_cast(&game);
-// 	mlx_put_image_to_window(game.data.mlx_ptr, game.data.win_ptr, game.data.img.img_ptr, 0, 0);
-
-// 	// mlx_key_hook(game.data.win_ptr, key_hook, &game);
-// 	// mlx_key_hook(game.data.win_ptr, key_hook_linux, &game);
-
-// 	mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook, &game);
-// 	// mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook_linux, &game);
-
-//     mlx_loop(game.data.mlx_ptr);
-//     return (0);
-// }
 
 void	init_angle(t_game *game)
 {
@@ -113,56 +56,47 @@ void	init_params(t_game *game)
 	game->rot_right = FALSE;
 }
 
-int main(int argc, char *argv[])
+void	mini_initial_parse(t_game *game, int argc, char **argv)
+{
+	if (argc != 2)
+	{
+		printf("Error\nMust use strictly 2 arguments\n");
+		exit(1);
+	}
+	if (valid_file_name(argv[1]) == FALSE)
+	{
+		printf("Error\nMap must be given in .cub format\n");
+		exit(1);
+	}
+	game->fd = open(argv[1], O_RDONLY, 0777);
+	if (game->fd == -1)
+	{
+		printf("Error\nCouldn't open file\n");
+		exit(1);
+	}
+}
+
+int	main(int argc, char *argv[])
 {
 	t_game	game;	
 
-	if (argc != 2)
-		return (printf("Must use strictly 2 arguments\n"), 1);
-	if (valid_file_name(argv[1]) == FALSE)
-		return (printf("Map must be in .cub format\n"), 1);
-	game.fd = open(argv[1], O_RDONLY, 0777);
-	if (game.fd == -1)
-		return (printf("Error opening file\n"), 1);
+	mini_initial_parse(&game, argc, argv);
 	init_params(&game);
-
 	parse_elements(&game, game.fd);
-
-	game.data.img.img_ptr = mlx_new_image(game.data.mlx_ptr, game.screen_width, game.screen_height);
+	game.data.img.img_ptr = mlx_new_image(game.data.mlx_ptr,
+			game.screen_width, game.screen_height);
 	if (game.data.img.img_ptr == NULL)
-	{
-		printf("error : img ptr\n");
-		return (1);
-	}
-
-	game.data.img.img_pixels_ptr = (int *) mlx_get_data_addr(game.data.img.img_ptr,
-												&(game.data.img.bits_per_pixel),
-												&(game.data.img.line_len),
-												&(game.data.img.endian));
+		return (printf("Error\nCouldn't allocate backdrop img ptr\n"), 1);
+	game.data.img.img_pixels_ptr = (int *)
+		mlx_get_data_addr(game.data.img.img_ptr,
+			&(game.data.img.bits_per_pixel), &(game.data.img.line_len),
+			&(game.data.img.endian));
 	if (game.data.img.img_pixels_ptr == NULL)
-	{
-		printf("error : img pxl ptr\n");
-		return (1);
-	}
-
-	// set_up_player(&game);
-
-
-	// set_up_images(&game);
-
-	// ray_cast(&game);
-
-	// // mlx_key_hook(game.data.win_ptr, key_hook, &game);
-	// // mlx_key_hook(game.data.win_ptr, key_hook_linux, &game);
-
-	// mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook, &game);
-	// // mlx_hook(game.data.win_ptr, 2, 1L << 0, key_hook_linux, &game);
+		return (printf("Error\nCouldn't allocate img pxl ptr\n"), 1);
 	init_angle(&game);
 	mlx_hook(game.data.win_ptr, 2, 0, key_press, &game);
 	mlx_hook(game.data.win_ptr, 3, 0, key_release, &game);
 	mlx_loop_hook(game.data.mlx_ptr, ray_cast, &game);
-
-    mlx_loop(game.data.mlx_ptr);
-
+	mlx_loop(game.data.mlx_ptr);
 	return (0);
 }
