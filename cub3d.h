@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/17 03:37:38 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/17 19:44:08 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ typedef struct s_game {
 	t_vector	dir;
 	t_vector	cam_plane;
 	t_var		data;
-	t_tex		album[6];
+	t_tex		album[5];
 }	t_game;
 
 //	---- START OF PARSING DIRECTORY SECTION ---- //
@@ -220,6 +220,7 @@ void	draw_ceiling_and_floor(t_game *game, t_dda dda, double x);
 //srcs/general_utils.c
 void	destroy_2d_arr(char **map);
 void	exit_err(t_game *game, char *line, char *message);
+void	ft_destroy(t_game *game);
 
 //srcs/movement1.c
 void	move_up(t_game *game);

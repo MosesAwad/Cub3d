@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:09:14 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/17 03:37:26 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/17 19:44:00 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	key_press(int keycode, t_game *game)
 		game->rot_left = TRUE;
 	else if (keycode == R_ARROW)
 		game->rot_right = TRUE;
+	else if (keycode == ESC_KEY)
+		ft_destroy(game);
 	return (0);
 }
 

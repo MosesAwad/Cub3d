@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:35:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/15 23:47:21 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/17 19:46:59 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static void	draw_gun(t_game *game)
 		y = 0;
 		while (y < game->screen_height - 1)
 		{
-			offset = (game->album[5].tex_width * y) + x;
-			color = *(game->album[5].img_pixels_ptr + offset);
+			offset = (game->album[4].tex_width * y) + x;
+			color = *(game->album[4].img_pixels_ptr + offset);
 			if (color > 0)
 				*(game->data.img.img_pixels_ptr + offset) = color;
 			y++;
