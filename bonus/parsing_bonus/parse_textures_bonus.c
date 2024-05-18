@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 18:01:47 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 22:52:45 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/18 22:09:00 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	get_path(t_game *game, char *full, char *str, int index)
 	int			i;
 
 	i = 0;
+	if (game->album[index].img != NULL)
+		exit_err(game, full, "Duplicate texture identifier");
 	while (str[i] && is_wspace(str[i]))
 		i++;
 	if (!str[i])
@@ -51,9 +53,6 @@ static int	get_tex_index(char *trimmed)
 
 int	parse_textures(t_game *game, char *trimmed)
 {
-	int	count;
-
-	count = 0;
 	if ((trimmed[0] == 'N' && trimmed[1] == 'O')
 		|| (trimmed[0] == 'S' && trimmed[1] == 'O')
 		|| (trimmed[0] == 'E' && trimmed[1] == 'A')
@@ -61,7 +60,7 @@ int	parse_textures(t_game *game, char *trimmed)
 	{
 		get_path(game, trimmed, trimmed + 2, get_tex_index(trimmed));
 		whitespace_checker(game, trimmed);
-		count++;
+		return (1);
 	}
-	return (count);
+	return (0);
 }

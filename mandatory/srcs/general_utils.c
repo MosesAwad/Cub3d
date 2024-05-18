@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 22:07:29 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/17 19:45:52 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/18 21:22:26 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	exit_err(t_game *game, char *line, char *message)
 	exit(1);
 }
 
-void	ft_destroy(t_game *game)
+int	ft_destroy(t_game *game)
 {
 	int	i;
 
@@ -67,4 +67,5 @@ void	ft_destroy(t_game *game)
 	destroy_2d_arr(game->map);
 	close(game->fd);
 	exit(0);
+	return (0);
 }

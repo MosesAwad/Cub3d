@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:44:12 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 22:52:45 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/18 22:09:00 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static char	*first_row(int fd, char **map, int *y)
 	if (map == NULL)
 		return (NULL);
 	row = get_next_line(fd);
+	if (!row)
+		return (free(row), NULL);
 	while (row[0] == '\n' && row[1] == '\0')
 	{
 		free(row);
@@ -44,7 +46,7 @@ static char	**get_map_nl(int fd)
 	map = (char **)malloc(sizeof(char *) * (9999));
 	row = first_row(fd, map, &y);
 	if (!row)
-		return (NULL);
+		return (free(map), NULL);
 	free(row);
 	while (row)
 	{
@@ -91,14 +93,14 @@ static char	*extract_nl(char *line)
 //(indicating that the user did not hit enter upon reaching
 //the last line as mentioned earlier), then we keep the line
 //as it is.
-char	**get_map(int fd)
+char	**get_map(t_game *game, int fd)
 {
 	char	**map;
 	int		i;
 
 	map = get_map_nl(fd);
 	if (map == NULL)
-		return (NULL);
+		exit_err(game, NULL, "No map content found");
 	i = 0;
 	while (map[i])
 	{

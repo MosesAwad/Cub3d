@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/17 20:12:59 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/18 21:22:03 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	main(int argc, char *argv[])
 	init_angle(&game);
 	mlx_hook(game.data.win_ptr, 2, 0, key_press, &game);
 	mlx_hook(game.data.win_ptr, 3, 0, key_release, &game);
+	mlx_hook(game.data.win_ptr, 17, 0, ft_destroy, &game);
 	mlx_loop_hook(game.data.mlx_ptr, ray_cast, &game);
 	mlx_loop(game.data.mlx_ptr);
 	return (0);

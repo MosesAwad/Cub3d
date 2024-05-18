@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:56:01 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 22:56:44 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/18 22:09:00 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,24 @@ void	set_up_start_end(t_game *game, t_dda *dda)
 	if (dda->side == 0)
 	{
 		dda->side_dist_x -= dda->delta_dist_x;
-		dda->line_height = (int)(game->map_height / dda->side_dist_x);
-		dda->start = (game->map_height / 2) - (3 * dda->line_height / 4);
+		dda->line_height = (int)(game->screen_height / dda->side_dist_x);
+		dda->start = (game->screen_height / 2) - (3 * dda->line_height / 4);
 		if (dda->start < 0)
 			dda->start = 0;
-		dda->end = (game->map_height / 2) + (dda->line_height / 4);
-		if (dda->end > game->map_height)
-			dda->end = game->map_height - 1;
+		dda->end = (game->screen_height / 2) + (dda->line_height / 4);
+		if (dda->end > game->screen_height)
+			dda->end = game->screen_height - 1;
 	}
 	else
 	{
 		dda->side_dist_y -= dda->delta_dist_y;
-		dda->line_height = (int)(game->map_height / dda->side_dist_y);
-		dda->start = (game->map_height / 2) - (3 * dda->line_height / 4);
+		dda->line_height = (int)(game->screen_height / dda->side_dist_y);
+		dda->start = (game->screen_height / 2) - (3 * dda->line_height / 4);
 		if (dda->start < 0)
 			dda->start = 0;
-		dda->end = (game->map_height / 2) + (dda->line_height / 4);
-		if (dda->end > game->map_height)
-			dda->end = game->map_height - 1;
+		dda->end = (game->screen_height / 2) + (dda->line_height / 4);
+		if (dda->end > game->screen_height)
+			dda->end = game->screen_height - 1;
 	}
 }
 
@@ -71,19 +71,19 @@ static int	assign_index(t_dda dda)
 }
 
 //This line:
-// tex->tex_pos = (dda.start - game->map_height / 2 + dda.line_height / 2)
+// tex->tex_pos = (dda.start - game->screen_height / 2 + dda.line_height / 2)
 // 					* tex->step;
 //is for the most part going to be zero, because
-//start = game->map_height / 2 - line_height / 2. So, in the
-//equation where we have -game->map_height / 2 + line_height / 2,
+//start = game->screen_height / 2 - line_height / 2. So, in the
+//equation where we have -game->screen_height / 2 + line_height / 2,
 //that is basically the negative of start. Thus, for most of the
 //the rays, tex_pos is usually start + (-1 * start) * step which 
 //is equal to 0. However, when the player gets too close to the
 //wall, start can get too large (out of screen bounds) so we end
 //up manually changing start to 0! In that case, start is no
-//longer equal to game->map_height / 2 - line_height / 2. Thus,
+//longer equal to game->screen_height / 2 - line_height / 2. Thus,
 //tex_pos instead ends up becoming -draw_start * step and not
-//just zero because tex_pos = (0 - game->map_height / 2 + 
+//just zero because tex_pos = (0 - game->screen_height / 2 + 
 //line_height / 2) * step) is the same as 
 //tex_pos = (-draw_start) * step. This would give us the right
 //tex_pos on the texture as per the actual line_height (which depends
@@ -111,8 +111,8 @@ void	texture_loop(t_game *game, t_tex *tex, t_dda dda, double x)
 
 	index = assign_index(dda);
 	tex->step = ((double) game->album[index].tex_height / dda.line_height);
-	tex->tex_pos = (dda.start - game->map_height / 2 + 3 * dda.line_height / 4)
-		* tex->step;
+	tex->tex_pos = (dda.start - game->screen_height / 2 + 3
+			* dda.line_height / 4) * tex->step;
 	while (dda.start < dda.end)
 	{
 		tex->tex_y = (int) tex->tex_pos & (game->album[index].tex_height - 1);
@@ -120,7 +120,7 @@ void	texture_loop(t_game *game, t_tex *tex, t_dda dda, double x)
 		color = get_color(game, index, tex->tex_x, tex->tex_y);
 		if (dda.side == 1)
 			color = (color >> 1) & 8355711;
-		offset = (game->map_width * dda.start) + x;
+		offset = (game->screen_width * dda.start) + x;
 		*(game->data.img.img_pixels_ptr + offset) = color;
 		dda.start++;
 	}

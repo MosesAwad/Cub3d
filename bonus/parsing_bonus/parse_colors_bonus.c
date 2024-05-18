@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:47:37 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/12 22:52:45 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/18 22:09:00 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static int	convert_rgb(t_game *game, char *line, long long int *rgb)
 	i = 0;
 	while (i < 3)
 	{
-		// printf("rgb[%d]: %lld\n", i, rgb[i]);
 		if (rgb[i] > 255 || rgb[i] < 0)
 			exit_err(game, line,
 				"r, g, b values outside of 0-255 range");
@@ -66,22 +65,26 @@ static int	set_color(t_game *game, char *full, char *str)
 
 int	parse_colors(t_game *game, char *trimmed)
 {
-	int	count;
-
-	count = 0;
-	if (trimmed[0] == 'C')
+	if (trimmed[0] == 'C' && is_wspace(trimmed[1]))
 	{
 		whitespace_checker(game, trimmed);
 		check_rgb_syntax(game, trimmed, trimmed + 1);
+		if (game->ceiling_color != -1)
+			exit_err(game, trimmed, "Duplicate color identifier");
 		game->ceiling_color = set_color(game, trimmed, trimmed + 1);
-		count++;
+		return (1);
 	}
-	else if (trimmed[0] == 'F')
+	else if (trimmed[0] == 'F' && is_wspace(trimmed[1]))
 	{
 		whitespace_checker(game, trimmed);
 		check_rgb_syntax(game, trimmed, trimmed + 1);
+		if (game->floor_color != -1)
+			exit_err(game, trimmed, "Duplicate color identifier");
 		game->floor_color = set_color(game, trimmed, trimmed + 1);
-		count++;
+		return (1);
 	}
-	return (count);
+	else if (trimmed[0] == '\n' || trimmed[0] == '\0')
+		return (0);
+	else
+		return (-1);
 }

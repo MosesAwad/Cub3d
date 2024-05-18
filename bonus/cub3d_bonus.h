@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/17 19:44:08 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/19 00:41:46 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
-// # include "mlx-linux/mlx.h"
-# include "mlx/mlx.h"
-# include "Libft/libft.h"
+// # include "../mlx-linux/mlx.h"
+# include "../mlx/mlx.h"
+# include "../Libft/libft.h"
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -25,6 +25,8 @@
 
 # define SCREEN_WIDTH 1280
 # define SCREEN_HEIGHT 720
+
+# define MIN_MAP_SCALE 32
 
 # define MOVE_SPEED 0.08
 # define ROT_SPEED	0.05
@@ -120,8 +122,14 @@ typedef struct s_var {
 	t_img	img;
 }	t_var;
 
+typedef struct s_minimap {
+	int	x_draw;
+	int	y_draw;
+}	t_minimap;
+
 typedef struct s_game {
 	char		**map;
+	t_minimap	minimap;
 	int			fd;
 	t_bool		move_up;
 	t_bool		move_down;
@@ -129,6 +137,7 @@ typedef struct s_game {
 	t_bool		move_left;
 	t_bool		rot_right;
 	t_bool		rot_left;
+	int			store_mouse_x;
 	int			screen_height;
 	int			screen_width;
 	int			map_ind_height;
@@ -146,106 +155,132 @@ typedef struct s_game {
 
 //	---- START OF PARSING DIRECTORY SECTION ---- //
 
-//parsing/map_dfs_utils.c
+//parsing/map_dfs_utils_bonus.c
 int		find_neighbors(t_game *game, t_index pos, t_index *neighbors);
 
-//parsing/map_dfs.c
+//parsing/map_dfs_bonus.c
 char	**mark_map_spawn(t_game *game, char **map);
 void	dfs(t_game *game, char **mark_map, int x, int y);
 void	parse_marked_map(t_game *game, char **marked_map);
 
-//parsing/get_map.c
+//parsing/get_map_bonus.c
 char	**get_map(t_game *game, int fd);
 void	parse_map_lines(t_game *game, char **map);
 
-//parsing/get_map_utils.c
+//parsing/get_map_utils_bonus.c
 void	ft_map_alloc_clean(char **map, char *line, int y);
 t_bool	valid_line(char *line);
 void	parse_map_lines(t_game *game, char **map);
 
-//parsing/map_utils2.c
+//parsing/map_utils2_bonus.c
 int		get_map_width(char **map);
 int		get_map_height(char **map);
 void	handle_spaces(char **map);
 
 char	**ft_realloc_x(t_game *game, char **map);
 
-//parsing/parse_textures.c
+//parsing/parse_textures_bonus.c
 int		parse_textures(t_game *game, char *trimmed);
 
-//parsing/parse_colors.c
+//parsing/parse_colors_bonus.c
 int		parse_colors(t_game *game, char *trimmed);
 
-//parsing/parse_colors_utils.c
+//parsing/parse_colors_utils_bonus.c
 void	check_rgb_syntax(t_game *game, char *full, char *str);
 
-//parsing/parse.c
+//parsing/parse_bonus.c
 void	parse_elements(t_game *game, int fd);
 
-//parsing/get_next_line.c
+//parsing/get_next_line_bonus.c
 char	*get_next_line(int fd);
 
-//parsing/parse_utils.c
+//parsing/parse_utils_bonus.c
 t_bool	is_wspace(char c);
 void	whitespace_checker(t_game *game, char *trimmed);
 t_bool	is_trailing_wspace(char *str, int index);
 t_bool	valid_file_name(char *str);
 
-//parsing/parse_map.c
+//parsing/parse_map_bonus.c
 void	parse_map(t_game *game, int fd);
 
 //	---- END OF PARSING DIRECTORY SECTION ---- //
 
-//srcs/main.c
+//srcs/main_bonus.c
 void	flush(t_game game);
 void	draw_v_line(t_game *game, t_dda dda, int x, int color);
 int		get_color(t_game *game, int index, int tex_x, int tex_y);
 void	my_pixel_put(t_game *game, int x, int y, int color);
 
-//srcs/player_utils.c
+//srcs/minimap_bonus.c
+void	ft_minimap(t_game *game);
+
+//srcs/player_utils_bonus.c
 void	set_up_player(t_game *game);
 
-//srcs/set_up_images.c
+//srcs/set_up_images_bonus.c
 void	set_up_images(t_game *game);
 
-//srcs/raycast.c
+//srcs/raycast_bonus.c
+void	set_up_delta_dist(t_dda *dda);
+void	set_up_side_dist(t_vector *pos, t_dda *dda);
+void	dda_loop(t_game *game, t_dda *dda);
 int		ray_cast(void *param);
 
-//srcs/raycast_utils.c
+//srcs/raycast_utils_bonus.c
+void	init_params_and_vectors(t_game *game, t_dda *dda,
+			t_vector *ray_dir, double x);
 void	set_up_start_end(t_game *game, t_dda *dda);
 void	set_up_tex_x(t_game *game, t_dda dda, t_tex *tex);
 void	texture_loop(t_game *game, t_tex *tex, t_dda dda, double x);
 void	draw_ceiling_and_floor(t_game *game, t_dda dda, double x);
 
-//srcs/general_utils.c
+//srcs/general_utils_bonus.c
+int		ft_destroy(t_game *game);
 void	destroy_2d_arr(char **map);
 void	exit_err(t_game *game, char *line, char *message);
-void	ft_destroy(t_game *game);
 
-//srcs/movement1.c
+//srcs/movement1_bonus.c
 void	move_up(t_game *game);
 void	move_down(t_game *game);
 void	move_left(t_game *game);
 void	move_right(t_game *game);
 void	movement(t_game *game);
 
-//srcs/movement2.c
+//srcs/movement2_bonus.c
 void	rotate_left(t_game *game);
 void	rotate_right(t_game *game);
+int		mouse_hook(int x, int y, t_game *game);
 int		key_press(int keycode, t_game *game);
 int		key_release(int keycode, t_game *game);
 
-//srcs/movement_utils.c
+//srcs/movement_utils_bonus.c
 void	rotate_angle(t_game *game, t_vector *vec, int flag);
 t_bool	check_valid_move(t_game *game, int flag);
 
-//srcs/drawing1.c
+//srcs/drawing1_bonus.c
 void	flush(t_game game);
 int		get_color(t_game *game, int index, int tex_x, int tex_y);
 void	draw_v_line(t_game *game, t_dda dda, int x, int color);
 void	my_pixel_put(t_game *game, int x, int y, int color);
 
-//srcs/drawing2.c
+//srcs/drawing2_bonus.c
 void	draw_gun_sprite(t_game *game);
+
+//srcs/wall_collisions1_bonus.c
+void	check_wc_up(t_game *game);
+void	check_wc_down(t_game *game);
+void	check_wc_left(t_game *game);
+void	check_wc_right(t_game *game);
+
+//srcs/wall_collisions2_bonus.c
+void	check_wc_right(t_game *game);
+void	check_wc_left(t_game *game);
+
+//srcs/wall_collisions_utils_bonus.c
+void	set_angle(t_vector *vec, double angle);
+int		mini_cast(t_game *game, int key);
+t_bool	check_valid_slide(t_game *game, t_vector target, int side);
+t_bool	check_right_of_vertical(t_game *game);
+t_bool	check_right_of_horizontal(t_game *game);
 
 #endif

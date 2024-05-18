@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:14:23 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/17 19:45:10 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/19 00:42:01 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	parse_gun_texture(t_game *game)
 {
 	game->album[4].img = mlx_xpm_file_to_image(game->data.mlx_ptr,
-			"mandatory/images/gun.xpm",
+			"images/gun.xpm",
 			&(game->album[4].tex_width), &(game->album[4].tex_height));
 	if (game->album[4].img == NULL)
 		exit_err(game, NULL, "Gun image not found");
