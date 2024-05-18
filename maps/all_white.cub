@@ -1,11 +1,11 @@
 F 235,242,249
-	NO images/fy_snow/ice3.xpm
-  WE		 images/fy_snow/ice3.xpm    
-  		EA 	images/fy_snow/ice3.xpm				
+	NO images/fy_snow/proper.xpm
+  WE		 images/fy_snow/proper.xpm    
+  		EA 	images/fy_snow/proper.xpm				
 
 C          115,122,132
 
-SO images/fy_snow/ice3.xpm
+SO images/fy_snow/proper.xpm
 
 111111111
 100000001
