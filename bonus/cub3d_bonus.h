@@ -13,8 +13,8 @@
 #ifndef CUB3D_BONUS_H
 # define CUB3D_BONUS_H
 
-// # include "../mlx-linux/mlx.h"
-# include "../mlx/mlx.h"
+# include "../mlx-linux/mlx.h"
+// # include "../mlx/mlx.h"
 # include "../Libft/libft.h"
 
 # include <stdio.h>
@@ -40,21 +40,23 @@
 # define BLU	"\033[1;34m"
 # define PRL	"\033[0;35m"
 
-# define W_KEY 13
-# define A_KEY 0
-# define S_KEY 1
-# define D_KEY 2
-# define ESC_KEY 53
-# define L_ARROW 123
-# define R_ARROW 124
+// // Mac_OS
+// # define W_KEY 13
+// # define A_KEY 0
+// # define S_KEY 1
+// # define D_KEY 2
+// # define ESC_KEY 53
+// # define L_ARROW 123
+// # define R_ARROW 124
 
-# define W_KEY_LINUX 119
-# define A_KEY_LINUX 97
-# define S_KEY_LINUX 115
-# define D_KEY_LINUX 100
-# define ESC_KEY_LINUX 65307
-# define L_ARROW_LINUX 65361
-# define R_ARROW_LINUX 65363
+// Linux
+# define W_KEY 119
+# define A_KEY 97
+# define S_KEY 115
+# define D_KEY 100
+# define ESC_KEY 65307
+# define L_ARROW 65361
+# define R_ARROW 65363
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846

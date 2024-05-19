@@ -34,7 +34,7 @@ void	init_params(t_game *game)
 	int	i;
 
 	i = 0;
-	while (i < 6)
+	while (i < 5)
 		game->album[i++].img = NULL;
 	game->data.img.img_ptr = NULL;
 	game->data.mlx_ptr = mlx_init();
@@ -94,8 +94,8 @@ int	main(int argc, char *argv[])
 	if (game.data.img.img_pixels_ptr == NULL)
 		return (printf("Error\nCouldn't allocate img pxl ptr\n"), 1);
 	init_angle(&game);
-	mlx_hook(game.data.win_ptr, 2, 0, key_press, &game);
-	mlx_hook(game.data.win_ptr, 3, 0, key_release, &game);
+	mlx_hook(game.data.win_ptr, 2, 1L<<0, key_press, &game);
+	mlx_hook(game.data.win_ptr, 3, 1L<<1, key_release, &game);
 	mlx_hook(game.data.win_ptr, 17, 0, ft_destroy, &game);
 	mlx_loop_hook(game.data.mlx_ptr, ray_cast, &game);
 	mlx_loop(game.data.mlx_ptr);

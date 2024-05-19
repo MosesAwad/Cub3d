@@ -70,11 +70,11 @@ $(NAME_BONUS): $(BONUS_SRCS_OBJS) $(BONUS_PARSE_OBJS)
 	$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@
 
 #LINUX
-#$(NAME_BONUS): $(BONUS_SRCS_OBJS) $(BONUS_PARSE_OBJS)
-#	$(CC) $(BONUS_SRCS_OBJS) $(BONUS_PARSE_OBJS) -o $(NAME_BONUS) -Lmlx-linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz $(LIBFT)
+$(NAME_BONUS): $(BONUS_SRCS_OBJS) $(BONUS_PARSE_OBJS)
+	$(CC) $(BONUS_SRCS_OBJS) $(BONUS_PARSE_OBJS) -o $(NAME_BONUS) -Lmlx-linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz $(LIBFT)
 
-#%.o: %.c
-#	$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3 -c $< -o $@
+%.o: %.c
+	$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 clean:
 	@$(MAKE) -C $(LIBFT_DIR) clean

@@ -64,7 +64,6 @@ int	ft_destroy(t_game *game)
 			mlx_destroy_image(game->data.mlx_ptr, game->album[i].img);
 		i++;
 	}
-	printf("did we?\n");
 	destroy_2d_arr(game->map);
 	close(game->fd);
 	exit(0);
