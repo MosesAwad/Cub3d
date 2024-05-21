@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 22:35:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/18 22:09:00 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/21 19:25:08 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ void	ft_drawmap1(t_game *game, int i, int j)
 	{
 		if (game->map[i / MIN_MAP_SCALE][j / MIN_MAP_SCALE] == '1')
 			my_pixel_put(game, game->minimap.x_draw,
-				game->minimap.y_draw, 0x80E7F3);
+				game->minimap.y_draw, 0xa4b1b9);
 		else if (game->map[i / MIN_MAP_SCALE][j / MIN_MAP_SCALE] == 'X')
 			my_pixel_put(game, game->minimap.x_draw,
-				game->minimap.y_draw, 0x808080);
+				game->minimap.y_draw, 0x67828b);
 		else
 			my_pixel_put(game, game->minimap.x_draw,
-				game->minimap.y_draw, 0x0F5315);
+				game->minimap.y_draw, 0xf7f9fb);
 	}
 	else
 		my_pixel_put(game, game->minimap.x_draw,
-			game->minimap.y_draw, 0x808080);
+			game->minimap.y_draw, 0x67828b);
 }
 
 void	draw_player(t_game *game)

@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/21 18:34:21 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/21 19:42:07 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ int	main(int argc, char *argv[])
 	if (game.data.img.img_pixels_ptr == NULL)
 		return (printf("Error\nCouldn't allocate img pxl ptr\n"), 1);
 	init_angle(&game);
-	mlx_hook(game.data.win_ptr, 2, 1L<<0, key_press, &game);
-	mlx_hook(game.data.win_ptr, 3, 1L<<1, key_release, &game);
-	mlx_hook(game.data.win_ptr, 6, 1L<<6, mouse_hook, &game);
+	mlx_hook(game.data.win_ptr, 2, 1L << 0, key_press, &game);
+	mlx_hook(game.data.win_ptr, 3, 1L << 1, key_release, &game);
+	mlx_hook(game.data.win_ptr, 6, 1L << 6, mouse_hook, &game);
 	mlx_hook(game.data.win_ptr, 17, 0, ft_destroy, &game);
 	mlx_loop_hook(game.data.mlx_ptr, ray_cast, &game);
 	mlx_loop(game.data.mlx_ptr);
