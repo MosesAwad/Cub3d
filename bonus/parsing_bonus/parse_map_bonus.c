@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:55:56 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/19 00:25:37 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/21 18:28:24 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	parse_map(t_game *game, int fd)
 	game->map = ft_realloc_x(game, game->map);
 	if (game->map_ind_width < 3 || game->map_ind_height < 3)
 		exit_err(game, NULL, "map must have a width and height of at least 3");
-	mark_map = mark_map_spawn(game, game->map);
 	set_up_player(game);
+	mark_map = mark_map_spawn(game, game->map);
 	dfs(game, mark_map, (int) game->player_posx, (int) game->player_posy);
 	parse_marked_map(game, mark_map);
 	destroy_2d_arr(mark_map);

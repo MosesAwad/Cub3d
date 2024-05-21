@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 00:01:02 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/19 00:25:32 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/21 18:35:18 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ void	set_up_player(t_game *game)
 				set_player_dir(game, x, y);
 				game->player_posx = x + 0.5;
 				game->player_posy = y + 0.5;
-				return ;
+				game->player_count++;
 			}
 			x++;
 		}
 		y++;
 	}
-	exit_err(game, NULL, "No player on map");
+	if (game->player_count != 1)
+		exit_err(game, NULL, "Must have strictly 1 player on map");
 }

@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/19 00:08:39 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/21 18:29:58 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # define BLU	"\033[1;34m"
 # define PRL	"\033[0;35m"
 
+//Mac_OS
 # define W_KEY 13
 # define A_KEY 0
 # define S_KEY 1
@@ -46,13 +47,14 @@
 # define L_ARROW 123
 # define R_ARROW 124
 
-# define W_KEY_LINUX 119
-# define A_KEY_LINUX 97
-# define S_KEY_LINUX 115
-# define D_KEY_LINUX 100
-# define ESC_KEY_LINUX 65307
-# define L_ARROW_LINUX 65361
-# define R_ARROW_LINUX 65363
+// Linux
+// # define W_KEY 119
+// # define A_KEY 97
+// # define S_KEY 115
+// # define D_KEY 100
+// # define ESC_KEY 65307
+// # define L_ARROW 65361
+// # define R_ARROW 65363
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
@@ -129,6 +131,7 @@ typedef struct s_game {
 	t_bool		move_left;
 	t_bool		rot_right;
 	t_bool		rot_left;
+	int			player_count;
 	int			screen_height;
 	int			screen_width;
 	int			map_ind_height;

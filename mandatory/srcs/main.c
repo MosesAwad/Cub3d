@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:51 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/18 21:22:03 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/21 18:30:41 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	init_params(t_game *game)
 	game->screen_width = SCREEN_WIDTH;
 	game->data.win_ptr = mlx_new_window(game->data.mlx_ptr,
 			game->screen_width, game->screen_height, "cub3D");
+	game->player_count = 0;
 	game->map = NULL;
 	game->ceiling_color = -1;
 	game->floor_color = -1;

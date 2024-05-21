@@ -6,7 +6,7 @@
 /*   By: mawad <mawad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:29:39 by mawad             #+#    #+#             */
-/*   Updated: 2024/05/19 00:41:46 by mawad            ###   ########.fr       */
+/*   Updated: 2024/05/21 18:33:31 by mawad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,22 @@
 # define PRL	"\033[0;35m"
 
 // // Mac_OS
-// # define W_KEY 13
-// # define A_KEY 0
-// # define S_KEY 1
-// # define D_KEY 2
-// # define ESC_KEY 53
-// # define L_ARROW 123
-// # define R_ARROW 124
+# define W_KEY 13
+# define A_KEY 0
+# define S_KEY 1
+# define D_KEY 2
+# define ESC_KEY 53
+# define L_ARROW 123
+# define R_ARROW 124
 
 // Linux
-# define W_KEY 119
-# define A_KEY 97
-# define S_KEY 115
-# define D_KEY 100
-# define ESC_KEY 65307
-# define L_ARROW 65361
-# define R_ARROW 65363
+// # define W_KEY 119
+// # define A_KEY 97
+// # define S_KEY 115
+// # define D_KEY 100
+// # define ESC_KEY 65307
+// # define L_ARROW 65361
+// # define R_ARROW 65363
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
@@ -133,6 +133,7 @@ typedef struct s_game {
 	char		**map;
 	t_minimap	minimap;
 	int			fd;
+	int			player_count;
 	t_bool		move_up;
 	t_bool		move_down;
 	t_bool		move_right;
